@@ -1,0 +1,8 @@
+{
+  "url": "https://www.nj.gov/dca/dlps/pdf/FourthRoundCalculation_Workbook.xlsx",
+  "sheet": "Final Summary",
+  "size": 35464111,
+  "sha256": "9a09462588b459d7c98079c451288d6f4ca86d619eee72be9fe7d4562ea7daa7",
+  "rows": 564,
+  "note": "DCA Fourth Round calculation (October 2024). Extract of the columns used by src/build.py."
+}

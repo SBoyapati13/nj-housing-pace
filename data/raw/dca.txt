@@ -1,0 +1,1475 @@
+Affordable Housing Obligations for
+    2025-2035 (Fourth Round)
+  Methodology and Background
+
+
+         Jacquelyn A. Suárez, Commissioner
+
+         Philip D. Murphy, Governor
+
+         Tahesha L. Way, Lieutenant Governor
+                                          Table of Contents
+Introduction ................................................................................................................3
+
+Present Need and Deficient Low- and Moderate-Income Occupied Housing ..........4
+
+Qualified Urban Aid Municipality Calculation .........................................................9
+
+Regional Prospective Need Calculation ..................................................................10
+
+Equalized Nonresidential Valuation Factor ............................................................. 11
+
+Income Capacity Factor ...........................................................................................12
+
+Land Capacity Factor ...............................................................................................14
+
+Final Prospective Need Calculation .........................................................................18
+
+Appendix A: Fourth Round Present Need and Prospective Need Obligations .......20
+
+Appendix B: GIS Data Sources ...............................................................................42
+
+Appendix C: Model Builder Flow Process Diagrams – Vacant Land Analysis ......43
+
+
+
+
+Fair Share Housing Obliga�ons for 2025-2035 (Fourth Round) Methodology and Background                               2
+Introduction
+
+On March 20, 2024, Governor Murphy signed P.L.2024, c.2. into law, establishing a
+new framework for determining and enforcing municipalities’ affordable housing
+obligations under the New Jersey Supreme Court’s Mount Laurel doctrine and the
+State’s Fair Housing Act. The law requires that the Department of Community Affairs
+(DCA) perform a calculation of regional need and municipal present and prospective
+obligations in accordance with the formulas established in the law.
+
+This report outlines DCA’s fourth round (2025-2035) fair share methodology and
+calculations of low- and moderate-income housing obligations for New Jersey’s 564
+municipalities. The report and calculation were prepared by the Offices of Policy and
+External Affairs and Local Planning Services in the Department of Community Affairs.
+The report explains how DCA calculated the Present Need and Prospective Need
+obligations for the fourth round in line with the formulas and criteria outlined in
+P.L.2024, c.2 (the Affordable Housing Law). Moreover, this report presents
+information on the data sources used and calculation decisions made to create
+transparency around the basis of the reported obligations.
+
+The final calculation and obligations for each municipality are presented in an
+Appendix at the end of this report. Detailed calculations and formulas can be found in
+the companion multi-tab Excel workbook calculation model, which also outlines all the
+source datasets used in the calculation and provides weblinks to their locations online.
+
+As a rule, DCA wherever possible utilized primary source data reported at the
+municipality level to preserve municipal level variation in housing stock characteristics
+and the low- and moderate-income population. DCA made necessary percentage-based
+adjustments based on figures available at higher levels of geography (such as the Public
+Use Microdata Area) when municipal level data was not available. The most recently
+available data sources were used at the time of analysis, unless the Affordable Housing
+Law explicitly required a dataset corresponding to a specific time period to be used.
+Data corresponding to consistent data surveys and products were also used in the
+calculations wherever possible. The calculations are presented in a way that they can
+be reproduced and that every calculation step can be traced and verified.
+
+
+Fair Share Housing Obliga�ons for 2025-2035 (Fourth Round) Methodology and Background   3
+Present Need and Deficient Low- and Moderate-Income Occupied Housing
+
+The first step was to calculate Present Need, defined in the Affordable Housing Law as
+the number of substandard existing deficient housing units currently occupied by low-
+and moderate-income (LMI) households. The Affordable Housing Law requires that
+with respect to this calculation a methodology should be used that is “similar to the
+methodology used to determine third round municipal present need, through the use of
+most recent datasets made available through the federal decennial census and the
+American Community Survey, including the Comprehensive Housing Affordability
+Strategy dataset thereof.”
+
+Third round municipal present need calculations used three factors to calculate present
+need: the number of housing units lacking complete kitchen facilities, the number of
+units lacking complete plumbing facilities, and the number of overcrowded units.
+Moreover, the Affordable Housing Law explicitly defines “deficient housing units” as
+housing that is over 50 years and overcrowded, that lacks complete plumbing, or that
+lacks complete kitchen facilities.
+
+The US Department of Housing and Urban Development (HUD) and the US Census
+Bureau publish separate tables on housing age, lack of plumbing facilities, lack of
+kitchen facilities, and overcrowding. However, there is no data source that reports the
+number of units that meet any one of those three conditions. Therefore, this number
+must be estimated using data from existing tables, with measures taken to account for
+overlap and to narrow the scope to deficient housing units occupied by low- and
+moderate-income households.
+
+Previous approaches have calculated county-level LMI deficient housing shares from
+the American Community Survey Public Use Microdata Sample (PUMS) and used
+them to estimate the LMI-occupied portion of each municipality’s deficient housing.
+However, this approach essentially assumes that the LMI share of deficient housing is
+uniform in a county, which is not the case. For example, data from HUD’s
+Comprehensive Housing Affordability Strategy (CHAS) dataset show that for 2017-21,
+the LMI share of housing lacking complete plumbing or kitchen facilities in Atlantic
+County was 69.1 percent. However, in Brigantine, it was 100 percent. Using the county
+LMI deficient share for Brigantine would result in underestimating city present need,
+
+Fair Share Housing Obliga�ons for 2025-2035 (Fourth Round) Methodology and Background   4
+undercounting the number of deficient housing units actually occupied by LMI
+households.
+
+Therefore, the analysis utilizes data from HUD’s Comprehensive Housing Affordability
+Strategy (CHAS) dataset, which has municipality-level data on the number and
+percentage of LMI households from a special tabulation of Census Bureau American
+Community Survey (ACS) data. The latest CHAS data release at the time of calculation
+corresponds to the 2017-2021 5 Year Estimates. To ensure data year and source
+consistency, the LMI deficient housing calculation relies on 2017-2021 data.
+
+The Affordable Housing Law defines low- and moderate-income households as
+“persons or families who are, in the case of State assisted projects or programs, so
+defined by the New Jersey Housing and Mortgage Finance Agency, or in the case of
+federally assisted projects or programs, defined as of ‘low- and very low-income’ by
+the United States Department of Housing and Urban Development”.
+
+Historically, income limits established by the former Council on Affordable Housing
+(COAH) have been used to identify low- and moderate-income households with respect
+to state programs. After COAH was declared inoperative by the New Jersey Supreme
+Court in 2015, these COAH (Housing) Region income limits have been informally
+calculated and published by the Affordable Housing Professionals of New Jersey and
+have identified limits corresponding to low-income households as incomes of 50
+percent or less of median income and limits corresponding to moderate-income
+households as incomes between 80 and 50 percent of the median income, with median
+income defined at the Housing Region level. The federal government utilizes a different
+set of income limits for its programs, using different regional boundaries 1. HUD defines
+low-income as 80 percent of Area Median Family Income and very low-income as 50
+percent of Area Median Family Income.2
+
+The HUD CHAS data define low- and moderate-income households based on HUD
+median family income limits, which correspond to federally defined housing market
+areas. These areas differ from the state Housing Regions, which are typically much
+
+1
+  The HUD Areas used for income limits can include single counties, groupings of adjacent counties, or entire
+metropolitan areas, or portions of metropolitan areas.
+2
+  https://www.huduser.gov/portal/datasets/il/il2024/2024summary.odn?inputname=STTLT*3499999999%2BNew+Je
+rsey&selection_type=county&stname=New+Jersey&statefp=34.0&year=2024
+Fair Share Housing Obliga�ons for 2025-2035 (Fourth Round) Methodology and Background               5
+larger in size. For these reasons HUD income limits differ slightly from State income
+limits. DCA performed an analysis to determine if using LMI data corresponding to
+HUD income limits would differ significantly from using LMI data corresponding to
+State income limits. Utilizing 2020 ACS PUMS data, the Department calculated LMI
+household shares for New Jersey’s 73 Public Use Microdata Areas, using the FY2020
+HUD Income Limits and the 2020 State Income Limits, as calculated by the Affordable
+Housing Professionals of New Jersey. The analysis revealed a very strong 98 percent
+correlation between the LMI household shares calculated by the HUD and State income
+limits. That suggests that utilizing HUD CHAS LMI data would not produce
+substantially different results than if the LMI data were based on State income limits.
+For this reason, DCA utilizes CHAS LMI data as a proxy for LMI data based on State
+income limits, as it has the advantage of offering municipal-level estimates and federal
+income limits are explicitly authorized in the Affordable Housing Law as a means of
+identifying low- and moderate-income households.
+
+DCA begins by calculating for each municipality on Tab D of the Calculation File the
+number of housing units that are more than 50 years old and that are overcrowded (more
+than one person per room) that have complete kitchen and plumbing facilities (to
+eliminate any overlap with housing units that lack complete kitchen or plumbing
+facilities), and that are occupied by low- and moderate-income households.
+
+Fifty years prior to the beginning of the fourth round is 1975, however the Census
+Bureau only reports housing units based on the decade they were built, making it
+impossible to accurately and precisely calculate pre-1975 housing. Therefore, to best
+conform to the intent of the Affordable Housing Law, pre-1980 housing is used for this
+calculation, which would correspond to housing that would be at least fifty years old at
+the midpoint of the fourth-round obligation period.
+
+DCA begins by pulling the number of pre- and post-1950 overcrowded housing units
+with complete plumbing from ACS Table B25050. This table only contains categories
+for housing built pre-1940, 1940-49, and 1950 or later, therefore pre-1980 housing had
+to be estimated using data from the ACS 5 percent PUMS.
+
+The first step was to adjust the figures for post-1950 units to units constructed between
+1950 and 1980. The 1950-1980 share of post-1950, overcrowded housing units with
+
+Fair Share Housing Obliga�ons for 2025-2035 (Fourth Round) Methodology and Background   6
+complete plumbing facilities was calculated at the Public Use Microdata Area (PUMA)3
+level. This analysis was conducted utilizing data from the IPUMS Center for Data
+Integration 4, which produces a formatted version of American Community Survey
+microdata primed for statistical analysis. The data were analyzed using a statistical
+program and household-level sampling weights were applied to generate the
+percentages. The results are shown on Tab I of the Excel calculation model. The PUMA
+level percentages were applied to each constituent municipality’s 5 post-1950
+overcrowded housing units with complete plumbing facilities to produce estimates of
+1950-1980 overcrowded housing units with complete plumbing facilities on Tab D.
+These figures were added to pre-1950 overcrowded housing units with complete
+plumbing from the ACS, producing an estimate of pre-1980 overcrowded housing units
+with complete plumbing for each municipality.
+
+The next step was to remove from these estimates units that lacked kitchen facilities.
+To do this, the percentage of pre-1980 overcrowded housing units with complete
+plumbing that lacked kitchen facilities was calculated for each PUMA. The results are
+shown on Tab I. These percentages were then assigned to each constituent municipality
+and subtracted from pre-1980 overcrowded housing units with complete plumbing. This
+produced an estimate of pre-1980 overcrowded housing units with complete plumbing
+and complete kitchen facilities for each municipality.
+
+The next step was to estimate what percentage of these units were occupied by low- and
+moderate-income households. Data from CHAS Table 3 were used to estimate the
+percentage of overcrowded housing units that were occupied by LMI households
+(households making 80 percent or less of Household Area Median Family Income) in
+each municipality on Tab F. These percentages were then multiplied by pre-1980
+overcrowded housing units with complete plumbing and kitchen facilities. This yielded
+
+
+3
+ PUMAs are non-overlapping, statistical geographic areas that partition each state or equivalent entity into
+geographic areas containing no fewer than 100,000 people each. They typically contain data corresponding to a
+grouping of municipalities or portions of large municipalities that exceed 100,000 population. They are the smallest
+geography available in the ACS Public Data Microdata Sample.
+4
+ Steven Ruggles, Sarah Flood, Matthew Sobek, Daniel Backman, Annie Chen, Grace Cooper, Stephanie Richards,
+Renae Rodgers, and Megan Schouweiler. IPUMS USA: Version 15.0 [dataset]. Minneapolis, MN: IPUMS, 2024.
+https://doi.org/10.18128/D010.V15.0
+5
+ 92% of municipalities have over 95% of their population within one PUMA. In cases where municipalities were
+split across multiple PUMAs, they were assigned the PUMA which accounted for a majority of their population. A
+listing of municipalities by PUMA can be found on Tab J.
+Fair Share Housing Obliga�ons for 2025-2035 (Fourth Round) Methodology and Background                       7
+an estimate of LMI pre-1980 overcrowded housing units with complete plumbing and
+complete kitchen facilities.
+
+Next, DCA determined the number of housing units lacking complete plumbing or
+kitchen facilities that were occupied by LMI households on Tab H of the Excel
+calculation model. Data by municipality were available from CHAS Table 8 and LMI
+specific totals were computed for each municipality.
+
+The final step was to add together and round to the nearest digit the two mutually
+exclusive components of LMI deficient housing units, LMI pre-1980 overcrowded
+housing units with complete plumbing and complete kitchen facilities and LMI housing
+units lacking complete plumbing or kitchen facilities. This yielded a final total of LMI
+deficient housing units, totaling 65,410 statewide. This serves as the Department’s
+Present Need obligation calculation and provides one of the components of the
+Qualified Urban Aid Municipality calculation.
+
+
+
+
+Fair Share Housing Obliga�ons for 2025-2035 (Fourth Round) Methodology and Background   8
+                           Present Need by Housing Region
+                         Housing                               Present
+                                           Counties
+                         Region                                 Need
+                                   Bergen, Hudson, Passaic,
+                           1                                   23,741
+                                         and Sussex
+                                   Essex, Morris, Union, and
+                           2                                   18,547
+                                           Warren
+                                   Hunterdon, Middlesex, and
+                           3                                   7,073
+                                          Somerset
+                                    Mercer, Monmouth, and
+                           4                                   6,721
+                                            Ocean
+                                   Burlington, Camden, and
+                           5                                   5,927
+                                          Gloucester
+                                      Atlantic, Cape May,
+                           6                                   3,401
+                                    Cumberland, and Salem
+                         TOTAL                                 65,410
+
+
+Qualified Urban Aid Municipality Calculation
+
+The qualified urban aid calculation begins with the list of Urban Aid municipalities.
+The Urban Aid List is produced by the Division of Local Government Services every
+year and relies on a statutory formula that considers the municipal tax rate, equalized
+valuation, number of children participating in the TANF program, population, and
+population density.
+
+The FY2025 Urban Aid list, the most recent list, was the one used for the calculation.
+There are 62 municipalities on the list. The FY2025 Urban Aid municipalities were
+analyzed to determine if they are “qualified” on Tab E of the Excel calculation model.
+There are three tests, any of which qualifies an Urban Aid municipality. For the first
+test, the ratio of substandard existing deficient housing units to all housing units in the
+municipality is compared to the same ratio for its Housing Region using the LMI
+substandard deficient housing unit data calculated in Tab D and total housing units from
+ACS Table B25001. If the ratio for the municipality exceeds the ratio for its Housing
+Region, it qualifies.
+
+For the second test, population density is calculated for every municipality using 2023
+Census Population Estimates data (the latest available at the time of analysis) and 2020
+
+Fair Share Housing Obliga�ons for 2025-2035 (Fourth Round) Methodology and Background   9
+Decennial Census land area data. If any municipality’s density exceeds 10,000 persons
+per square mile, it qualifies.
+
+For the third test, municipalities with population densities between 6,000 and 10,000
+persons per square mile are analyzed to establish if less than five percent of parcels are
+vacant and not used as farmland. This is determined by averaging the number of vacant
+land parcels in the municipality as a percentage of the total number of parcels in the
+municipality and the valuation of vacant land in the municipality as a percentage of
+total valuations in the municipality from the 2023 Division of Local Government
+Services property tax data tables. If this average is less than 5 percent these
+municipalities qualify. Any municipality meeting at least one of these tests is tagged as
+a Qualified Urban Aid municipality. The calculation, performed on Tab E, produced 47
+Qualified Urban Aid municipalities within 13 counties.
+
+Regional Prospective Need Calculation
+
+The Affordable Housing Law requires that “Projected household change for a 10-year
+round in a region shall be estimated by establishing the household change experienced
+in the region between the most recent federal decennial census, and the second-most
+recent federal decennial census.” The most recent federal decennial census is the 2020
+Census, and the second-most recent census is the 2010 Census. DCA collected
+household data at the county level from the Table H14 of the 2010 Census Summary
+File 1 and Table DP1 of the 2020 Census Demographic Profile. These figures were
+aggregated to the Housing Region level and the difference between the two was
+computed, representing the increase in the number of households on the Final Summary
+tab of the Excel calculation model. The Affordable Housing Law requires that “this
+household change, if positive, shall be divided by 2.5 to estimate the number of low-
+and moderate-income homes needed to address low- and moderate-income household
+change in the region, and to determine the regional prospective need for a 10-year
+round of low- and moderate-income housing obligations.” Pursuant to this requirement,
+DCA divided the household change for each Housing Region by 2.5, producing
+Regional Prospective Need figures totaling 84,698 statewide.
+
+
+
+
+Fair Share Housing Obliga�ons for 2025-2035 (Fourth Round) Methodology and Background   10
+                   Regional Prospective Need Obligations by Housing Region
+                                                                                                      Change Divided by
+                                                              2010            2020
+                                           Regional                                                   2.5 (Assumed Low-
+    Housing                                                Households      Households
+                      Counties            Prospective                                     Change        and Moderate-
+    Region                                                 - Decennial     - Decennial
+                                             Need                                                     Income Household
+                                                             Census          Census
+                                                                                                            Growth)
+                 Bergen, Hudson,
+      1                                     27,743           803,704        873,062       69,358             27,743
+                Passaic, and Sussex
+               Essex, Morris, Union,
+      2                                     20,506           693,844        745,108       51,264             20,506
+                   and Warren
+               Hunterdon, Middlesex,
+      3                                     11,604           446,114        475,123       29,009             11,604
+                  and Somerset
+              Mercer, Monmouth, and
+      4                                     13,822           588,249        622,803       34,554             13,822
+                      Ocean
+              Burlington, Camden, and
+      5                                     9,134            461,569        484,404       22,835             9,134
+                     Gloucester
+                Atlantic, Cape May,
+      6                                     1,889            220,880        225,602        4,722             1,889
+              Cumberland, and Salem
+    TOTAL                                   84,698          3,214,360      3,426,102      211,742            84,698
+
+
+Equalized Nonresidential Valuation Factor
+
+The Affordable Housing Law requires that “…the changes in nonresidential property
+valuations in the municipality, since the beginning of the round preceding the round
+being calculated, shall be calculated using data published by the Division of Local
+Government Services in the department.” It defines the beginning of this period as
+being 1999.
+
+Utilizing the data from the NJ Division of Local Government Services, 1999 and 2023
+Property Value Classification Files, DCA added together the commercial and industrial
+property valuations for each municipality to obtain total nonresidential valuation.6
+These figures were then adjusted by the State Equalization Table Average Ratios in
+1999 and 2023 to obtain 1999 and 2023 equalized nonresidential valuations for every
+municipality. The 1999-2023 change in these valuations was then computed and
+
+
+6
+ The Borough of Pine Valley was merged into the Borough of Pine Hill in 2022 and Princeton Township and
+Princeton Borough merged into a single municipality in 2013. For the purposes of calculating the 1999-2023 change
+in valuation, the 1999 valuation for Pine Valley was added to the 1999 valuation for Pine Hill and the 1999
+Princeton Borough and Princeton Township valuations were combined into a single consolidated Princeton
+valuation.
+Fair Share Housing Obliga�ons for 2025-2035 (Fourth Round) Methodology and Background                   11
+aggregated to the Housing Region level, less the valuation changes in Qualified Urban
+Aid municipalities. All of these changes were positive.
+
+For the next step, the Affordable Housing Law requires that “the change in the
+municipality’s nonresidential valuations shall be divided by the regional total change
+in nonresidential valuations to determine the municipality’s share of the regional
+change as the equalized nonresidential valuation factor.” Each municipality’s
+equalized nonresidential valuation change was then divided by the change for its
+Housing Region to determine its Equalized Nonresidential Valuation Factor.
+
+Income Capacity Factor
+
+The Affordable Housing Law requires calculation of an Income Capacity Factor, which
+measures the extent to which a municipality’s income level differs from that of the
+lowest-income municipality in its Housing Region. It is calculated as the average of two
+measures. The first is “the municipal share of the regional sum of the differences
+between the median municipal household income, according to the most recent
+American Community Survey Five-Year Estimates, and an income floor of $100 below
+the lowest median household income in the region.” The second is “the municipal share
+of the regional sum of the differences between the median municipal household incomes
+and an income floor of $100 below the lowest median household income in the region,
+weighted by the number of the households in the municipality.”
+
+DCA began by pulling the median household income for every municipality from Table
+S1903 of the Census Bureau’s American Community Survey 2018-22 5-Year
+Estimates, the most recently available dataset for all New Jersey municipalities at the
+time of the calculation. Household data from Table S1901 was also used to implement
+the household weighting required by the Affordable Housing Law.
+
+First, DCA computed the lowest municipal median household income in each Housing
+Region and subtracted 100 from that to produce Housing Region median household
+income floors.
+
+
+
+
+Fair Share Housing Obliga�ons for 2025-2035 (Fourth Round) Methodology and Background   12
+                            Lowest Median Income by Housing Region
+                                       Lowest Median
+                           Housing                          Lowest Income
+                                         Household
+                           Region                         Municipality in Region
+                                          Income
+                              1           52,092              Paterson city
+                              2           46,360               Newark city
+                              3           56,139            Perth Amboy city
+                              4           44,344               Trenton city
+                              5           36,158              Camden city
+                              6           29,721          Penns Grove borough
+
+
+Then for each municipality, excluding the Qualified Urban Aid municipalities, the
+regional income floor was subtracted from the median household income 7 to compute
+the difference from the regional income floor. Those differences were then summed to
+the Housing Region level to produce aggregated income differences by region, less any
+differences accounted for by Qualified Urban Aid municipalities. Each municipality’s
+difference from the regional income floor was then divided by its Housing Region
+aggregated income differences, to compute its share of Housing Region income
+differences. Next, the same calculation was performed, however each municipality’s
+difference from the regional income floor was multiplied by its number of households
+to produce household-weighted income differences These differences were then
+aggregated to the Housing Region level, and each municipality’s weighted difference
+was divided by its Housing Region aggregated household-weighted income differences,
+producing its share of Housing Region household-weighted income differences.
+
+The share of Housing Region income differences and share of Housing Region
+household-weighted income differences were then averaged to produce the Income
+Capacity Factor.
+
+
+
+
+7
+ Three municipali�es, Walpack Township, Teterboro Borough, and Tavistock Borough did not have 2018-22 Median
+Household Income es�mates available. As the Aﬀordable Housing Law requires that “the most recent American
+Community Survey Five-Year Es�mates” be used, DCA used the most recently available ACS ﬁgures for these
+municipali�es, which were 2008-12 for Tavistock, 2011-15 for Walpack, and 2015-19 for Teterboro. Six
+municipali�es, Ho-Ho-Kus, Tavistock, Millburn, Rumson, Chatham Borough, and Mountain Lakes, had median
+household incomes that were top-coded at 250,000 by the Census Bureau. The Census Bureau top-codes median
+household incomes above 250,000 to ensure privacy for individuals repor�ng high incomes.
+Fair Share Housing Obliga�ons for 2025-2035 (Fourth Round) Methodology and Background               13
+Land Capacity Factor
+
+The Land Capacity Factor is computed pursuant to statutory edict by determining, for
+each municipality, the total acreage that is developable utilizing the most recent land
+use / land cover (LULC) data from the New Jersey Department of Environmental
+Protection (DEP), the most recently available (released in 2024) MOD-IV Property Tax
+List data from the Division of Taxation in the Department of the Treasury, and
+construction permit data from the Department of Community Affairs. As discussed
+below, DCA excluded lands that did not correspond to a tax parcel with a Property Class
+Code denoting vacant land or qualified farmland. DCA also excluded lands subject to
+development limitations and applied weighting factors as specified in the Affordable
+Housing Law. Weights were applied to developable lands based on the planning area
+type in which such land was located, as required by the Law. The weights were as
+follows:
+
+                                    Planning Area Weights
+                                        Planning Area                           Weight
+             Planning Area 1 (Metropolitan)                                       1
+             Planning Area 2 (Suburban)                                           1
+             Planning Area 3 (Fringe)                                            0.5
+             Planning Area 4 (Rural)                                              0
+             Planning Area 5 (Environmentally Sensitive)                          0
+             Centers in Planning Areas 1 and 2                                    1
+             Centers in Planning Areas 3, 4, and 5                               0.5
+             Pinelands Regional Growth Area                                      0.5
+             Pinelands Town                                                      0.5
+             All other Pinelands                                                  0
+             Meadowlands                                                          1
+             Meadowlands Center                                                   1
+             Highlands Preservation Area                                          0
+             Highlands Planning Area Existing Community Zone                      1
+             Highlands Designated Center in a Highlands-conforming
+                                                                                  1
+             municipality
+             Highlands Planning Area, State-designated sewer service area,
+             Highlands municipality that is not a Highlands-conforming
+                                                                                  1
+             municipality as determined by the Highlands Water Protection and
+             Planning Council
+             All other Highlands Planning Areas                                   0
+
+
+
+
+Fair Share Housing Obliga�ons for 2025-2035 (Fourth Round) Methodology and Background    14
+The analysis work was done using Model Builder in ArcGIS Pro. A description of GIS
+data sources and the Model Builder flow process is included in the appendix. Only the
+land area within the above planning areas were included in the analysis. The total
+developable land area for each municipality was divided by the Housing Region total,
+excluding land area corresponding to Qualified Urban Aid municipalities, to determine
+its Land Capacity Factor.
+
+The datasets mandated for use by the legislation have significant limitations in their
+use. The LULC data reflect a geographic depiction of the classification system
+established by the U.S. Geological Survey (Anderson Codes) and modified by DEP.
+Based on aerial imagery from 2020, land areas are identified by category to reflect uses
+and coverages.
+
+The following LULC areas were used to identify vacant, developable land:
+
+                   LULC Areas Identified as Vacant, Developable Land
+            Code                                Description
+            2100    Cropland and Pastureland
+            2200    Orchards/Vineyards/Nurseries/Horticultural Areas
+            4110    Deciduous Forest (10-50% Crown Closure)
+            4120    Deciduous Forest (>50% Crown Closure)
+            4210    Coniferous Forest (10-50% Crown Closure)
+            4220    Coniferous Forest (>50% Crown Closure)
+            4230    Plantation
+            4311    Mixed Forest (>50% Coniferous With 10-50% Crown Closure)
+            4312    Mixed Forest (>50% Coniferous With >50% Crown Closure)
+            4321    Mixed Forest (>50% Deciduous With 10-50% Crown Closure)
+            4322    Mixed Forest (>50% Deciduous With >50% Crown Closure)
+            4410    Old Field (< 25% Brush Covered)
+            4411    Phragmites Dominate Old Field
+            4420    Deciduous Brush/Shrubland
+            4430    Coniferous Brush/Shrubland
+            4440    Mixed Deciduous/Coniferous Brush/Shrubland
+            4500    Severe Burned Upland Vegetation
+            7600    Undifferentiated Barren Lands
+
+
+Vacant land identified from a mapping of the above LULC categories was initially
+supplemented with a mapping of all tax parcels coded as vacant land or qualified
+Fair Share Housing Obliga�ons for 2025-2035 (Fourth Round) Methodology and Background   15
+farmland by individual municipal tax assessors. Each individual tax lot in the state is
+assigned a unique identifier called a PAMS PIN which consists of a concatenation of
+the Division of Taxation four-digit Municipality Code, Block, Lot and Qualification
+Code for each of the over 3.4 million individual tax lots in the state. However, there are
+abundant instances throughout the state where multiple adjoining parcels with the same
+Property Class and under one ownership are consolidated for the purposes of generating
+tax bills. However, the individual parcel boundaries are not consolidated. The result of
+this practice is that a Property Class Code is only assigned to one parcel and the
+associated parcels are only noted in the MOD-IV Property Tax data via an “Additional
+Lots” field that is not standardized to a point where queries and data joins are practical.
+In most cases, these additional lots are assigned a null value in all of the other property
+characteristic fields within the dataset, and they cannot be easily identified as vacant or
+qualified farmland parcels. While an attempt was made to capture these null value fields
+and integrate them with the main parcel with which they are associated, success was
+limited. Additionally, many parcels coded by local Tax Assessors may technically be
+vacant land but are not actually developable. The most prevalent examples of this are
+common open space that is part of planned residential development, detention basins,
+utility rights of way, and landfills. However, uncoded additional lots, common open
+space and landfills are generally captured by the LULC part of the analysis.
+Consequently, tax parcels identified as vacant land and qualified farmland were not
+used as a source dataset to identify developable land in the analysis.
+
+Conversely, because the LULC data identify land cover based aerial imagery, many
+instances were noted where forested crown closure was actually rear yards of clustered
+residences, buffer areas on non-residential development or tree-covered roadways. To
+address this issue, a mask was built, using the MOD-IV data, to remove LULC areas
+where there is no underlying tax parcel (indicating rights of way), and underlying tax
+parcels with property class codes for residential, commercial, industrial, apartment,
+railroad, and school.
+
+Given the age of both the LULC and MOD-IV Property Tax data, an analysis of
+construction permit data reported to DCA by municipalities was incorporated to capture
+more recent development activities that warranted removal of properties otherwise
+identified as vacant. However, these data are “as reported by municipalities” and are
+therefore neither standardized nor consistent.
+
+Fair Share Housing Obliga�ons for 2025-2035 (Fourth Round) Methodology and Background   16
+The aggregate of land areas identified as vacant from the LULC geospatial data, as
+adjusted to reflect underlying non-vacant property class coded parcels and updated
+information from construction permit data, served as a starting point for the DCA Land
+Capacity Analysis.
+
+GIS data that reflect the statutorily defined Housing Regions 1 through 6, planning area
+weights, and municipal boundaries were used to isolate and identify vacant land at the
+municipal and regional levels. These areas were then reduced to reflect undevelopable
+land based on GIS mappings of open space, preserved farmland, category 1 waterways
+and wetlands (and associated buffers based on special resource area restrictions), steep
+slopes exceeding 15 percent, and open waters.
+
+Steep slope areas obtained from the 10 foot digital elevation model LiDAR data
+compiled by the State Office of GIS (OGIS) are extremely granular and reflect steep
+slope areas that are too small and fragmented to be realistically included in a generalized
+analysis of vacant land for the purposes of this study. The sheer size (over 176 million
+polygons) of the dataset also presented impediments from the perspective of
+computational resource capacities. Therefore, certain thresholds were used to both
+reduce the size of datasets and focus on steep slopes that reflect impactful constraints
+on development potential. Small patches of steep slope areas consisting of 5,000 square
+feet or less were removed from the dataset. The 5,000 square foot threshold is adopted
+from the definition of Steep Slope Protection Areas established by the New Jersey
+Highlands Water Protection and Planning Council.
+
+MOD-IV data are compiled by individual Tax Assessors throughout the state and not
+all characteristics of vacant land are recorded uniformly. Initially, notes in various
+comment field were analyzed to identify remove parcels noted as common area,
+detention basins, road rights of way, etc. In a best effort further analysis to capture these
+inconsistencies, approximately 22,000 vacant parcels were manually reviewed to
+identify and remove additional homeowner association common areas, detention
+basins, and road and utility rights of way.
+
+Due to limitations resulting from inconsistencies between source datasets, the resulting
+municipal and regional mappings include many instances of small land areas caused by
+
+Fair Share Housing Obliga�ons for 2025-2035 (Fourth Round) Methodology and Background   17
+an incongruous alignment of geospatial layers. These “slivers” are considered artifacts
+of error that are common when overlaying polygons and vectors from non-coincident
+data sources. To correct for this anomaly, and to account for very small areas remaining
+after the exclusion of various environmental constraints, all feature parts with an area
+less than 2,500 square feet (presuming a 25 by 100-foot area could be a developable
+property) were removed from the resulting analysis.
+
+The resulting land area for each municipality was summed with the resulting land areas
+for all other municipalities within each the housing region to then determine the
+municipal percentage of land capacity for the housing region.
+
+Final Prospective Need Calculation
+
+To calculate prospective need for each municipality, DCA averaged the equalized
+nonresidential valuation factor, land capacity factor, and income capacity factor for
+each municipality into an average allocation factor. Qualified Urban Aid municipalities
+received an average allocation factor of 0 since they have no prospective need
+obligations under the Affordable Housing Law. The Prospective Need for each Housing
+Region was multiplied by each constituent municipality’s average allocation factor and
+a regional adjustment factor particular to each housing region to yield its number of
+prospective need units. The regional adjustment factors are factors evenly applied
+across housing regions designed to ensure that the summed total of all constituent
+municipalities’ prospective need obligations equals the regional obligation exactly.
+Without these factors, the totals would not equal the regional obligation due to
+rounding. They range from 0.9998 (Housing Region 5) to 1.0004 (Housing Region 6).
+
+Next, the Department calculates the prospective need obligations with the 1,000 unit/20
+percent cap outlined in the Affordable Housing Law:
+
+The municipality may in its plan lower its prospective need obligation to the extent
+necessary to prevent establishing a prospective need obligation that requires the
+municipality to provide a realistic opportunity for more than 1,000 housing units, after
+the application of any excess credits, or to prevent a prospective need obligation that
+exceeds 20 percent of the total number of households in a municipality according to the
+most recent federal decennial census, not including any prior round obligation.
+
+Fair Share Housing Obliga�ons for 2025-2035 (Fourth Round) Methodology and Background   18
+DCA calculates each municipality’s prospective need as a percentage of households
+reported by 2020 Decennial Census Table DP1 8 (the most recent federal decennial
+census). The Department then determines if each municipality’s prospective need
+obligation exceeds 1,000 or has a prospective need as a percentage of households more
+than 20 percent. If either condition is met, then the obligation is reduced to the lesser of
+the two, reported as the prospective need obligation with the 1,000 unit/20 percent cap.
+
+
+
+
+8
+ Total households for the Borough of Pine Hill include households in the Borough of Pine Valley counted in the
+2020 Census. Pine Valley merged into the Borough of Pine Hill in 2022.
+Fair Share Housing Obliga�ons for 2025-2035 (Fourth Round) Methodology and Background                     19
+                        Appendix A: Fourth Round Present Need and Prospective Need Obligations
+                                                                         Equalized                                                                 Prospective
+                                                         Qualified                        Land     Income      Average
+                                              Present                  Nonresidential                                      Prospective    1,000/    Need with
+         Municipality       County   Region              Urban Aid                      Capacity   Capacity   Allocation
+                                               Need                      Valuation                                            Need       20% Cap   1,000/20%
+                                                        Municipality                     Factor     Factor      Factor
+                                                                          Factor                                                                      Cap
+Absecon city             Atlantic      6       39          No             0.97%         1.11%      1.44%       1.17%          22          723         22
+Atlantic City            Atlantic      6       875         Yes            0.00%         0.00%      0.00%       0.00%           0         1,000         0
+Brigantine city          Atlantic      6       13          No             0.98%         0.00%      2.10%       1.03%          19          760         19
+Buena borough            Atlantic      6        3          No             0.12%         0.05%      1.26%       0.48%           9          353          9
+Buena Vista township     Atlantic      6       22          No             0.74%         0.05%      1.35%       0.71%          13          550         13
+Corbin City              Atlantic      6        0          No             0.06%         0.00%      0.84%       0.30%           6          37           6
+Egg Harbor township      Atlantic      6       164         No             9.19%         7.77%      6.49%       7.81%          148        1,000        148
+Egg Harbor City          Atlantic      6       61          No             0.40%         0.51%      0.53%       0.48%           9          342          9
+Estell Manor city        Atlantic      6        0          No             0.07%         0.00%      1.45%       0.51%          10          126         10
+Folsom borough           Atlantic      6        0          No             0.34%         0.00%      1.46%       0.60%          11          134         11
+Galloway township        Atlantic      6       260         No             4.67%         4.50%      4.96%       4.71%          89         1,000        89
+Hamilton township        Atlantic      6       13          No             3.04%         3.23%      4.05%       3.44%          65         1,000        65
+Hammonton town           Atlantic      6       64          No             2.73%         2.80%      2.25%       2.59%          49         1,000        49
+Linwood city             Atlantic      6       49          No             0.91%         0.11%      2.94%       1.32%          25          529         25
+Longport borough         Atlantic      6        0          No            -0.02%         0.00%      1.17%       0.38%           7          90           7
+Margate City             Atlantic      6       19          No             1.08%         0.00%      2.31%       1.13%          21          530         21
+Mullica township         Atlantic      6        0          No             0.24%         0.37%      1.48%       0.70%          13          439         13
+Northfield city          Atlantic      6       10          No             1.33%         0.16%      2.30%       1.27%          24          623         24
+Pleasantville city       Atlantic      6       294         Yes            0.00%         0.00%      0.00%       0.00%           0         1,000         0
+Port Republic city       Atlantic      6       10          No             0.05%         0.00%      1.62%       0.55%          10          82          10
+Somers Point city        Atlantic      6       27          No             3.38%         0.05%      1.50%       1.65%          31          969         31
+Ventnor City             Atlantic      6       24          No             0.69%         0.00%      1.55%       0.75%          14          859         14
+Weymouth township        Atlantic      6        0          No             0.37%         0.00%      0.77%       0.38%           7          241          7
+Allendale borough        Bergen        1       159         No             0.56%         1.21%      1.05%       0.94%          260         465         260
+Alpine borough           Bergen        1        0          No             0.17%         1.41%      1.19%       0.93%          257         117         117
+                                                                             Equalized                                                                 Prospective
+                                                             Qualified                        Land     Income      Average
+                                                  Present                  Nonresidential                                      Prospective    1,000/    Need with
+         Municipality          County    Region              Urban Aid                      Capacity   Capacity   Allocation
+                                                   Need                      Valuation                                            Need       20% Cap   1,000/20%
+                                                            Municipality                     Factor     Factor      Factor
+                                                                              Factor                                                                      Cap
+Bergenfield borough         Bergen         1       137         Yes            0.00%         0.00%      0.00%       0.00%           0         1,000         0
+Bogota borough              Bergen         1       26          No             0.23%         0.06%      0.66%       0.32%          88          588         88
+Carlstadt borough           Bergen         1        0          No             5.14%         0.01%      0.37%       1.84%          511         486         486
+Cliffside Park borough      Bergen         1       150         Yes            0.00%         0.00%      0.00%       0.00%           0         1,000         0
+Closter borough             Bergen         1       16          No             0.84%         0.57%      1.30%       0.91%          251         552         251
+Cresskill borough           Bergen         1        0          No             0.40%         0.11%      1.17%       0.56%          155         603         155
+Demarest borough            Bergen         1        0          No             0.03%         0.15%      0.96%       0.38%          106         320         106
+Dumont borough              Bergen         1       16          No             0.30%         0.06%      1.03%       0.46%          128        1,000        128
+East Rutherford borough     Bergen         1       53          No             3.27%         0.69%      0.50%       1.49%          412         861         412
+Edgewater borough           Bergen         1        6          No             1.77%         0.02%      1.40%       1.06%          295        1,000        295
+Elmwood Park borough        Bergen         1       154         No             0.76%         0.25%      0.55%       0.52%          145        1,000        145
+Emerson borough             Bergen         1        0          No             0.37%         0.70%      0.89%       0.65%          181         496         181
+Englewood city              Bergen         1       166         No             2.53%         0.65%      0.94%       1.37%          381        1,000        381
+Englewood Cliffs borough    Bergen         1        0          No             1.78%         0.36%      1.41%       1.18%          329         369         329
+Fair Lawn borough           Bergen         1       65          No             2.12%         0.16%      2.19%       1.49%          412        1,000        412
+Fairview borough            Bergen         1       313         No             0.94%         0.01%      0.11%       0.35%          97         1,000        97
+Fort Lee borough            Bergen         1       241         No             2.26%         0.22%      1.66%       1.38%          382        1,000        382
+Franklin Lakes borough      Bergen         1       65          No             0.57%         3.04%      1.78%       1.79%          497         744         497
+Garfield city               Bergen         1       322         Yes            0.00%         0.00%      0.00%       0.00%           0         1,000         0
+Glen Rock borough           Bergen         1        0          No             0.35%         0.33%      1.72%       0.80%          222         787         222
+Hackensack city             Bergen         1       593         Yes            0.00%         0.00%      0.00%       0.00%           0         1,000         0
+Harrington Park borough     Bergen         1        0          No             0.22%         0.84%      1.13%       0.73%          202         319         202
+Hasbrouck Heights borough   Bergen         1        8          No             0.71%         0.13%      0.77%       0.54%          149         907         149
+Haworth borough             Bergen         1        0          No             0.20%         1.16%      1.24%       0.87%          242         221         221
+Hillsdale borough           Bergen         1        0          No             0.23%         0.77%      1.37%       0.79%          220         700         220
+Ho-Ho-Kus borough           Bergen         1        0          No             0.10%         0.66%      1.60%       0.78%          218         283         218
+     Fair Share Housing Obliga�ons for 2025-2035 (Fourth Round) Methodology and Background                                                        21
+                                                                              Equalized                                                                 Prospective
+                                                              Qualified                        Land     Income      Average
+                                                   Present                  Nonresidential                                      Prospective    1,000/    Need with
+         Municipality           County    Region              Urban Aid                      Capacity   Capacity   Allocation
+                                                    Need                      Valuation                                            Need       20% Cap   1,000/20%
+                                                             Municipality                     Factor     Factor      Factor
+                                                                               Factor                                                                      Cap
+Leonia borough               Bergen         1       68          No            0.31%          0.16%      0.65%       0.37%          104         672         104
+Little Ferry borough         Bergen         1       114         No            0.80%          0.02%      0.26%       0.36%          99          870         99
+Lodi borough                 Bergen         1       140         Yes           0.00%          0.00%      0.00%       0.00%           0         1,000         0
+Lyndhurst township           Bergen         1       91          No            2.85%          0.09%      1.02%       1.32%          366        1,000        366
+Mahwah township              Bergen         1       36          No            2.91%          2.49%      1.40%       2.27%          629        1,000        629
+Maywood borough              Bergen         1       12          No            0.58%          0.06%      0.77%       0.47%          131         743         131
+Midland Park borough         Bergen         1        0          No            0.40%          0.40%      0.87%       0.56%          155         550         155
+Montvale borough             Bergen         1       30          No            0.55%          1.91%      1.30%       1.26%          348         603         348
+Moonachie borough            Bergen         1       102         No            1.97%          1.01%      0.28%       1.09%          301         224         224
+New Milford borough          Bergen         1       14          No            0.27%          0.11%      0.85%       0.41%          114        1,000        114
+North Arlington borough      Bergen         1       36          No            1.37%          0.36%      0.71%       0.82%          227        1,000        227
+Northvale borough            Bergen         1        8          No            0.53%          0.11%      0.57%       0.40%          112         328         112
+Norwood borough              Bergen         1       15          No            0.41%          0.40%      0.93%       0.58%          161         389         161
+Oakland borough              Bergen         1       10          No            1.18%          0.74%      1.39%       1.10%          306         871         306
+Old Tappan borough           Bergen         1        4          No            0.03%          1.20%      1.28%       0.84%          233         396         233
+Oradell borough              Bergen         1        0          No            0.41%          0.15%      1.45%       0.67%          186         556         186
+Palisades Park borough       Bergen         1       333         No            1.67%          0.03%      0.69%       0.80%          221        1,000        221
+Paramus borough              Bergen         1       254         No            12.40%         2.49%      1.58%       5.49%         1,523       1,000       1,000
+Park Ridge borough           Bergen         1       137         No            0.07%          0.21%      1.21%       0.50%          138         662         138
+Ramsey borough               Bergen         1       51          No            1.60%          2.34%      1.50%       1.81%          503        1,000        503
+Ridgefield borough           Bergen         1       62          No            1.66%          0.10%      0.64%       0.80%          223         810         223
+Ridgefield Park village      Bergen         1       163         No            0.73%          0.06%      0.57%       0.45%          126         997         126
+Ridgewood village            Bergen         1        4          No            1.19%          0.41%      3.02%       1.54%          427        1,000        427
+River Edge borough           Bergen         1       33          No            0.31%          0.18%      1.23%       0.57%          159         838         159
+River Vale township          Bergen         1       49          No            0.07%          0.58%      1.46%       0.70%          195         707         195
+Rochelle Park township       Bergen         1       10          No            0.61%          0.01%      0.56%       0.39%          109         430         109
+      Fair Share Housing Obliga�ons for 2025-2035 (Fourth Round) Methodology and Background                                                        22
+                                                                              Equalized                                                                 Prospective
+                                                              Qualified                        Land     Income      Average
+                                                   Present                  Nonresidential                                      Prospective    1,000/    Need with
+         Municipality           County    Region              Urban Aid                      Capacity   Capacity   Allocation
+                                                    Need                      Valuation                                            Need       20% Cap   1,000/20%
+                                                             Municipality                     Factor     Factor      Factor
+                                                                               Factor                                                                      Cap
+Rockleigh borough            Bergen         1        0           No            0.03%         0.29%      0.94%       0.42%          116         14          14
+Rutherford borough           Bergen         1       16           No            1.06%         0.12%      1.23%       0.80%          223        1,000        223
+Saddle Brook township        Bergen         1       42           No            1.70%         0.32%      0.99%       1.00%          279        1,000        279
+Saddle River borough         Bergen         1       75           No            0.13%         3.58%      1.41%       1.71%          473         249         249
+South Hackensack township    Bergen         1        7           No            1.62%         0.00%      0.26%       0.63%          174         184         174
+Teaneck township             Bergen         1       214          No            1.51%         1.13%      2.03%       1.55%          431        1,000        431
+Tenafly borough              Bergen         1       68           No            0.55%         0.55%      2.11%       1.07%          297         983         297
+Teterboro borough            Bergen         1        4           No            0.99%         0.01%      0.00%       0.33%          92           5           5
+Upper Saddle River borough   Bergen         1        0           No            0.06%         0.65%      1.80%       0.84%          233         532         233
+Waldwick borough             Bergen         1       19           No            0.38%         0.44%      1.10%       0.64%          178         715         178
+Wallington borough           Bergen         1       81           No            0.53%         0.10%      0.37%       0.33%          92          965         92
+Washington township          Bergen         1        0           No            0.11%         0.73%      1.14%       0.66%          184         656         184
+Westwood borough             Bergen         1       19           No            1.06%         0.14%      1.34%       0.85%          235         903         235
+Woodcliff Lake borough       Bergen         1        0           No            1.39%         1.77%      1.61%       1.59%          441         423         423
+Wood-Ridge borough           Bergen         1       17           No            0.43%         0.03%      0.95%       0.47%          130         784         130
+Wyckoff township             Bergen         1       40           No            0.58%         1.66%      1.95%       1.39%          387        1,000        387
+Bass River township          Burlington     5       30           No            0.25%         0.00%      0.50%       0.25%          23          104         23
+Beverly city                 Burlington     5       15           No            0.03%         0.07%      0.52%       0.21%          19          194         19
+Bordentown city              Burlington     5        0           No            0.31%         0.01%      0.60%       0.30%          28          375         28
+Bordentown township          Burlington     5       95           No            3.19%         0.79%      1.24%       1.74%          159         901         159
+Burlington city              Burlington     5       63           No            0.31%         0.17%      0.49%       0.33%          30          801         30
+Burlington township          Burlington     5       132          No            4.41%         4.25%      1.46%       3.37%          308        1,000        308
+Chesterfield township        Burlington     5        0           No            0.10%         0.00%      1.88%       0.66%          60          402         60
+Cinnaminson township         Burlington     5       32           No            0.92%         0.41%      1.74%       1.02%          93         1,000        93
+Delanco township             Burlington     5       20           No            0.26%         0.31%      0.43%       0.33%          30          406         30
+Delran township              Burlington     5       40           No            1.43%         0.41%      1.33%       1.06%          96         1,000        96
+     Fair Share Housing Obliga�ons for 2025-2035 (Fourth Round) Methodology and Background                                                         23
+                                                                             Equalized                                                                 Prospective
+                                                             Qualified                        Land     Income      Average
+                                                  Present                  Nonresidential                                      Prospective    1,000/    Need with
+         Municipality          County    Region              Urban Aid                      Capacity   Capacity   Allocation
+                                                   Need                      Valuation                                            Need       20% Cap   1,000/20%
+                                                            Municipality                     Factor     Factor      Factor
+                                                                              Factor                                                                      Cap
+Eastampton township         Burlington     5       24           No            0.15%         0.14%      0.86%       0.38%          35          490         35
+Edgewater Park township     Burlington     5       72           No            1.00%         0.32%      0.62%       0.65%          59          732         59
+Evesham township            Burlington     5       111          No            3.94%         0.11%      3.18%       2.41%          220        1,000        220
+Fieldsboro borough          Burlington     5        0           No            0.01%         0.01%      0.40%       0.14%          13          43          13
+Florence township           Burlington     5       42           No            1.49%         0.90%      1.12%       1.17%          107        1,000        107
+Hainesport township         Burlington     5        0           No            0.82%         0.61%      1.09%       0.84%          77          455         77
+Lumberton township          Burlington     5       38           No            1.16%         1.06%      1.27%       1.16%          106         950         106
+Mansfield township          Burlington     5        0           No            0.66%         1.00%      1.03%       0.90%          82          709         82
+Maple Shade township        Burlington     5       73           No            1.67%         0.05%      0.84%       0.85%          78         1,000        78
+Medford township            Burlington     5       69           No            1.42%         1.33%      2.86%       1.87%          171        1,000        171
+Medford Lakes borough       Burlington     5        0           No            0.04%         0.00%      1.12%       0.38%          35          304         35
+Moorestown township         Burlington     5       20           No            4.36%         1.04%      2.80%       2.73%          250        1,000        250
+Mount Holly township        Burlington     5       42           No            0.51%         0.17%      0.66%       0.45%          41          752         41
+Mount Laurel township       Burlington     5       46           No            9.08%         1.96%      3.13%       4.72%          431        1,000        431
+New Hanover township        Burlington     5        1           No            0.07%         0.00%      0.62%       0.23%          21          129         21
+North Hanover township      Burlington     5       37           No            0.34%         0.00%      0.59%       0.31%          28          576         28
+Palmyra borough             Burlington     5        2           No            0.18%         0.15%      0.67%       0.34%          31          654         31
+Pemberton borough           Burlington     5        0           No            0.03%         0.00%      0.45%       0.16%          15          113         15
+Pemberton township          Burlington     5       79           No            0.49%         1.05%      1.04%       0.86%          79         1,000        79
+Riverside township          Burlington     5       126          No            0.11%         0.03%      0.45%       0.20%          18          582         18
+Riverton borough            Burlington     5        0           No            0.12%         0.01%      0.86%       0.33%          30          208         30
+Shamong township            Burlington     5        0           No            0.13%         0.05%      1.00%       0.39%          36          442         36
+Southampton township        Burlington     5       33           No            0.67%         0.03%      0.75%       0.48%          44          931         44
+Springfield township        Burlington     5        2           No            0.25%         0.00%      1.05%       0.43%          40          234         40
+Tabernacle township         Burlington     5        0           No            0.17%         0.17%      0.89%       0.41%          37          484         37
+Washington township         Burlington     5        0           No            0.09%         0.00%      0.35%       0.15%          13          57          13
+     Fair Share Housing Obliga�ons for 2025-2035 (Fourth Round) Methodology and Background                                                        24
+                                                                             Equalized                                                                 Prospective
+                                                             Qualified                        Land     Income      Average
+                                                  Present                  Nonresidential                                      Prospective    1,000/    Need with
+        Municipality           County    Region              Urban Aid                      Capacity   Capacity   Allocation
+                                                   Need                      Valuation                                            Need       20% Cap   1,000/20%
+                                                            Municipality                     Factor     Factor      Factor
+                                                                              Factor                                                                      Cap
+Westampton township         Burlington     5        0          No            2.15%          2.15%      1.13%       1.81%          165         655         165
+Willingboro township        Burlington     5       16          No            0.89%          0.22%      1.42%       0.84%          77         1,000        77
+Woodland township           Burlington     5        4          No            0.05%          0.00%      1.00%       0.35%          32          94          32
+Wrightstown borough         Burlington     5       17          No            0.07%          0.17%      0.14%       0.13%          12          63          12
+Audubon borough             Camden         5        0          No            0.41%          0.02%      0.95%       0.46%          42          725         42
+Audubon Park borough        Camden         5        4          No            0.00%          0.00%      0.14%       0.05%           4          98           4
+Barrington borough          Camden         5       34          No            0.33%          0.08%      0.65%       0.36%          32          639         32
+Bellmawr borough            Camden         5       74          No            0.73%          0.09%      0.60%       0.47%          43          956         43
+Berlin borough              Camden         5       15          No            0.49%          0.72%      0.83%       0.68%          62          572         62
+Berlin township             Camden         5       60          No            1.27%          0.88%      0.63%       0.93%          84          460         84
+Brooklawn borough           Camden         5        7          No            0.20%          0.02%      0.21%       0.14%          13          147         13
+Camden city                 Camden         5      1,342        Yes           0.00%          0.00%      0.00%       0.00%           0         1,000         0
+Cherry Hill township        Camden         5       378         No            12.32%         1.73%      4.72%       6.26%          571        1,000        571
+Chesilhurst borough         Camden         5        0          No            0.03%          0.70%      0.44%       0.39%          36          114         36
+Clementon borough           Camden         5        0          No            0.12%          0.20%      0.33%       0.22%          20          441         20
+Collingswood borough        Camden         5       10          No            0.55%          0.00%      0.86%       0.47%          43         1,000        43
+Gibbsboro borough           Camden         5       14          No            0.17%          0.83%      0.54%       0.51%          47          159         47
+Gloucester township         Camden         5       221         No            3.50%          4.60%      3.03%       3.71%          339        1,000        339
+Gloucester City             Camden         5        7          No            0.40%          0.06%      0.55%       0.34%          31          822         31
+Haddon township             Camden         5       35          No            0.67%          0.04%      1.55%       0.75%          69         1,000        69
+Haddonfield borough         Camden         5       35          No            0.81%          0.03%      2.23%       1.02%          93          882         93
+Haddon Heights borough      Camden         5       30          No            0.26%          0.02%      1.12%       0.47%          43          602         43
+Hi-Nella borough            Camden         5        5          No            0.01%          0.03%      0.25%       0.10%           9          77           9
+Laurel Springs borough      Camden         5        0          No            0.01%          0.01%      0.73%       0.25%          23          150         23
+Lawnside borough            Camden         5       29          No            0.28%          0.47%      0.39%       0.38%          35          230         35
+Lindenwold borough          Camden         5       293         Yes           0.00%          0.00%      0.00%       0.00%           0         1,000         0
+     Fair Share Housing Obliga�ons for 2025-2035 (Fourth Round) Methodology and Background                                                        25
+                                                                             Equalized                                                                 Prospective
+                                                             Qualified                        Land     Income      Average
+                                                  Present                  Nonresidential                                      Prospective    1,000/    Need with
+         Municipality          County    Region              Urban Aid                      Capacity   Capacity   Allocation
+                                                   Need                      Valuation                                            Need       20% Cap   1,000/20%
+                                                            Municipality                     Factor     Factor      Factor
+                                                                              Factor                                                                      Cap
+Magnolia borough            Camden         5        0          No             0.24%         0.06%      0.43%       0.24%          22          355         22
+Merchantville borough       Camden         5       15          No             0.10%         0.00%      0.39%       0.16%          15          312         15
+Mount Ephraim borough       Camden         5       40          No             0.18%         0.02%      0.53%       0.24%          22          388         22
+Oaklyn borough              Camden         5       31          No             0.08%         0.01%      0.50%       0.20%          18          352         18
+Pennsauken township         Camden         5       392         Yes            0.00%         0.00%      0.00%       0.00%           0         1,000         0
+Pine Hill borough           Camden         5       53          No             0.16%         1.89%      0.53%       0.86%          79          882         79
+Runnemede borough           Camden         5       59          No             0.46%         0.13%      0.68%       0.43%          39          675         39
+Somerdale borough           Camden         5        5          No             0.33%         0.09%      0.58%       0.33%          30          458         30
+Stratford borough           Camden         5       10          No             0.12%         0.02%      0.68%       0.27%          25          536         25
+Tavistock borough           Camden         5        0          No             0.08%         0.00%      1.75%       0.61%          56           0           0
+Voorhees township           Camden         5       289         No             3.17%         1.46%      2.13%       2.25%          206        1,000        206
+Waterford township          Camden         5       10          No             0.21%         0.55%      0.95%       0.57%          52          759         52
+Winslow township            Camden         5       132         No             1.61%         6.26%      1.73%       3.20%          292        1,000        292
+Woodlynne borough           Camden         5        7          No             0.02%         0.01%      0.31%       0.11%          10          180         10
+Avalon borough              Cape May       6        0          No             2.64%         0.00%      2.22%       1.62%          31          127         31
+Cape May city               Cape May       6       46          No             6.72%         0.00%      0.83%       2.52%          48          276         48
+Cape May Point borough      Cape May       6        0          No            -0.01%         0.00%      0.77%       0.25%           5          30           5
+Dennis township             Cape May       6        0          No             2.83%         0.30%      2.15%       1.76%          33          472         33
+Lower township              Cape May       6       75          No             4.24%         1.53%      3.07%       2.95%          56         1,000        56
+Middle township             Cape May       6       51          No             7.23%         2.58%      3.08%       4.30%          81         1,000        81
+North Wildwood city         Cape May       6       39          No             2.89%         0.00%      1.24%       1.38%          26          384         26
+Ocean City                  Cape May       6       160         No             7.82%         0.00%      3.01%       3.61%          68         1,000        68
+Sea Isle City               Cape May       6        0          No             2.71%         0.00%      1.22%       1.31%          25          220         25
+Stone Harbor borough        Cape May       6        0          No             2.46%         0.00%      1.67%       1.38%          26          80          26
+Upper township              Cape May       6        0          No             2.74%         1.54%      3.22%       2.50%          47          964         47
+West Cape May borough       Cape May       6        0          No             0.78%         0.00%      0.94%       0.57%          11          100         11
+     Fair Share Housing Obliga�ons for 2025-2035 (Fourth Round) Methodology and Background                                                        26
+                                                                              Equalized                                                                 Prospective
+                                                              Qualified                        Land     Income      Average
+                                                   Present                  Nonresidential                                      Prospective    1,000/    Need with
+         Municipality           County    Region              Urban Aid                      Capacity   Capacity   Allocation
+                                                    Need                      Valuation                                            Need       20% Cap   1,000/20%
+                                                             Municipality                     Factor     Factor      Factor
+                                                                               Factor                                                                      Cap
+West Wildwood borough        Cape May       6        8          No             0.14%         0.00%      0.44%       0.19%           4          52           4
+Wildwood city                Cape May       6       15          No             7.03%         0.00%      0.53%       2.52%          48          457         48
+Wildwood Crest borough       Cape May       6       10          No             3.16%         0.00%      0.83%       1.33%          25          295         25
+Woodbine borough             Cape May       6       27          No             0.24%         3.81%      0.21%       1.42%          27          145         27
+Bridgeton city               Cumberland     6       290         Yes            0.00%         0.00%      0.00%       0.00%           0         1,000         0
+Commercial township          Cumberland     6        2          No             0.15%         0.75%      0.60%       0.50%           9          355          9
+Deerfield township           Cumberland     6        3          No             0.24%         0.00%      0.96%       0.40%           8          221          8
+Downe township               Cumberland     6        4          No             0.00%         0.00%      0.54%       0.18%           3          117          3
+Fairfield township           Cumberland     6       35          No             0.25%         5.01%      0.69%       1.98%          37          352         37
+Greenwich township           Cumberland     6        4          No             0.01%         0.00%      1.02%       0.34%           7          63           7
+Hopewell township            Cumberland     6       31          No             0.50%         8.78%      1.34%       3.54%          67          329         67
+Lawrence township            Cumberland     6       17          No             0.06%         0.00%      1.10%       0.39%           7          214          7
+Maurice River township       Cumberland     6        0          No             0.34%         0.08%      0.81%       0.41%           8          251          8
+Millville city               Cumberland     6       132         No             3.94%         12.09%     2.72%       6.25%          118        1,000        118
+Shiloh borough               Cumberland     6        0          No             0.02%         0.00%      0.85%       0.29%           5          39           5
+Stow Creek township          Cumberland     6        4          No             0.04%         0.00%      1.16%       0.40%           8          104          8
+Upper Deerfield township     Cumberland     6       31          No             1.61%         15.75%     1.32%       6.23%          118         568         118
+Vineland city                Cumberland     6       276         Yes            0.00%         0.00%      0.00%       0.00%           0         1,000         0
+Belleville township          Essex          2       324         Yes            0.00%         0.00%      0.00%       0.00%           0         1,000         0
+Bloomfield township          Essex          2       329         Yes            0.00%         0.00%      0.00%       0.00%           0         1,000         0
+Caldwell borough             Essex          2       57          No             0.38%         0.01%      0.76%       0.38%          79          708         79
+Cedar Grove township         Essex          2       15          No             0.74%         0.46%      1.29%       0.83%          170         951         170
+City of Orange township      Essex          2       678         Yes            0.00%         0.00%      0.00%       0.00%           0         1,000         0
+East Orange city             Essex          2      1,850        Yes            0.00%         0.00%      0.00%       0.00%           0         1,000         0
+Essex Fells borough          Essex          2        0          No             0.02%         0.40%      1.39%       0.60%          124         150         124
+Fairfield township           Essex          2        0          No             4.90%         1.00%      0.63%       2.18%          447         549         447
+      Fair Share Housing Obliga�ons for 2025-2035 (Fourth Round) Methodology and Background                                                        27
+                                                                              Equalized                                                                 Prospective
+                                                              Qualified                        Land     Income      Average
+                                                   Present                  Nonresidential                                      Prospective    1,000/    Need with
+         Municipality           County    Region              Urban Aid                      Capacity   Capacity   Allocation
+                                                    Need                      Valuation                                            Need       20% Cap   1,000/20%
+                                                             Municipality                     Factor     Factor      Factor
+                                                                               Factor                                                                      Cap
+Glen Ridge borough           Essex          2        0          No             0.78%         0.00%      1.83%       0.87%          178         506         178
+Irvington township           Essex          2      1,404        Yes            0.00%         0.00%      0.00%       0.00%           0         1,000         0
+Livingston township          Essex          2        0          No             2.69%         1.06%      3.00%       2.25%          461        1,000        461
+Maplewood township           Essex          2       20          No             1.14%         0.03%      1.99%       1.05%          216        1,000        216
+Millburn township            Essex          2        0          No             4.60%         0.46%      3.06%       2.71%          555        1,000        555
+Montclair township           Essex          2       132         Yes            0.00%         0.00%      0.00%       0.00%           0         1,000         0
+Newark city                  Essex          2      4,630        Yes            0.00%         0.00%      0.00%       0.00%           0         1,000         0
+North Caldwell borough       Essex          2        0          No             0.06%         0.18%      1.49%       0.58%          118         452         118
+Nutley township              Essex          2       85          Yes            0.00%         0.00%      0.00%       0.00%           0         1,000         0
+Roseland borough             Essex          2        0          No             0.72%         0.70%      0.81%       0.74%          152         505         152
+South Orange Village twp.    Essex          2       20          No             0.64%         0.03%      1.71%       0.80%          163        1,000        163
+Verona township              Essex          2        0          No             0.65%         0.45%      1.43%       0.84%          173        1,000        173
+West Caldwell township       Essex          2        4          No             2.22%         0.61%      1.15%       1.33%          272         801         272
+West Orange township         Essex          2       409         No             2.20%         5.17%      2.28%       3.22%          660        1,000        660
+Clayton borough              Gloucester     5        1          No             0.22%         1.13%      0.77%       0.71%          65          646         65
+Deptford township            Gloucester     5       87          No             3.91%         7.57%      1.59%       4.36%          398        1,000        398
+East Greenwich township      Gloucester     5        0          No             0.37%         3.13%      1.53%       1.68%          153         787         153
+Elk township                 Gloucester     5       17          No             0.19%         5.67%      1.17%       2.34%          214         317         214
+Franklin township            Gloucester     5       48          No             0.54%         6.71%      1.07%       2.78%          253        1,000        253
+Glassboro borough            Gloucester     5       121         Yes            0.00%         0.00%      0.00%       0.00%           0         1,000         0
+Greenwich township           Gloucester     5       18          No             0.82%         1.87%      0.63%       1.11%          101         395         101
+Harrison township            Gloucester     5       40          No             0.76%         7.14%      2.14%       3.35%          306         887         306
+Logan township               Gloucester     5        0          No             8.57%         2.84%      0.88%       4.10%          374         419         374
+Mantua township              Gloucester     5       21          No             1.02%         2.22%      1.32%       1.52%          139        1,000        139
+Monroe township              Gloucester     5       50          No             1.82%         6.12%      2.01%       3.32%          303        1,000        303
+National Park borough        Gloucester     5       10          No             0.03%         0.08%      0.47%       0.19%          18          225         18
+      Fair Share Housing Obliga�ons for 2025-2035 (Fourth Round) Methodology and Background                                                        28
+                                                                             Equalized                                                                 Prospective
+                                                             Qualified                        Land     Income      Average
+                                                  Present                  Nonresidential                                      Prospective    1,000/    Need with
+        Municipality           County    Region              Urban Aid                      Capacity   Capacity   Allocation
+                                                   Need                      Valuation                                            Need       20% Cap   1,000/20%
+                                                            Municipality                     Factor     Factor      Factor
+                                                                              Factor                                                                      Cap
+Newfield borough            Gloucester     5        0          No             0.04%         0.00%      0.63%       0.22%          20          130         20
+Paulsboro borough           Gloucester     5       130         No             0.12%         0.13%      0.28%       0.18%          16          463         16
+Pitman borough              Gloucester     5       55          No             0.04%         0.26%      0.81%       0.37%          34          682         34
+South Harrison township     Gloucester     5       14          No             0.25%         0.01%      0.92%       0.39%          36          221         36
+Swedesboro borough          Gloucester     5        5          No             0.19%         0.11%      0.55%       0.28%          26          191         26
+Washington township         Gloucester     5       157         No             4.72%         4.36%      2.82%       3.97%          362        1,000        362
+Wenonah borough             Gloucester     5        0          No             0.03%         0.05%      0.87%       0.31%          29          169         29
+West Deptford township      Gloucester     5       42          No             2.66%         4.71%      1.17%       2.85%          260        1,000        260
+Westville borough           Gloucester     5       16          No             0.20%         0.02%      0.31%       0.18%          16          351         16
+Woodbury city               Gloucester     5       147         Yes            0.00%         0.00%      0.00%       0.00%           0          814          0
+Woodbury Heights borough    Gloucester     5       15          No             0.24%         0.19%      0.77%       0.40%          36          219         36
+Woolwich township           Gloucester     5       16          No             0.62%         5.51%      1.78%       2.64%          241         820         241
+Bayonne city                Hudson         1       749         Yes            0.00%         0.00%      0.00%       0.00%           0         1,000         0
+East Newark borough         Hudson         1       31          No             0.16%         0.00%      0.08%       0.08%          22          178         22
+Guttenberg town             Hudson         1       116         No             0.29%         0.00%      0.32%       0.20%          56          984         56
+Harrison town               Hudson         1       257         Yes            0.00%         0.00%      0.00%       0.00%           0         1,000         0
+Hoboken city                Hudson         1       126         Yes            0.00%         0.00%      0.00%       0.00%           0         1,000         0
+Jersey City                 Hudson         1      3,733        Yes            0.00%         0.00%      0.00%       0.00%           0         1,000         0
+Kearny town                 Hudson         1       630         Yes            0.00%         0.00%      0.00%       0.00%           0         1,000         0
+North Bergen township       Hudson         1       596         Yes            0.00%         0.00%      0.00%       0.00%           0         1,000         0
+Secaucus town               Hudson         1       25          No             6.95%         5.45%      1.46%       4.62%         1,282       1,000       1,000
+Union City                  Hudson         1      2,088        Yes            0.00%         0.00%      0.00%       0.00%           0         1,000         0
+Weehawken township          Hudson         1       84          Yes            0.00%         0.00%      0.00%       0.00%           0         1,000         0
+West New York town          Hudson         1      1,173        Yes            0.00%         0.00%      0.00%       0.00%           0         1,000         0
+Alexandria township         Hunterdon      3        0          No             0.05%         0.68%      1.22%       0.65%          75          350         75
+Bethlehem township          Hunterdon      3        0          No             0.05%         0.00%      1.28%       0.44%          51          269         51
+     Fair Share Housing Obliga�ons for 2025-2035 (Fourth Round) Methodology and Background                                                        29
+                                                                             Equalized                                                                 Prospective
+                                                             Qualified                        Land     Income      Average
+                                                  Present                  Nonresidential                                      Prospective    1,000/    Need with
+         Municipality          County    Region              Urban Aid                      Capacity   Capacity   Allocation
+                                                   Need                      Valuation                                            Need       20% Cap   1,000/20%
+                                                            Municipality                     Factor     Factor      Factor
+                                                                              Factor                                                                      Cap
+Bloomsbury borough          Hunterdon      3        0           No            0.05%         0.00%      0.32%       0.13%          15          68          15
+Califon borough             Hunterdon      3        0           No            0.03%         0.00%      0.56%       0.20%          23          81          23
+Clinton town                Hunterdon      3        3           No            0.15%         0.24%      1.00%       0.46%          54          223         54
+Clinton township            Hunterdon      3        0           No            0.38%         2.24%      1.88%       1.50%          174         932         174
+Delaware township           Hunterdon      3        0           No            0.06%         0.00%      1.49%       0.52%          60          359         60
+East Amwell township        Hunterdon      3        4           No            0.28%         0.00%      0.85%       0.38%          44          310         44
+Flemington borough          Hunterdon      3       74           No            0.23%         0.02%      0.40%       0.22%          25          371         25
+Franklin township           Hunterdon      3        0           No            0.04%         0.11%      1.19%       0.44%          52          234         52
+Frenchtown borough          Hunterdon      3       11           No            0.07%         0.00%      0.49%       0.19%          22          126         22
+Glen Gardner borough        Hunterdon      3       10           No            0.01%         0.00%      0.27%       0.09%          11          157         11
+Hampton borough             Hunterdon      3        0           No            0.01%         0.00%      0.21%       0.07%           9          122          9
+High Bridge borough         Hunterdon      3        4           No            0.09%         0.12%      0.64%       0.28%          33          285         33
+Holland township            Hunterdon      3        0           No           -0.01%         0.17%      0.95%       0.37%          43          400         43
+Kingwood township           Hunterdon      3       20           No            0.12%         0.00%      1.19%       0.44%          50          295         50
+Lambertville city           Hunterdon      3        0           No            0.37%         0.00%      0.65%       0.34%          39          419         39
+Lebanon borough             Hunterdon      3        7           No            0.16%         0.05%      0.59%       0.27%          31          159         31
+Lebanon township            Hunterdon      3        0           No            0.10%         0.00%      1.09%       0.40%          46          474         46
+Milford borough             Hunterdon      3        3           No           -0.03%         0.25%      0.37%       0.20%          23          105         23
+Raritan township            Hunterdon      3       44           No            2.72%         3.38%      2.59%       2.90%          336        1,000        336
+Readington township         Hunterdon      3       45           No            0.67%         12.00%     1.84%       4.84%          561        1,000        561
+Stockton borough            Hunterdon      3        0           No            0.03%         0.00%      0.48%       0.17%          20          47          20
+Tewksbury township          Hunterdon      3        0           No            0.11%         0.10%      1.74%       0.65%          76          437         76
+Union township              Hunterdon      3        0           No            0.14%         2.01%      0.89%       1.01%          118         368         118
+West Amwell township        Hunterdon      3        0           No            0.12%         0.00%      0.90%       0.34%          39          229         39
+East Windsor township       Mercer         4       166          No            2.28%         4.29%      1.42%       2.66%          368        1,000        368
+Ewing township              Mercer         4       99           No            2.93%         2.93%      1.06%       2.31%          319        1,000        319
+     Fair Share Housing Obliga�ons for 2025-2035 (Fourth Round) Methodology and Background                                                        30
+                                                                             Equalized                                                                 Prospective
+                                                             Qualified                        Land     Income      Average
+                                                  Present                  Nonresidential                                      Prospective    1,000/    Need with
+         Municipality          County    Region              Urban Aid                      Capacity   Capacity   Allocation
+                                                   Need                      Valuation                                            Need       20% Cap   1,000/20%
+                                                            Municipality                     Factor     Factor      Factor
+                                                                              Factor                                                                      Cap
+Hamilton township           Mercer         4       186         No            6.85%          2.41%      2.60%       3.95%          546        1,000        546
+Hightstown borough          Mercer         4       47          No            0.16%          0.01%      0.58%       0.25%          35          419         35
+Hopewell borough            Mercer         4        0          No            0.09%          0.00%      0.76%       0.28%          39          157         39
+Hopewell township           Mercer         4        8          No            2.85%          6.90%      2.05%       3.93%          543        1,000        543
+Lawrence township           Mercer         4       68          No            3.67%          1.47%      1.81%       2.32%          320        1,000        320
+Pennington borough          Mercer         4        4          No            0.17%          0.02%      1.06%       0.42%          58          206         58
+Princeton                   Mercer         4       60          No            2.08%          1.35%      2.56%       2.00%          276        1,000        276
+Robbinsville township       Mercer         4       40          No            2.59%          2.95%      1.76%       2.43%          336        1,000        336
+Trenton city                Mercer         4      1,084        Yes           0.00%          0.00%      0.00%       0.00%           0         1,000         0
+West Windsor township       Mercer         4       61          No            4.42%          6.87%      3.06%       4.78%          661        1,000        661
+Carteret borough            Middlesex      3       164         Yes           0.00%          0.00%      0.00%       0.00%           0         1,000         0
+Cranbury township           Middlesex      3        0          No            4.48%          1.82%      1.82%       2.71%          314         265         265
+Dunellen borough            Middlesex      3       79          No            0.14%          0.01%      0.45%       0.20%          23          524         23
+East Brunswick township     Middlesex      3       170         No            3.09%          1.69%      3.34%       2.71%          314        1,000        314
+Edison township             Middlesex      3       637         No            12.80%         1.30%      4.69%       6.27%          727        1,000        727
+Helmetta borough            Middlesex      3        3          No            0.01%          0.04%      0.58%       0.21%          24          210         24
+Highland Park borough       Middlesex      3       209         No            0.25%          0.08%      0.83%       0.38%          45         1,000        45
+Jamesburg borough           Middlesex      3       19          No            0.17%          0.03%      0.80%       0.33%          38          423         38
+Metuchen borough            Middlesex      3        5          No            1.07%          0.08%      1.95%       1.03%          120        1,000        120
+Middlesex borough           Middlesex      3       14          No            1.07%          0.09%      0.93%       0.70%          81         1,000        81
+Milltown borough            Middlesex      3       13          No            0.23%          0.06%      1.02%       0.44%          51          523         51
+Monroe township             Middlesex      3       76          No            4.78%          12.19%     2.45%       6.47%          751        1,000        751
+New Brunswick city          Middlesex      3      1,225        Yes           0.00%          0.00%      0.00%       0.00%           0         1,000         0
+North Brunswick township    Middlesex      3       130         No            3.29%          0.83%      2.07%       2.06%          239        1,000        239
+Old Bridge township         Middlesex      3       318         No            3.02%          12.32%     2.39%       5.91%          685        1,000        685
+Perth Amboy city            Middlesex      3       987         Yes           0.00%          0.00%      0.00%       0.00%           0         1,000         0
+     Fair Share Housing Obliga�ons for 2025-2035 (Fourth Round) Methodology and Background                                                        31
+                                                                              Equalized                                                                 Prospective
+                                                              Qualified                        Land     Income      Average
+                                                   Present                  Nonresidential                                      Prospective    1,000/    Need with
+         Municipality           County    Region              Urban Aid                      Capacity   Capacity   Allocation
+                                                    Need                      Valuation                                            Need       20% Cap   1,000/20%
+                                                             Municipality                     Factor     Factor      Factor
+                                                                               Factor                                                                      Cap
+Piscataway township          Middlesex      3       150         No             9.71%         1.51%      2.73%       4.65%          539        1,000        539
+Plainsboro township          Middlesex      3       53          No             2.50%         3.67%      1.81%       2.66%          309        1,000        309
+Sayreville borough           Middlesex      3       194         No             2.21%         3.19%      1.58%       2.32%          270        1,000        270
+South Amboy city             Middlesex      3       19          No             0.34%         0.26%      0.68%       0.43%          49          748         49
+South Brunswick township     Middlesex      3       132         No             9.68%         11.74%     3.37%       8.27%          959        1,000        959
+South Plainfield borough     Middlesex      3       54          No             3.55%         0.15%      1.67%       1.79%          208        1,000        208
+South River borough          Middlesex      3       66          No             0.60%         0.20%      0.81%       0.53%          62         1,000        62
+Spotswood borough            Middlesex      3        7          No             0.23%         0.14%      0.71%       0.36%          42          639         42
+Woodbridge township          Middlesex      3       694         Yes            0.00%         0.00%      0.00%       0.00%           0         1,000         0
+Aberdeen township            Monmouth       4        0          No             0.66%         0.21%      1.34%       0.73%          101        1,000        101
+Allenhurst borough           Monmouth       4        4          No             0.16%         0.00%      0.38%       0.18%          25          40          25
+Allentown borough            Monmouth       4        0          No             0.03%         0.03%      0.56%       0.21%          28          139         28
+Asbury Park city             Monmouth       4       214         Yes            0.00%         0.00%      0.00%       0.00%           0         1,000         0
+Atlantic Highlands borough   Monmouth       4        0          No             0.28%         0.05%      0.72%       0.35%          48          390         48
+Avon-by-the-Sea borough      Monmouth       4        5          No             0.11%         0.00%      0.52%       0.21%          29          180         29
+Belmar borough               Monmouth       4        0          No             0.45%         0.00%      0.49%       0.31%          43          573         43
+Bradley Beach borough        Monmouth       4       64          No             0.20%         0.00%      0.44%       0.22%          30          431         30
+Brielle borough              Monmouth       4        0          No             0.26%         0.03%      1.12%       0.47%          65          390         65
+Colts Neck township          Monmouth       4        0          No             0.48%         0.00%      1.71%       0.73%          101         661         101
+Deal borough                 Monmouth       4        5          No             0.10%         0.01%      0.22%       0.11%          15          69          15
+Eatontown borough            Monmouth       4       20          No             3.14%         0.39%      0.66%       1.40%          193        1,000        193
+Englishtown borough          Monmouth       4       25          No             0.14%         0.03%      0.47%       0.21%          30          158         30
+Fair Haven borough           Monmouth       4        0          No             0.15%         0.01%      1.85%       0.67%          92          399         92
+Farmingdale borough          Monmouth       4        0          No             0.10%         0.00%      0.39%       0.16%          22          123         22
+Freehold borough             Monmouth       4       270         No             0.67%         0.03%      0.35%       0.35%          49          829         49
+Freehold township            Monmouth       4       39          No             4.49%         5.70%      2.13%       4.11%          568        1,000        568
+      Fair Share Housing Obliga�ons for 2025-2035 (Fourth Round) Methodology and Background                                                        32
+                                                                             Equalized                                                                 Prospective
+                                                             Qualified                        Land     Income      Average
+                                                  Present                  Nonresidential                                      Prospective    1,000/    Need with
+        Municipality           County    Region              Urban Aid                      Capacity   Capacity   Allocation
+                                                   Need                      Valuation                                            Need       20% Cap   1,000/20%
+                                                            Municipality                     Factor     Factor      Factor
+                                                                              Factor                                                                      Cap
+Hazlet township             Monmouth       4        0          No             1.10%         0.67%      1.28%       1.02%          140        1,000        140
+Highlands borough           Monmouth       4        0          No             0.20%         0.00%      0.45%       0.22%          30          485         30
+Holmdel township            Monmouth       4       129         No             0.18%         0.76%      1.94%       0.96%          133        1,000        133
+Howell township             Monmouth       4       63          No             2.77%         1.84%      2.72%       2.45%          338        1,000        338
+Interlaken borough          Monmouth       4        0          No             0.00%         0.00%      0.85%       0.28%          39          72          39
+Keansburg borough           Monmouth       4       91          No             0.23%         0.00%      0.44%       0.23%          31          762         31
+Keyport borough             Monmouth       4       29          No             0.43%         0.02%      0.37%       0.27%          37          640         37
+Lake Como borough           Monmouth       4       11          No             0.10%         0.00%      0.32%       0.14%          19          156         19
+Little Silver borough       Monmouth       4        0          No             0.30%         0.06%      1.76%       0.71%          98          439         98
+Loch Arbour village         Monmouth       4        0          No             0.01%         0.00%      0.57%       0.19%          27          19          19
+Long Branch city            Monmouth       4       317         Yes            0.00%         0.00%      0.00%       0.00%           0         1,000         0
+Manalapan township          Monmouth       4       62          No             1.51%         1.79%      2.82%       2.04%          282        1,000        282
+Manasquan borough           Monmouth       4        0          No             0.55%         0.00%      0.90%       0.48%          67          492         67
+Marlboro township           Monmouth       4        5          No             2.25%         7.02%      3.30%       4.19%          579        1,000        579
+Matawan borough             Monmouth       4        0          No             0.41%         0.13%      0.99%       0.51%          70          770         70
+Middletown township         Monmouth       4       186         No             1.58%         2.10%      3.84%       2.50%          346        1,000        346
+Millstone township          Monmouth       4        7          No             0.37%         0.00%      1.75%       0.71%          98          665         98
+Monmouth Beach borough      Monmouth       4        0          No             0.09%         0.00%      0.92%       0.34%          47          290         47
+Neptune township            Monmouth       4       97          No             1.83%         0.84%      1.02%       1.23%          170        1,000        170
+Neptune City borough        Monmouth       4       12          No             0.31%         0.01%      0.38%       0.23%          32          422         32
+Ocean township              Monmouth       4       51          No             1.60%         0.54%      1.47%       1.20%          166        1,000        166
+Oceanport borough           Monmouth       4        0          No             0.35%         0.05%      0.93%       0.44%          61          469         61
+Red Bank borough            Monmouth       4       54          No             2.64%         0.01%      0.70%       1.12%          154        1,000        154
+Roosevelt borough           Monmouth       4       30          No             0.00%         0.00%      0.43%       0.14%          20          61          20
+Rumson borough              Monmouth       4        0          No             0.41%         0.02%      2.11%       0.85%          117         480         117
+Sea Bright borough          Monmouth       4        0          No             0.46%         0.00%      0.54%       0.33%          46          159         46
+     Fair Share Housing Obliga�ons for 2025-2035 (Fourth Round) Methodology and Background                                                        33
+                                                                              Equalized                                                                 Prospective
+                                                              Qualified                        Land     Income      Average
+                                                   Present                  Nonresidential                                      Prospective    1,000/    Need with
+         Municipality           County    Region              Urban Aid                      Capacity   Capacity   Allocation
+                                                    Need                      Valuation                                            Need       20% Cap   1,000/20%
+                                                             Municipality                     Factor     Factor      Factor
+                                                                               Factor                                                                      Cap
+Sea Girt borough              Monmouth      4        0           No            0.11%         0.04%      1.43%       0.53%          73          157         73
+Shrewsbury borough            Monmouth      4       35           No            1.05%         0.02%      1.03%       0.70%          97          291         97
+Shrewsbury township           Monmouth      4        4           No            0.00%         0.00%      0.26%       0.09%          12          101         12
+Spring Lake borough           Monmouth      4       10           No            0.47%         0.01%      1.00%       0.49%          68          245         68
+Spring Lake Heights borough   Monmouth      4       35           No            0.32%         0.01%      0.62%       0.32%          44          486         44
+Tinton Falls borough          Monmouth      4       413          No            2.31%         1.22%      1.21%       1.58%          219        1,000        219
+Union Beach borough           Monmouth      4        0           No            0.06%         0.12%      0.79%       0.32%          45          407         45
+Upper Freehold township       Monmouth      4       15           No            0.20%         0.00%      1.32%       0.51%          70          494         70
+Wall township                 Monmouth      4       224          No            5.75%         8.47%      1.94%       5.38%          744        1,000        744
+West Long Branch borough      Monmouth      4        0           No            0.53%         0.06%      0.76%       0.45%          62          510         62
+Boonton town                  Morris        2       23           No            0.72%         1.00%      0.52%       0.75%          153         682         153
+Boonton township              Morris        2        4           No            0.09%         0.14%      0.95%       0.40%          81          301         81
+Butler borough                Morris        2        0           No            0.56%         0.17%      0.65%       0.46%          94          652         94
+Chatham borough               Morris        2        8           No            0.59%         0.07%      1.99%       0.88%          181         611         181
+Chatham township              Morris        2       30           No            0.28%         0.23%      1.77%       0.76%          156         793         156
+Chester borough               Morris        2       10           No            0.38%         0.03%      0.65%       0.35%          72          127         72
+Chester township              Morris        2        0           No            0.08%         0.06%      1.62%       0.59%          120         515         120
+Denville township             Morris        2       58           No            1.65%         3.89%      1.56%       2.37%          485        1,000        485
+Dover town                    Morris        2       349          No            1.31%         0.05%      0.30%       0.55%          113        1,000        113
+East Hanover township         Morris        2        0           No            2.56%         0.99%      1.06%       1.54%          315         787         315
+Florham Park borough          Morris        2       66           No            2.16%         1.75%      1.12%       1.68%          344         894         344
+Hanover township              Morris        2       69           No            4.85%         1.77%      1.34%       2.65%          544        1,000        544
+Harding township              Morris        2        0           No            0.16%         0.26%      0.80%       0.40%          83          284         83
+Jefferson township            Morris        2       52           No            0.59%         2.22%      1.20%       1.34%          274        1,000        274
+Kinnelon borough              Morris        2       22           No            0.21%         0.00%      1.28%       0.50%          102         681         102
+Lincoln Park borough          Morris        2       15           No            0.43%         1.79%      0.74%       0.98%          202         813         202
+      Fair Share Housing Obliga�ons for 2025-2035 (Fourth Round) Methodology and Background                                                        34
+                                                                             Equalized                                                                 Prospective
+                                                             Qualified                        Land     Income      Average
+                                                  Present                  Nonresidential                                      Prospective    1,000/    Need with
+         Municipality          County    Region              Urban Aid                      Capacity   Capacity   Allocation
+                                                   Need                      Valuation                                            Need       20% Cap   1,000/20%
+                                                            Municipality                     Factor     Factor      Factor
+                                                                              Factor                                                                      Cap
+Long Hill township          Morris         2        0           No            0.43%         0.01%      1.06%       0.50%          102         624         102
+Madison borough             Morris         2        0           No            1.11%         0.37%      1.53%       1.00%          206        1,000        206
+Mendham borough             Morris         2        0           No            0.18%         0.40%      1.37%       0.65%          133         352         133
+Mendham township            Morris         2        0           No            0.02%         0.06%      1.67%       0.58%          120         397         120
+Mine Hill township          Morris         2       13           No            0.18%         0.28%      0.50%       0.32%          65          295         65
+Montville township          Morris         2        9           No            1.19%         2.95%      1.86%       2.00%          410        1,000        410
+Morris township             Morris         2        9           No            0.63%         5.37%      2.34%       2.78%          571        1,000        571
+Morris Plains borough       Morris         2        0           No            0.43%         0.68%      0.90%       0.67%          137         486         137
+Morristown town             Morris         2       140          No            2.93%         0.89%      1.17%       1.66%          341        1,000        341
+Mountain Lakes borough      Morris         2        0           No            0.29%         2.03%      1.59%       1.30%          267         275         267
+Mount Arlington borough     Morris         2       38           No            0.23%         0.20%      0.45%       0.29%          60          530         60
+Mount Olive township        Morris         2       99           No            1.49%         3.98%      1.23%       2.24%          459        1,000        459
+Netcong borough             Morris         2       24           No            0.14%         0.28%      0.31%       0.24%          50          287         50
+Parsippany-Troy Hills
+                            Morris         2       138          No            4.75%         1.20%      2.15%       2.70%          553        1,000        553
+township
+Pequannock township         Morris         2       44           No            1.14%         2.00%      0.95%       1.37%          280        1,000        280
+Randolph township           Morris         2       84           No            1.69%         1.30%      2.21%       1.73%          355        1,000        355
+Riverdale borough           Morris         2       44           No            0.78%         0.35%      0.48%       0.54%          110         386         110
+Rockaway borough            Morris         2       195          No            0.45%         0.17%      0.44%       0.36%          73          512         73
+Rockaway township           Morris         2       20           No            2.52%         2.24%      1.60%       2.12%          435        1,000        435
+Roxbury township            Morris         2       59           No            2.34%         10.87%     1.26%       4.82%          989        1,000        989
+Victory Gardens borough     Morris         2        8           No            0.03%         0.00%      0.06%       0.03%           6          114          6
+Washington township         Morris         2       20           No            0.37%         0.80%      1.83%       1.00%          205        1,000        205
+Wharton borough             Morris         2       91           No            0.58%         0.08%      0.43%       0.36%          74          521         74
+Barnegat Light borough      Ocean          4        0           No            0.16%         2.60%      0.37%       1.04%          144         64          64
+Barnegat township           Ocean          4       38           No            0.75%         0.00%      0.79%       0.51%          71         1,000        71
+
+     Fair Share Housing Obliga�ons for 2025-2035 (Fourth Round) Methodology and Background                                                        35
+                                                                              Equalized                                                                 Prospective
+                                                              Qualified                        Land     Income      Average
+                                                   Present                  Nonresidential                                      Prospective    1,000/    Need with
+         Municipality            County   Region              Urban Aid                      Capacity   Capacity   Allocation
+                                                    Need                      Valuation                                            Need       20% Cap   1,000/20%
+                                                             Municipality                     Factor     Factor      Factor
+                                                                               Factor                                                                      Cap
+Bay Head borough               Ocean        4        0          No             0.21%         0.02%      0.65%       0.29%          40          87          40
+Beach Haven borough            Ocean        4        1          No             0.52%         0.00%      0.52%       0.35%          48          97          48
+Beachwood borough              Ocean        4        8          No             0.16%         0.17%      0.68%       0.34%          47          744         47
+Berkeley township              Ocean        4       150         No             1.25%         2.61%      0.68%       1.51%          209        1,000        209
+Brick township                 Ocean        4       149         No             3.97%         1.58%      2.26%       2.60%          360        1,000        360
+Eagleswood township            Ocean        4        0          No             0.10%         0.06%      0.39%       0.18%          25          135         25
+Harvey Cedars borough          Ocean        4        0          No             0.06%         0.00%      0.60%       0.22%          31          40          31
+Island Heights borough         Ocean        4        5          No             0.08%         0.04%      0.49%       0.20%          28          144         28
+Jackson township               Ocean        4       186         No             3.17%         15.26%     2.27%       6.90%          954        1,000        954
+Lacey township                 Ocean        4       52          No             1.77%         0.81%      1.16%       1.24%          172        1,000        172
+Lakehurst borough              Ocean        4        0          No             0.11%         0.05%      0.29%       0.15%          21          182         21
+Lakewood township              Ocean        4       878         Yes            0.00%         0.00%      0.00%       0.00%           0         1,000         0
+Lavallette borough             Ocean        4        4          No             0.18%         0.00%      0.54%       0.24%          34          185         34
+Little Egg Harbor township     Ocean        4       32          No             0.76%         2.47%      0.76%       1.33%          184        1,000        184
+Long Beach township            Ocean        4        0          No             0.41%         0.00%      0.61%       0.34%          47          319         47
+Manchester township            Ocean        4       154         No             1.89%         6.70%      0.36%       2.98%          412        1,000        412
+Mantoloking borough            Ocean        4        0          No             0.04%         0.00%      1.44%       0.49%          68          32          32
+Ocean township                 Ocean        4       56          No             0.41%         0.43%      0.67%       0.50%          69          796         69
+Ocean Gate borough             Ocean        4        0          No             0.02%         0.01%      0.19%       0.07%          10          170         10
+Pine Beach borough             Ocean        4        0          No             0.03%         0.02%      0.60%       0.22%          30          168         30
+Plumsted township              Ocean        4       22          No             0.21%         0.00%      0.50%       0.24%          33          599         33
+Point Pleasant borough         Ocean        4       41          No             0.89%         0.03%      1.10%       0.67%          93         1,000        93
+Point Pleasant Beach borough   Ocean        4       10          No             1.18%         0.03%      0.73%       0.65%          89          409         89
+Seaside Heights borough        Ocean        4       20          No             0.71%         0.00%      0.06%       0.26%          36          230         36
+Seaside Park borough           Ocean        4        0          No             0.08%         0.00%      0.31%       0.13%          18          154         18
+Ship Bottom borough            Ocean        4        0          No             0.55%         0.00%      0.40%       0.32%          44          110         44
+      Fair Share Housing Obliga�ons for 2025-2035 (Fourth Round) Methodology and Background                                                        36
+                                                                             Equalized                                                                 Prospective
+                                                             Qualified                        Land     Income      Average
+                                                  Present                  Nonresidential                                      Prospective    1,000/    Need with
+         Municipality          County    Region              Urban Aid                      Capacity   Capacity   Allocation
+                                                   Need                      Valuation                                            Need       20% Cap   1,000/20%
+                                                            Municipality                     Factor     Factor      Factor
+                                                                              Factor                                                                      Cap
+South Toms River borough    Ocean          4        0          No             0.15%         0.16%      0.45%       0.25%          35          216         35
+Stafford township           Ocean          4       38          No             2.49%         0.71%      1.32%       1.51%          208        1,000        208
+Surf City borough           Ocean          4        2          No             0.31%         0.00%      0.53%       0.28%          39          129         39
+Toms River township         Ocean          4       526         No             7.25%         4.59%      2.71%       4.85%          670        1,000        670
+Tuckerton borough           Ocean          4        0          No             0.16%         0.19%      0.34%       0.23%          32          315         32
+Bloomingdale borough        Passaic        1        0          No             0.16%         3.77%      0.77%       1.57%          434         622         434
+Clifton city                Passaic        1       884         Yes            0.00%         0.00%      0.00%       0.00%           0         1,000         0
+Haledon borough             Passaic        1       45          No             0.33%         0.91%      0.50%       0.58%          160         603         160
+Hawthorne borough           Passaic        1       105         No             1.06%         1.26%      0.92%       1.08%          300        1,000        300
+Little Falls township       Passaic        1        0          No             0.65%         1.46%      0.97%       1.03%          285         944         285
+North Haledon borough       Passaic        1        0          No             0.18%         1.49%      0.80%       0.82%          228         611         228
+Passaic city                Passaic        1      3,179        Yes            0.00%         0.00%      0.00%       0.00%           0         1,000         0
+Paterson city               Passaic        1      3,966        Yes            0.00%         0.00%      0.00%       0.00%           0         1,000         0
+Pompton Lakes borough       Passaic        1       45          No             0.37%         0.01%      0.76%       0.38%          106         840         106
+Prospect Park borough       Passaic        1       77          No             0.10%         0.67%      0.02%       0.26%          73          386         73
+Ringwood borough            Passaic        1       26          No             0.32%         0.00%      1.11%       0.48%          133         836         133
+Totowa borough              Passaic        1       211         No             3.58%         1.43%      0.70%       1.90%          528         780         528
+Wanaque borough             Passaic        1       15          No             0.22%         1.06%      0.70%       0.66%          183         878         183
+Wayne township              Passaic        1       162         No             6.19%         9.41%      3.28%       6.29%         1,746       1,000       1,000
+West Milford township       Passaic        1       105         No             0.72%         0.00%      1.41%       0.71%          197        1,000        197
+Woodland Park borough       Passaic        1       153         No             0.83%         2.37%      0.53%       1.25%          346        1,000        346
+Alloway township            Salem          6       20          No             0.09%         0.00%      1.72%       0.61%          11          245         11
+Carneys Point township      Salem          6       43          No             2.77%         10.65%     1.41%       4.94%          93          677         93
+Elmer borough               Salem          6        7          No             0.22%         0.00%      1.01%       0.41%           8          102          8
+Elsinboro township          Salem          6        0          No             0.02%         0.00%      0.92%       0.31%           6          92           6
+
+
+     Fair Share Housing Obliga�ons for 2025-2035 (Fourth Round) Methodology and Background                                                        37
+                                                                              Equalized                                                                   Prospective
+                                                              Qualified                        Land     Income      Average
+                                                   Present                  Nonresidential                                      Prospective    1,000/      Need with
+         Municipality           County    Region              Urban Aid                      Capacity   Capacity   Allocation
+                                                    Need                      Valuation                                            Need       20% Cap     1,000/20%
+                                                             Municipality                     Factor     Factor      Factor
+                                                                               Factor                                                                        Cap
+Lower Alloways Creek
+                             Salem          6        0           No            1.07%         0.00%      0.78%       0.62%           12         139            12
+township
+Mannington township          Salem          6        0           No           0.12%          0.00%      1.16%       0.43%           8          102            8
+Oldmans township             Salem          6        0           No           1.05%          10.97%     1.33%       4.45%          84          141           84
+Penns Grove borough          Salem          6        7           No           0.23%          0.02%      0.00%       0.09%           2          337            2
+Pennsville township          Salem          6       69           No           0.06%          5.43%      1.87%       2.45%          46         1,000          46
+Pilesgrove township          Salem          6        0           No           0.58%          0.00%      2.52%       1.04%          20          314           20
+Pittsgrove township          Salem          6       25           No           0.46%          0.00%      1.47%       0.64%          12          644           12
+Quinton township             Salem          6        4           No           0.24%          0.00%      1.00%       0.41%           8          209            8
+Salem city                   Salem          6       10           No           0.36%          0.00%      0.14%       0.17%           3          419            3
+Upper Pittsgrove township    Salem          6        0           No           0.27%          0.00%      1.02%       0.43%           8          266            8
+Woodstown borough            Salem          6        9           No           0.35%          0.00%      1.26%       0.54%          10          307           10
+Bedminster township          Somerset       3        6           No           0.50%          0.12%      1.24%       0.62%          72          844           72
+Bernards township            Somerset       3       24           No           0.78%          1.51%      3.33%       1.88%          218        1,000          218
+Bernardsville borough        Somerset       3        0           No           0.36%          0.09%      2.48%       0.98%          113         551           113
+Bound Brook borough          Somerset       3       91           No           0.38%          0.00%      0.42%       0.27%          31          836           31
+Branchburg township          Somerset       3        0           No           3.88%          1.62%      2.18%       2.56%          297        1,000          297
+Bridgewater township         Somerset       3       130          No           5.64%          2.59%      4.02%       4.08%          474        1,000          474
+Far Hills borough            Somerset       3        0           No           0.04%          0.04%      0.99%       0.35%          41          74            41
+Franklin township            Somerset       3       268          No           10.76%         4.58%      3.11%       6.15%          714        1,000          714
+Green Brook township         Somerset       3       26           No           0.56%          0.43%      2.10%       1.03%          120         487           120
+Hillsborough township        Somerset       3       111          No           1.97%          8.97%      3.68%       4.87%          565        1,000          565
+Manville borough             Somerset       3       36           No           0.32%          0.03%      0.54%       0.30%          34          818           34
+Millstone borough            Somerset       3        0           No           0.00%          0.01%      0.83%       0.28%          33          31            31
+Montgomery township          Somerset       3       73           No           0.62%          1.95%      4.16%       2.24%          260        1,000          260
+North Plainfield borough     Somerset       3       427          No           0.90%          0.12%      0.62%       0.55%          64         1,000          64
+
+      Fair Share Housing Obliga�ons for 2025-2035 (Fourth Round) Methodology and Background                                                          38
+                                                                             Equalized                                                                   Prospective
+                                                             Qualified                        Land     Income      Average
+                                                  Present                  Nonresidential                                      Prospective    1,000/      Need with
+        Municipality           County    Region              Urban Aid                      Capacity   Capacity   Allocation
+                                                   Need                      Valuation                                            Need       20% Cap     1,000/20%
+                                                            Municipality                     Factor     Factor      Factor
+                                                                              Factor                                                                        Cap
+Peapack and Gladstone
+                            Somerset       3        10          No           -0.05%         0.45%      1.53%       0.64%           75         177            75
+borough
+Raritan borough             Somerset       3        9           No            1.61%         0.24%      0.71%       0.85%          99          599           99
+Rocky Hill borough          Somerset       3        4           No            0.05%         0.14%      0.76%       0.32%          37          56            37
+Somerville borough          Somerset       3       103          No            0.91%         0.10%      0.90%       0.64%          74         1,000          74
+South Bound Brook borough   Somerset       3       67           No            0.08%         0.00%      0.50%       0.19%          22          371           22
+Warren township             Somerset       3       10           No            0.69%         3.38%      2.72%       2.26%          262        1,000          262
+Watchung borough            Somerset       3       35           No            0.77%         0.87%      1.44%       1.03%          119         435           119
+Andover borough             Sussex         1        0           No            0.04%         0.00%      0.17%       0.07%          20          51            20
+Andover township            Sussex         1       11           No            0.20%         0.00%      0.55%       0.25%          69          420           69
+Branchville borough         Sussex         1        4           No           -0.02%         0.00%      0.43%       0.14%          38          67            38
+Byram township              Sussex         1       27           No            0.21%         0.21%      0.83%       0.42%          115         589           115
+Frankford township          Sussex         1       13           No            0.16%         0.00%      0.53%       0.23%          64          417           64
+Franklin borough            Sussex         1       25           No            0.36%         3.43%      0.33%       1.37%          381         409           381
+Fredon township             Sussex         1        0           No            0.05%         0.00%      0.71%       0.25%          70          238           70
+Green township              Sussex         1        4           No            0.12%         1.88%      0.86%       0.95%          265         249           249
+Hamburg borough             Sussex         1        0           No            0.08%         1.06%      0.22%       0.45%          125         290           125
+Hampton township            Sussex         1        0           No            0.42%         0.00%      0.45%       0.29%          81          399           81
+Hardyston township          Sussex         1       22           No            0.39%         16.44%     0.71%       5.85%         1,622        674           674
+Hopatcong borough           Sussex         1        3           No            0.29%         2.21%      0.81%       1.10%          306        1,000          306
+Lafayette township          Sussex         1        7           No            0.10%         0.00%      0.46%       0.19%          52          176           52
+Montague township           Sussex         1       23           No            0.18%         0.00%      0.42%       0.20%          55          312           55
+Newton town                 Sussex         1       45           No            0.55%         0.00%      0.23%       0.26%          72          680           72
+Ogdensburg borough          Sussex         1        4           No            0.03%         0.00%      0.40%       0.14%          40          175           40
+Sandyston township          Sussex         1        4           No            0.05%         0.00%      0.36%       0.14%          38          161           38
+Sparta township             Sussex         1       10           No            1.13%         1.68%      1.80%       1.54%          427        1,000          427
+
+     Fair Share Housing Obliga�ons for 2025-2035 (Fourth Round) Methodology and Background                                                          39
+                                                                              Equalized                                                                 Prospective
+                                                              Qualified                        Land     Income      Average
+                                                   Present                  Nonresidential                                      Prospective    1,000/    Need with
+         Municipality           County    Region              Urban Aid                      Capacity   Capacity   Allocation
+                                                    Need                      Valuation                                            Need       20% Cap   1,000/20%
+                                                             Municipality                     Factor     Factor      Factor
+                                                                               Factor                                                                      Cap
+Stanhope borough             Sussex         1        0          No             0.08%         1.24%      0.58%       0.63%          176         286         176
+Stillwater township          Sussex         1       11          No             0.04%         0.00%      0.54%       0.19%          53          322         53
+Sussex borough               Sussex         1       14          No             0.04%         0.00%      0.10%       0.05%          13          180         13
+Vernon township              Sussex         1       33          No             0.28%         1.87%      1.14%       1.10%          304        1,000        304
+Walpack township             Sussex         1        0          No             0.00%         0.00%      0.00%       0.00%           0           1           0
+Wantage township             Sussex         1       32          No             0.25%         0.00%      0.59%       0.28%          77          812         77
+Berkeley Heights township    Union          2        0          No             1.10%         1.17%      1.76%       1.34%          275         897         275
+Clark township               Union          2       71          No             1.33%         0.09%      1.01%       0.81%          166        1,000        166
+Cranford township            Union          2       204         No             1.42%         0.62%      1.88%       1.31%          268        1,000        268
+Elizabeth city               Union          2      3,132        Yes            0.00%         0.00%      0.00%       0.00%           0         1,000         0
+Fanwood borough              Union          2        0          No             0.30%         0.03%      1.26%       0.53%          109         545         109
+Garwood borough              Union          2       31          No             0.64%         0.01%      0.52%       0.39%          80          384         80
+Hillside township            Union          2       224         Yes            0.00%         0.00%      0.00%       0.00%           0         1,000         0
+Kenilworth borough           Union          2       35          No             2.47%         0.09%      0.49%       1.01%          208         586         208
+Linden city                  Union          2       299         No             9.75%         0.74%      1.02%       3.84%          787        1,000        787
+Mountainside borough         Union          2       120         No             0.94%         0.49%      1.07%       0.83%          171         480         171
+New Providence borough       Union          2       20          No             1.33%         0.23%      1.50%       1.02%          210        1,000        210
+Plainfield city              Union          2      1,346        Yes            0.00%         0.00%      0.00%       0.00%           0         1,000         0
+Rahway city                  Union          2       98          Yes            0.00%         0.00%      0.00%       0.00%           0         1,000         0
+Roselle borough              Union          2       360         Yes            0.00%         0.00%      0.00%       0.00%           0         1,000         0
+Roselle Park borough         Union          2       78          No             0.42%         0.04%      0.64%       0.37%          75         1,000        75
+Scotch Plains township       Union          2       53          No             0.61%         0.68%      2.29%       1.19%          244        1,000        244
+Springfield township         Union          2       53          No             2.07%         0.72%      1.37%       1.39%          284        1,000        284
+Summit city                  Union          2       59          No             2.71%         0.24%      2.10%       1.68%          345        1,000        345
+Union township               Union          2       317         No             5.83%         0.56%      2.18%       2.86%          585        1,000        585
+Westfield town               Union          2        0          No             2.08%         0.71%      3.02%       1.94%          397        1,000        397
+      Fair Share Housing Obliga�ons for 2025-2035 (Fourth Round) Methodology and Background                                                        40
+                                                                             Equalized                                                                 Prospective
+                                                             Qualified                        Land     Income      Average
+                                                  Present                  Nonresidential                                      Prospective    1,000/    Need with
+         Municipality          County    Region              Urban Aid                      Capacity   Capacity   Allocation
+                                                   Need                      Valuation                                            Need       20% Cap   1,000/20%
+                                                            Municipality                     Factor     Factor      Factor
+                                                                              Factor                                                                      Cap
+Winfield township           Union          2         8          No            0.00%         0.05%      0.10%       0.05%          11          138         11
+Allamuchy township          Warren         2         0          No            0.02%         3.38%      0.70%       1.37%         281          472        281
+Alpha borough               Warren         2         4          No            0.19%         0.42%      0.23%       0.28%          58          194         58
+Belvidere town              Warren         2        20          No            0.00%         1.54%      0.37%       0.64%         131          206        131
+Blairstown township         Warren         2         0          No            0.19%         0.00%      0.75%       0.31%          65          421         65
+Franklin township           Warren         2        32          No            0.17%         0.66%      0.55%       0.46%          95          225         95
+Frelinghuysen township      Warren         2         0          No            0.07%         2.78%      0.50%       1.12%         229          156        156
+Greenwich township          Warren         2         0          No            0.46%         9.46%      1.01%       3.64%         747          360        360
+Hackettstown town           Warren         2        87          No            0.81%         0.20%      0.52%       0.51%         105          754        105
+Hardwick township           Warren         2         0          No            0.00%         0.00%      0.42%       0.14%          29          116         29
+Harmony township            Warren         2         4          No            0.66%         0.05%      0.32%       0.35%          71          199         71
+Hope township               Warren         2         0          No            0.04%         0.00%      0.40%       0.15%          31          149         31
+Independence township       Warren         2         6          No            0.09%         0.44%      0.42%       0.32%          65          465         65
+Knowlton township           Warren         2         4          No            0.06%         0.00%      0.41%       0.16%          32          221         32
+Liberty township            Warren         2        25          No            0.01%         0.00%      0.50%       0.17%          35          204         35
+Lopatcong township          Warren         2         0          No            0.51%         0.25%      0.50%       0.42%          87          718         87
+Mansfield township          Warren         2         7          No            0.53%         5.13%      0.46%       2.04%         418          628        418
+Oxford township             Warren         2         0          No            0.02%         0.38%      0.40%       0.26%          54          193         54
+Phillipsburg town           Warren         2        21          No            0.35%         0.50%      0.26%       0.37%          75         1,000        75
+Pohatcong township          Warren         2         0          No            0.20%         0.35%      0.40%       0.32%          65          262         65
+Washington borough          Warren         2         0          No            0.13%         0.05%      0.21%       0.13%          27          600         27
+Washington township         Warren         2        31          No            0.28%         1.77%      0.60%       0.89%         181          485        181
+White township              Warren         2       100          No           -0.05%         4.67%      0.09%       1.57%         322          434        322
+                              TOTAL               65,410                                                                        84,698                  80,798
+
+
+
+     Fair Share Housing Obliga�ons for 2025-2035 (Fourth Round) Methodology and Background                                                        41
+                                                                Appendix B: GIS Data Sources
+                                                                                                                                                                                         Date of
+Data Layer                   URL
+                                                                                                                                                                                        Download
+Land Use /Land Cover         https://services1.arcgis.com/QWdNfRs7lkPq4g4Q/arcgis/rest/services/Land_Use_2020/FeatureServer/5                                                           3/26/2024
+Municipalities               https://services2.arcgis.com/XVOqAjTOJ5P6ngMu/arcgis/rest/services/NJ_Municipalities_3857/FeatureServer/0                                                  3/26/2024
+Housing Regions              Derived from Legislation                                                                                                                                   3/26/2024
+                             https://services3.arcgis.com/iy3mGBSHxkFa1uPL/arcgis/rest/services/Planning_Area_Boundaries_of_the_NJ_State_
+Planning Areas               Development_and_Redevelopment_Plan_New_Jersey/FeatureServer/0
+                                                                                                                                                                                        3/26/2024
+
+Pinelands Areas              https://services1.arcgis.com/nCm6SZaiGMuGX35l/arcgis/rest/services/Pinelands_ManagementAreas/FeatureServer                                                 3/28/2024
+Meadowlands                  https://maps.nj.gov/arcgis/rest/services/Framework/Government_Boundaries/MapServer/7                                                                       3/28/2024
+Highlands Areas              https://services6.arcgis.com/ZrVlS0wslq8Nvq5I/arcgis/rest/services/Preservation_and_Planning_Area/FeatureServer                                            3/28/2024
+Highlands HERZ               https://services6.arcgis.com/ZrVlS0wslq8Nvq5I/arcgis/rest/services/Highlands_Designated_Centers_HERZ/FeatureServer/1                                       4/4/2024
+Highlands Conforming Towns   https://services6.arcgis.com/ZrVlS0wslq8Nvq5I/arcgis/rest/services/Highlands_Conforming_Towns/FeatureServer/7                                              4/4/2024
+Highlands Land Use
+                             https://services6.arcgis.com/ZrVlS0wslq8Nvq5I/arcgis/rest/services/Land_Use_Capability_Zones/FeatureServer/4                                               4/4/2024
+Capability Zones
+Sewer Service Areas          https://mapsdep.nj.gov/arcgis/rest/services/Features/Utilities/MapServer/8                                                                                 4/4/2024
+Designated Centers           https://services3.arcgis.com/iy3mGBSHxkFa1uPL/arcgis/rest/services/Designated_Centers_of_the_NJ_State_Development_and_Redevelopment_Plan/FeatureServer/0   3/26/2024
+Preserved Open Space         https://mapsdep.nj.gov/arcgis/rest/services/Features/Land/MapServer/65                                                                                     6/18/2024
+Wetlands                     https://mapsdep.nj.gov/arcgis/rest/services/Features/Land_lu/MapServer/2                                                                                   6/18/2024
+Highlands Wetlands           https://services6.arcgis.com/ZrVlS0wslq8Nvq5I/arcgis/rest/services/Wetlands/FeatureServer/1                                                                6/18/2024
+Pinelands Wetlands           https://services1.arcgis.com/nCm6SZaiGMuGX35l/arcgis/rest/services/Pinelands_Wetlands/FeatureServer/0                                                      6/18/2024
+Preserved Farmland           https://services.arcgis.com/gzSkSfQGxyX6dicF/arcgis/rest/services/NJFPP_Preserved_Farms/FeatureServer/0                                                    6/18/2024
+C1 Waters                    https://mapsdep.nj.gov/arcgis/rest/services/Features/Hydrography/MapServer/6                                                                               6/18/2024
+Parcels                      https://maps.nj.gov/arcgis/rest/services/Framework/Cadastral/MapServer/0                                                                                   4/4/2024
+Steep Slope                  https://njgin.nj.gov/njgin/edata/elevation/#swdp4                                                                                                          7/3/2024
+Hydrography                  https://njogis-newjersey.opendata.arcgis.com/documents/247f2f76682843109eafc881d7a2c0bf/about                                                              6/18/2024
+
+
+
+ Fair Share Housing Obliga�ons for 2025-2035 (Fourth Round) Methodology and Background                                                                                                   42
+                     Appendix C: Model Builder Flow Process Diagrams – Vacant Land Analysis
+
+
+
+
+Fair Share Housing Obliga�ons for 2025-2035 (Fourth Round) Methodology and Background         43
+

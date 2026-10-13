@@ -1,0 +1,268 @@
+<title>NJ Housing Pace</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;800&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: civic data tool. Headline + stamp, four figures, then map (left) beside a legend/search/detail rail (right); table and method below. */
+:root {
+  --bg: #f5f6f7; --surface: #ffffff; --ink: #14181d; --ink2: #4c5560; --line: #dde1e6; --accent: #1c5cab;
+  --c-closed: #a8262b; --c-behind: #ef8a83; --c-on: #86b6ef; --c-ahead: #1c5cab; --c-exempt: #e4e3df; --c-nodata: #ffffff;
+  --edge: #ffffff; --hatch: #b9b8b3; --warn-bg: #fff4e5; --warn-ink: #7a4100; --stop-bg: #fdecec; --stop-ink: #8a1f22;
+  --f-display: "Public Sans", "Segoe UI", system-ui, sans-serif;
+  --f-body: "Public Sans", "Segoe UI", system-ui, sans-serif;
+  --f-data: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #111315; --surface: #1a1d21; --ink: #eceef1; --ink2: #a7aeb8; --line: #2b3036; --accent: #6da7ec;
+  --c-closed: #e8635e; --c-behind: #8c3434; --c-on: #24507f; --c-ahead: #6da7ec; --c-exempt: #3a3a37; --c-nodata: #1a1d21;
+  --edge: #111315; --hatch: #5c5c58; --warn-bg: #3a2a12; --warn-ink: #f3c37a; --stop-bg: #3d1c1d; --stop-ink: #f2a4a2; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #111315; --surface: #1a1d21; --ink: #eceef1; --ink2: #a7aeb8; --line: #2b3036; --accent: #6da7ec;
+  --c-closed: #e8635e; --c-behind: #8c3434; --c-on: #24507f; --c-ahead: #6da7ec; --c-exempt: #3a3a37; --c-nodata: #1a1d21;
+  --edge: #111315; --hatch: #5c5c58; --warn-bg: #3a2a12; --warn-ink: #f3c37a; --stop-bg: #3d1c1d; --stop-ink: #f2a4a2; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 15px; line-height: 1.5; }
+.wrap { max-width: 1180px; margin: 0 auto; padding-inline: 16px; padding-block: 28px 48px; display: grid; gap: 22px; }
+header { display: grid; gap: 8px; }
+.eyebrow { font: 600 12px/1.2 var(--f-body); letter-spacing: .08em; text-transform: uppercase; color: var(--ink2); }
+h1 { font: 800 clamp(26px, 4vw, 38px)/1.12 var(--f-display); margin: 0; text-wrap: balance; letter-spacing: -.01em; max-width: 24ch; }
+.stamp { color: var(--ink2); font-size: 14px; max-width: 70ch; }
+.stamp b { color: var(--ink); font-weight: 600; }
+.banner { border-radius: 6px; padding: 10px 14px; font-size: 14px; }
+.banner.warn { background: var(--warn-bg); color: var(--warn-ink); }
+.banner.stop { background: var(--stop-bg); color: var(--stop-ink); }
+.figures { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.fig { background: var(--surface); padding: 14px 16px; display: grid; gap: 2px; align-content: start; }
+.fig .v { font: 500 26px/1.1 var(--f-data); font-variant-numeric: tabular-nums; }
+.fig .k { font-size: 13px; color: var(--ink2); }
+.main { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 22px; align-items: start; }
+.mapbox { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 12px; position: relative; min-width: 0; }
+.toolbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+.seg button { font: 500 13px var(--f-body); background: transparent; color: var(--ink2); border: 0; padding: 6px 12px; cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--surface); }
+.seg button:focus-visible, .chip:focus-visible, input:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.viewnote { font-size: 12.5px; color: var(--ink2); }
+svg.map { width: 100%; height: auto; max-height: 78vh; display: block; }
+svg.map path { stroke: var(--edge); stroke-width: .5; vector-effect: non-scaling-stroke; cursor: pointer; transition: opacity .15s; }
+svg.map path.dim { opacity: .18; }
+svg.map path.sel { stroke: var(--ink); stroke-width: 2.2; }
+svg.map path.outline { fill: none; stroke: var(--ink); stroke-width: 1.1; pointer-events: none; }
+.tip { position: absolute; pointer-events: none; background: var(--surface); color: var(--ink); border: 1px solid var(--line); border-radius: 6px; padding: 8px 10px; font-size: 13px; box-shadow: 0 4px 16px rgb(0 0 0 / .12); max-width: 250px; z-index: 3; }
+.tip b { display: block; font-size: 14px; }
+.tip .m { color: var(--ink2); }
+aside { display: grid; gap: 14px; min-width: 0; }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 14px; display: grid; gap: 10px; min-width: 0; }
+.panel h2 { font: 600 13px var(--f-body); letter-spacing: .06em; text-transform: uppercase; color: var(--ink2); margin: 0; }
+label.srch { display: grid; gap: 6px; font-size: 13px; color: var(--ink2); }
+input[type=search] { font: 15px var(--f-body); padding: 8px 10px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--ink); width: 100%; }
+.legend { display: grid; gap: 4px; }
+.chip { display: grid; grid-template-columns: 18px minmax(0, 1fr) auto; gap: 8px; align-items: center; text-align: left; font: 13.5px/1.3 var(--f-body); color: var(--ink); background: transparent; border: 1px solid transparent; border-radius: 6px; padding: 5px 6px; cursor: pointer; }
+.chip:hover { border-color: var(--line); }
+.chip[aria-pressed="true"] { border-color: var(--ink); }
+.chip .sw { width: 18px; height: 14px; border-radius: 3px; border: 1px solid var(--line); }
+.chip .n { font: 500 13px var(--f-data); font-variant-numeric: tabular-nums; color: var(--ink2); }
+.hint { font-size: 12px; color: var(--ink2); margin: 0; }
+.detail dl { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px; margin: 0; font-size: 13.5px; }
+.detail dt { color: var(--ink2); }
+.detail dd { margin: 0; font-family: var(--f-data); font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
+.detail .name { font: 700 18px/1.2 var(--f-display); }
+.detail .status { display: inline-flex; gap: 6px; align-items: center; font-size: 13px; font-weight: 600; }
+.detail .status i { width: 12px; height: 12px; border-radius: 2px; display: inline-block; }
+.empty { color: var(--ink2); font-size: 13.5px; }
+details { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; }
+summary { cursor: pointer; font-weight: 600; }
+.tablewrap { overflow-x: auto; margin-top: 10px; }
+table { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+th { color: var(--ink2); font-weight: 600; font-size: 12.5px; }
+td.num, th.num { text-align: right; font-family: var(--f-data); font-variant-numeric: tabular-nums; }
+.method { display: grid; gap: 8px; font-size: 14px; color: var(--ink2); max-width: 75ch; }
+.method h2 { font: 600 15px var(--f-body); color: var(--ink); margin: 0; }
+.method p { margin: 0; }
+.method a { color: var(--accent); }
+.health { display: flex; flex-wrap: wrap; gap: 6px; }
+.health span { font: 500 12px var(--f-data); border: 1px solid var(--line); border-radius: 4px; padding: 2px 6px; color: var(--ink2); }
+@media (max-width: 900px) { .main { grid-template-columns: minmax(0, 1fr); } .figures { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (prefers-reduced-motion: reduce) { svg.map path { transition: none; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Mount Laurel · Fourth Round, 2025–2035</div>
+    <h1>Is New Jersey building where it owes affordable housing?</h1>
+    <p class="stamp" id="stamp">Loading the latest Census release…</p>
+  </header>
+  <div id="banner" hidden></div>
+  <section class="figures" id="figures" aria-label="Statewide figures"></section>
+  <section class="main">
+    <div class="mapbox">
+      <div class="toolbar">
+        <div class="seg" role="group" aria-label="Measure">
+          <button id="v-live" aria-pressed="true">Fourth Round to date</button>
+          <button id="v-base" aria-pressed="false">2021–25 baseline</button>
+        </div>
+        <span class="viewnote" id="viewnote"></span>
+      </div>
+      <svg class="map" id="map" role="img" aria-label="Map of New Jersey municipalities colored by affordable-housing progress"></svg>
+      <div class="tip" id="tip" hidden></div>
+    </div>
+    <aside>
+      <div class="panel">
+        <label class="srch" for="q">Find a town
+          <input type="search" id="q" list="towns" placeholder="e.g. Paramus, Wayne, Edison" autocomplete="off">
+        </label>
+        <datalist id="towns"></datalist>
+      </div>
+      <div class="panel detail" id="detail"><p class="empty">Hover or tap a town on the map, or search for one, to see its numbers.</p></div>
+      <div class="panel">
+        <h2>Legend</h2>
+        <div class="legend" id="legend"></div>
+        <p class="hint">Click a category to highlight its towns.</p>
+      </div>
+    </aside>
+  </section>
+  <details id="tabledetails">
+    <summary>Table: every town in the current view</summary>
+    <div class="tablewrap"><table id="table"></table></div>
+  </details>
+  <section class="method" id="method"></section>
+</div>
+
+<script>
+(async function () {
+  const $ = (s) => document.querySelector(s);
+  let D;
+  const inline = document.getElementById("town-data");
+  try {
+    D = inline ? JSON.parse(inline.textContent) : await (await fetch("data/towns.json", { cache: "no-store" })).json();
+  } catch (e) {
+    $("#stamp").textContent = "The map data couldn't be loaded. Rebuild it with: python3 src/update.py";
+    return;
+  }
+  const S = D.summary, M = D.meta;
+  const fmt = (n, d = 0) => n == null || Number.isNaN(n) ? "–" : Number(n).toLocaleString("en-US", { maximumFractionDigits: d, minimumFractionDigits: d });
+  const pct = (r) => r == null ? "–" : Math.round(r * 100) + "%";
+  const monthName = (v) => { const [y, m] = v.split("-").map(Number); return new Date(y, m - 1, 1).toLocaleString("en-US", { month: "long", year: "numeric" }); };
+
+  // ---- header ----
+  $("#stamp").innerHTML = `Census building permits through <b>${monthName(S.vintage)}</b>, month <b>${S.months_elapsed}</b> of 120 of the Fourth Round (July 2025 – June 2035). Rebuilt automatically whenever the Census Bureau publishes a new monthly release. Data last updated ${M.built_utc.slice(0, 10)}.`;
+  const h = S.health;
+  if (h && h.overall !== "ok") {
+    const b = $("#banner"); b.hidden = false; b.className = "banner " + (h.can_answer ? "warn" : "stop");
+    const bad = h.checks.filter(c => c.status === "stop" || c.status === "warn").map(c => c.detail).join(" ");
+    b.textContent = (h.can_answer ? "Check needed: " : "This map can't currently answer its question. The figures below are from the last valid run. ") + bad;
+  }
+  const figs = [
+    [pct(S.live_progress_statewide), "of the pace needed statewide, Fourth Round to date"],
+    [`${fmt(S.live_towns_below_half)} / ${fmt(S.live_obligated_towns)}`, "towns with obligations below half the needed pace"],
+    [fmt(S.inclusionary_route_closed), "towns that can't finish even at their best year since 2015 (20% route)"],
+    [pct(S.live_exempt_share_round_to_date), "of homes permitted are in towns with no new obligation"],
+  ];
+  $("#figures").innerHTML = figs.map(([v, k]) => `<div class="fig"><span class="v">${v}</span><span class="k">${k}</span></div>`).join("");
+
+  // ---- map ----
+  const svg = $("#map"), NS = "http://www.w3.org/2000/svg";
+  svg.setAttribute("viewBox", `0 0 ${M.width} ${M.height}`);
+  const defs = document.createElementNS(NS, "defs");
+  defs.innerHTML = `<pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="var(--c-exempt)"/><line x1="0" y1="0" x2="0" y2="6" stroke="var(--hatch)" stroke-width="1.4"/></pattern>`;
+  svg.appendChild(defs);
+  const gTowns = document.createElementNS(NS, "g"), gOut = document.createElementNS(NS, "g");
+  svg.appendChild(gTowns); svg.appendChild(gOut);
+  const byFips = {};
+  for (const t of D.towns) {
+    const p = document.createElementNS(NS, "path"); p.setAttribute("d", t.d); p.dataset.f = t.f;
+    gTowns.appendChild(p); t.el = p; byFips[t.f] = t;
+    if (t.any_status === "past") { const o = document.createElementNS(NS, "path"); o.setAttribute("d", t.d); o.setAttribute("class", "outline"); gOut.appendChild(o); t.outline = o; }
+  }
+  const VIEWS = {
+    live: { key: "cls_live", note: "Homes permitted since July 2025 × 20%, against the obligation pro-rated to date.",
+      classes: [["closed", "var(--c-closed)", "Can't finish even at its best year since 2015 (20% route)"], ["behind", "var(--c-behind)", "Behind pace, still reachable"],
+                ["on_pace", "var(--c-on)", "On pace (1–2×)"], ["ahead", "var(--c-ahead)", "Well ahead (2× or more)"],
+                ["exempt", "url(#hatch)", "No new obligation (urban-aid exempt)"], ["no_data", "var(--c-nodata)", "No Census permit data"]] },
+    base: { key: "cls_base", note: "Frozen baseline: average yearly permits 2021–2025 × 20%, against one-tenth of the obligation.",
+      classes: [["far", "var(--c-closed)", "Under half the needed pace"], ["behind", "var(--c-behind)", "Behind (half to full pace)"],
+                ["on_pace", "var(--c-on)", "On pace (1–2×)"], ["ahead", "var(--c-ahead)", "Well ahead (2× or more)"],
+                ["exempt", "url(#hatch)", "No new obligation (urban-aid exempt)"], ["no_data", "var(--c-nodata)", "No Census permit data"]] },
+  };
+  let view = "live", hi = null, sel = null;
+  function paint() {
+    const V = VIEWS[view], fill = Object.fromEntries(V.classes.map(c => [c[0], c[1]]));
+    for (const t of D.towns) {
+      const c = t[V.key]; t.el.style.fill = fill[c]; t.el.classList.toggle("dim", hi !== null && c !== hi);
+      if (t.outline) t.outline.style.display = view === "live" && (hi === null || hi === c) ? "" : "none";
+    }
+    const counts = {}; D.towns.forEach(t => counts[t[V.key]] = (counts[t[V.key]] || 0) + 1);
+    const outN = D.towns.filter(t => t.any_status === "past").length;
+    $("#legend").innerHTML = V.classes.filter(c => counts[c[0]]).map(c =>
+      `<button class="chip" data-c="${c[0]}" aria-pressed="${hi === c[0]}"><span class="sw" style="background:${c[1].startsWith("url") ? "repeating-linear-gradient(45deg,var(--c-exempt) 0 3px,var(--hatch) 3px 4.5px)" : c[1]}"></span><span>${c[2]}</span><span class="n">${counts[c[0]]}</span></button>`).join("")
+      + (view === "live" ? `<div class="chip" style="cursor:default"><span class="sw" style="background:transparent;border:1.6px solid var(--ink)"></span><span>Outlined: can't finish even if every new home were affordable</span><span class="n">${outN}</span></div>` : "");
+    document.querySelectorAll("#legend button.chip").forEach(b => b.onclick = () => { hi = hi === b.dataset.c ? null : b.dataset.c; paint(); table(); });
+    $("#viewnote").textContent = V.note;
+    $("#v-live").setAttribute("aria-pressed", view === "live"); $("#v-base").setAttribute("aria-pressed", view === "base");
+    if (sel) detail(sel);
+  }
+  $("#v-live").onclick = () => { view = "live"; hi = null; paint(); table(); };
+  $("#v-base").onclick = () => { view = "base"; hi = null; paint(); table(); };
+
+  const label = (t) => (VIEWS[view].classes.find(c => c[0] === t[VIEWS[view].key]) || [])[2] || "";
+  const swatch = (t) => (VIEWS[view].classes.find(c => c[0] === t[VIEWS[view].key]) || [])[1] || "";
+  function closes(status, date) {
+    return { past: "Already", projected: date ? monthName(date) : "–", open: "Not at current pace", met: "Already met at 20%" }[status] || "–";
+  }
+  function detail(t) {
+    const live = view === "live";
+    const rows = t.pn > 0 ? (live ? [
+      ["Obligation, 2025–35", fmt(t.pn) + " units"], ["Pro-rated to date", fmt(t.target, 0)], ["Homes permitted since July 2025", fmt(t.rtd)],
+      ["Progress vs. needed pace", pct(t.prog)], ["Homes permitted, last 12 months", fmt(t.ttm)], ["Best year since 2015", fmt(t.best) + " homes"],
+      ["20% route closes", closes(t.inc_status, t.inc_date)], ["Every route closes", closes(t.any_status, t.any_date)]] : [
+      ["Obligation, 2025–35", fmt(t.pn) + " units"], ["Avg. homes permitted / yr, 2021–25", fmt(t.avg, 1)], ["Coverage at 20%", pct(t.cov)]])
+      : [["Obligation, 2025–35", t.f in byFips && t.cls_live === "exempt" ? "None (urban-aid exempt)" : "–"], ["Homes permitted since July 2025", fmt(t.rtd)], ["Avg. homes permitted / yr, 2021–25", fmt(t.avg, 1)]];
+    $("#detail").innerHTML = `<div class="name">${t.n}</div><div class="m" style="color:var(--ink2);font-size:13px">${t.c} County</div>
+      <div class="status"><i style="background:${swatch(t).startsWith("url") ? "var(--hatch)" : swatch(t)}"></i>${label(t)}</div>
+      <dl>${rows.map(([a, b]) => `<dt>${a}</dt><dd>${b}</dd>`).join("")}</dl>`;
+  }
+  function select(t) { if (sel) sel.el.classList.remove("sel"); sel = t; t.el.classList.add("sel"); gTowns.appendChild(t.el); detail(t); }
+  const tip = $("#tip"), box = $(".mapbox");
+  gTowns.addEventListener("mousemove", (e) => {
+    const t = byFips[e.target.dataset.f]; if (!t) return;
+    tip.hidden = false;
+    tip.innerHTML = `<b>${t.n}</b><span class="m">${t.c} County</span><br>${label(t)}` + (t.pn > 0 ? `<br><span class="m">${view === "live" ? "Progress " + pct(t.prog) : "Coverage " + pct(t.cov)} · owes ${fmt(t.pn)}</span>` : "");
+    const r = box.getBoundingClientRect(); let x = e.clientX - r.left + 14, y = e.clientY - r.top + 14;
+    if (x + 260 > r.width) x = e.clientX - r.left - 264; tip.style.left = x + "px"; tip.style.top = y + "px";
+  });
+  gTowns.addEventListener("mouseleave", () => tip.hidden = true);
+  gTowns.addEventListener("click", (e) => { const t = byFips[e.target.dataset.f]; if (t) select(t); });
+
+  // ---- search ----
+  const names = {}; D.towns.forEach(t => names[`${t.n} (${t.c})`] = t);
+  $("#towns").innerHTML = Object.keys(names).sort().map(n => `<option value="${n}">`).join("");
+  $("#q").addEventListener("input", (e) => {
+    const v = e.target.value.trim().toLowerCase(); if (!v) return;
+    const t = names[e.target.value] || D.towns.find(t => t.n.toLowerCase() === v) || (v.length > 3 && D.towns.find(t => t.n.toLowerCase().startsWith(v)));
+    if (t) select(t);
+  });
+
+  // ---- table ----
+  function table() {
+    const live = view === "live";
+    const rows = D.towns.filter(t => hi === null || t[VIEWS[view].key] === hi).sort((a, b) => (b.pn || 0) - (a.pn || 0) || a.n.localeCompare(b.n));
+    const head = live ? ["Town", "County", "Status", "Obligation", "Since Jul 2025", "Progress", "20% route closes"] : ["Town", "County", "Status", "Obligation", "Avg / yr 2021–25", "Coverage"];
+    const num = live ? [3, 4, 5] : [3, 4, 5];
+    $("#table").innerHTML = `<thead><tr>${head.map((h, i) => `<th${num.includes(i) ? ' class="num"' : ""}>${h}</th>`).join("")}</tr></thead><tbody>` +
+      rows.map(t => `<tr><td>${t.n}</td><td>${t.c}</td><td>${label(t)}</td><td class="num">${fmt(t.pn)}</td>` +
+        (live ? `<td class="num">${fmt(t.rtd)}</td><td class="num">${pct(t.prog)}</td><td>${t.pn > 0 ? closes(t.inc_status, t.inc_date) : "–"}</td>`
+              : `<td class="num">${fmt(t.avg, 1)}</td><td class="num">${pct(t.cov)}</td>`) + `</tr>`).join("") + "</tbody>";
+    $("#tabledetails summary").textContent = `Table: ${rows.length} towns in the current view`;
+  }
+
+  // ---- method ----
+  $("#method").innerHTML = `<h2>How this is measured</h2>
+    <p>Each town's affordable-housing obligation for 2025–2035 comes from the NJ Department of Community Affairs' Fourth Round calculation. Homes permitted come from the U.S. Census Bureau's Building Permits Survey. Progress assumes 20% of new homes are affordable, a generous upper bound, since not every project includes affordable units. Towns can also comply in ways permits don't capture, and some towns' final numbers differ from DCA's.</p>
+    <p>The map, its data and these figures are rebuilt from public sources by one command (<code>python3 src/update.py</code>), and every update is logged. ${M.repo ? `Code, data and the full write-up: <a href="${M.repo}">${M.repo.replace("https://", "")}</a>.` : ""}</p>
+    <div class="health">${(h ? h.checks : []).map(c => `<span>${c.check.replace(/_/g, " ")}: ${c.status}</span>`).join("")}</div>`;
+
+  paint(); table();
+  const start = byFips[M.start_fips]; if (start) select(start);
+})();
+</script>

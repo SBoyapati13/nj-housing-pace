@@ -1,0 +1,6 @@
+# 35 MB source workbook: pinned as data/raw/dca_final_summary.csv + dca_pin.json (rebuild with src/pin_dca.py)
+data/raw/dca_fourth_round_workbook.xlsx
+# superseded by out/summary.json
+out/summary.txt
+__pycache__/
+*.pyc

@@ -1,0 +1,63 @@
+name: Update from new Census releases
+
+on:
+  schedule:
+    - cron: "37 13 * * 1"   # every Monday 13:37 UTC; Census posts place files monthly
+  workflow_dispatch:         # run on demand from the Actions tab
+  push:
+    branches: [main]
+    paths: ["docs/**"]       # redeploy the map when the site itself is edited
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: nj-housing-pace
+  cancel-in-progress: false
+
+jobs:
+  update:
+    if: github.event_name != 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - run: python src/update.py
+      - name: Commit only if new data arrived
+        run: |
+          git config user.name "nj-housing-pace bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # New data = new or revised Census files, or a new run-log entry. Anything else
+          # (e.g. PNGs re-rendered with a different font stack) is discarded.
+          if git diff --quiet -- data/raw/bps/manifest.json data/runs.jsonl; then
+            echo "No new Census data this week."
+            git checkout -- .
+            exit 0
+          fi
+          git add -A
+          VINTAGE=$(python -c "import json; print(json.load(open('out/summary.json'))['vintage'])")
+          git commit -m "Data update: Census permits through ${VINTAGE}"
+          git push
+
+  deploy-map:
+    needs: update
+    if: ${{ always() && (needs.update.result == 'success' || needs.update.result == 'skipped') }}
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main            # pick up the commit the update job just pushed
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+      - id: deploy
+        uses: actions/deploy-pages@v4

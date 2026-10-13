@@ -1,0 +1,96 @@
+{
+  "dca_upstream": {
+    "last_modified": "Fri, 18 Oct 2024 19:38:09 GMT",
+    "size": "35464111"
+  },
+  "files": {
+    "ne1512y.txt": {
+      "fetched_utc": "2026-10-13T23:07:15+00:00",
+      "last_modified": "Fri, 30 Sep 2016 14:51:18 GMT",
+      "sha256": "0ef24bfef542ba9d819f4f78c33274b4090e32382be0dee3f109448e1d5c4f29",
+      "size": "378877"
+    },
+    "ne1612y.txt": {
+      "fetched_utc": "2026-10-13T23:07:17+00:00",
+      "last_modified": "Fri, 27 Jan 2017 12:36:15 GMT",
+      "sha256": "c62575080583c1c22e8450d08cf00fe3c26b29ea7184cf3f49fccc8794ec43cc",
+      "size": "379339"
+    },
+    "ne1712y.txt": {
+      "fetched_utc": "2026-10-13T23:07:19+00:00",
+      "last_modified": "Thu, 25 Jan 2018 12:32:54 GMT",
+      "sha256": "c22a824ddab270a96d88cd951f245e0cd3dcf3868ee2448bab8a96b1beb79f34",
+      "size": "376519"
+    },
+    "ne1812y.txt": {
+      "fetched_utc": "2026-10-13T23:07:21+00:00",
+      "last_modified": "Tue, 26 Feb 2019 16:44:41 GMT",
+      "sha256": "a5ee3c7a0b5748bfb62d42c70a408ca1bdd6f2d9739356f6e45438dd29031467",
+      "size": "377103"
+    },
+    "ne1912y.txt": {
+      "fetched_utc": "2026-10-13T23:07:23+00:00",
+      "last_modified": "Mon, 27 Jan 2020 14:34:34 GMT",
+      "sha256": "0a9f404d2b4de418e3b5e13c43a8b49af134469f522841978f84de19a1447009",
+      "size": "379220"
+    },
+    "ne2012y.txt": {
+      "fetched_utc": "2026-10-13T23:07:24+00:00",
+      "last_modified": "Thu, 28 Jan 2021 13:06:47 GMT",
+      "sha256": "51179981a845ad90b1ad70073fa73c48e84f9e587e8e4d5f21d73d7334be5d4b",
+      "size": "380061"
+    },
+    "ne2112y.txt": {
+      "fetched_utc": "2026-10-13T23:07:26+00:00",
+      "last_modified": "Fri, 21 Jan 2022 19:12:05 GMT",
+      "sha256": "d20d96791a489f7fa2e500788fc9c6a43d3eb0a5f4f0f6db5630d0cfa40feeac",
+      "size": "380790"
+    },
+    "ne2212y.txt": {
+      "fetched_utc": "2026-10-13T23:07:28+00:00",
+      "last_modified": "Mon, 23 Jan 2023 17:42:59 GMT",
+      "sha256": "9644ba3c423c85cdf1fa6fc6aca25508bb6d22d8a1f78bebede1d6f0faaf8ba7",
+      "size": "845647"
+    },
+    "ne2312y.txt": {
+      "fetched_utc": "2026-10-13T23:07:30+00:00",
+      "last_modified": "Mon, 22 Jan 2024 17:02:52 GMT",
+      "sha256": "de2c0b51e9a5043938dc90405d3429b053f196594d0e32a8f94b83e45ad83d58",
+      "size": "844151"
+    },
+    "ne2412y.txt": {
+      "fetched_utc": "2026-10-13T23:07:32+00:00",
+      "last_modified": "Mon, 27 Jan 2025 12:42:19 GMT",
+      "sha256": "2dbfd5f9a3e11fedf4e63465c113349250c5d0915961014cce5736f33a11255b",
+      "size": "846233"
+    },
+    "ne2506y.txt": {
+      "fetched_utc": "2026-10-13T23:18:15+00:00",
+      "last_modified": "Thu, 24 Jul 2025 12:00:24 GMT",
+      "sha256": "2b60a1ddfa2262445dda9f9bb0d7a38425dab6f4fe8d4ea2b52d84126d5c8ec5",
+      "size": "832308"
+    },
+    "ne2508y.txt": {
+      "fetched_utc": "2026-10-13T23:07:34+00:00",
+      "last_modified": "Wed, 24 Sep 2025 11:30:25 GMT",
+      "sha256": "70543a4958ba90e83732fe41b575770858a9011c8e4259dae377b6684dfcd3aa",
+      "size": "837174"
+    },
+    "ne2512y.txt": {
+      "fetched_utc": "2026-10-13T23:07:36+00:00",
+      "last_modified": "Fri, 20 Feb 2026 12:45:27 GMT",
+      "sha256": "27a5d2950a2574f46697bb003925b2a1d263480fd66c9bcc312debc05e708bd0",
+      "size": "845724"
+    },
+    "ne2608y.txt": {
+      "fetched_utc": "2026-10-13T23:07:38+00:00",
+      "last_modified": "Thu, 24 Sep 2026 11:46:16 GMT",
+      "sha256": "de5a2f05803807ce36d148c3f0744b89cbf9435fac0a2a9ef455222c6959ae70",
+      "size": "836682"
+    }
+  },
+  "vintage": {
+    "month": 8,
+    "year": 2026
+  }
+}

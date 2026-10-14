@@ -2,6 +2,22 @@
 
 Methodology changes are recorded here before results that depend on them are published. Data updates are not listed; they are in `data/runs.jsonl`.
 
+## v3.1 method, registered 2026-10-13 after v3 results were computed (before v3.1 results)
+An independent check of v3 recomputed every figure and confirmed the arithmetic, but found three problems in the v3 rules. These corrections were written **after seeing v3 results**, in response to that check, and before any v3.1 results were computed. v3 was never published without the "under revision" notice.
+1. **Same window for the map class.** v3 compared the state's 7 months with Census's 14, so "sources disagree" partly measured timing. In v3.1 the class compares both sources over the common window: July 2025 through the earlier of the two sources' latest months. For Census that is July–December 2025 (as in v3) plus the year-to-date file for the window's last month. The usable test (75% of months) applies to the same window. Each source's figures over its own full period stay in the town detail and the statewide table, labelled with their periods.
+2. **State "Missing Data" markers on processing dates.** A state year-to-date figure read from a monthly file counts as reported only if neither its total nor its processing date is marked "Missing Data". This matches the completions rule. Revised yearly files are unaffected.
+3. **Unconfirmed state zeros.** A state figure of exactly 0, for the window or for a full year, counts as reported only if the same town reported at least 75% of the same period's months to Census and those reports total fewer than 5 homes. Otherwise the state zero is treated as not reported. This replaces the v3 diagnostic flag.
+
+## v3, published 2026-10-13: what changed beyond the registered method
+Implemented as registered below, with these additions and removals, all made while building and listed so none is silent:
+- **Added after the first v3 results (diagnostic only, changes no class):** a flag for towns whose state figure since July 2025 is 0 while the town reported 20 or more homes to Census (10 towns at the first release). The state's "Missing Data" marker turned out not to catch every missing report: in 62 town-years since 2015 the state recorded 0 against a full-year Census report of 20 or more. Turning this into a rule would be a new, separately registered method version.
+- **Removed:** the trailing-12-month pace and the projected month a town would cross the best-year threshold. Both relied on Census estimates for non-reporting towns.
+- **Health:** the two reporting checks became one (`reporting_coverage`), warning only when neither source has usable reports for towns holding 60% of the obligation. Census coverage alone is low by nature (towns holding 53% of the obligation at the first release) and is reported, not flagged.
+- **Figure 2** (county chart) counts only towns with usable reports to each source. The former Figure 3 (frozen v1 county baseline) is removed; the re-derived baseline is in README §4.
+- **Final numbers:** an `evidence` column says whether each status comes from the order, settlement or resolution itself, or from a document describing it. Montvale added: the Superior Court fixed its prospective need at 205 on June 12, 2025 (the README previously gave 255, the earlier dispute-program recommendation).
+- **Presentation:** orange–purple palette instead of red–blue; no town names printed on the static map; the page heading and link-preview description no longer ask whether towns permit "enough"; "owes" and "Passed" removed from labels; "No new obligation" gives the reason per town (Qualified Urban Aid, or a calculated obligation of zero).
+- **Run log:** a note line records that v1–v2.2 are superseded; their lines are kept unchanged.
+
 ## v3 method, pre-registered 2026-10-13 (written before any v3 results were computed)
 What was looked at before writing this: reporting coverage and statewide totals in both permit sources for 2015–2025, the file formats, and a handful of named towns (Newark, Jersey City, Wayne, Manalapan, Linden, Edison). No v3 town classifications, statewide figures or maps had been computed.
 

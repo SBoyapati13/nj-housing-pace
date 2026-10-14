@@ -5,7 +5,7 @@ Two views, both re-derived from public files in data/raw/:
   BASELINE (frozen, pre-registered): average yearly permits 2021-2025 vs. obligation.
   LIVE (updates with every Census release): permits since the round began (July 1, 2025)
        vs. the pro-rated obligation to date, trailing-12-month pace, and each town's
-       point of no return (when even its best year since 2015 could no longer finish the job).
+       best-year threshold (whether reaching the obligation would take more than the town's best year since 2015).
 Every run whose inputs changed appends one line to data/runs.jsonl.
 """
 import hashlib, json
@@ -114,7 +114,7 @@ def main():
     df["live_units_ttm"] = ttm.where(df.matched)
     df["live_coverage_ttm"] = df.live_units_ttm * SET_ASIDE / df.annual_target.where(df.annual_target > 0)
 
-    # ---- point of no return ----
+    # ---- best-year threshold ----
     # Two thresholds. "inclusionary" = future homes carry a 20% set-aside (the yardstick above).
     # "any_route" = every future home permitted is affordable (e.g. 100%-affordable projects);
     # if even that cannot finish at the town's best year since 2015, no route remains at historical pace.

@@ -1,6 +1,14 @@
-# Building Where the Obligation Isn't: Permit Pace and New Jersey's Fourth Round Affordable-Housing Obligations, 2021–2025
+# Permit Pace and New Jersey's Fourth Round Affordable-Housing Obligations
 
 **Swapnil Boyapati** · October 2026 · *Unassembled public records*, project 1
+
+[![Census permits through](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2FSBoyapati13%2Fnj-housing-pace%2Fmain%2Fout%2Fsummary.json&query=%24.vintage&label=Census%20permits%20through&color=1c5cab)](out/summary.json)
+[![Weekly data update](https://github.com/SBoyapati13/nj-housing-pace/actions/workflows/update.yml/badge.svg)](https://github.com/SBoyapati13/nj-housing-pace/actions/workflows/update.yml)
+[![Interactive map](https://img.shields.io/badge/interactive%20map-open-1c5cab)](https://sboyapati13.github.io/nj-housing-pace/)
+
+[![Map of New Jersey towns: homes permitted since July 2025 compared with each town's Fourth Round obligation](out/map_live_progress.png)](https://sboyapati13.github.io/nj-housing-pace/)
+
+*Figure 1. Homes permitted since July 2025 in every New Jersey town, compared with its Fourth Round obligation pro-rated to date. Redrawn automatically with each Census release. **Click the map to open the interactive version**, where you can search for a town and see its numbers.*
 
 ---
 
@@ -8,12 +16,14 @@
 
 New Jersey's 2024 Affordable Housing Law assigns 564 municipalities a combined 80,798 units of new ("prospective need") affordable housing for 2025–2035 [3, 4]. This project joins those obligations to U.S. Census Bureau building-permit records for every town [5] and asks whether recent construction is happening where the obligations are.
 
-Statewide, recent building would nearly suffice. New Jersey permitted about 35,600 homes a year in 2021–2025; if every one carried a 20% affordable set-aside, that would yield about 7,100 affordable homes a year against the 8,080 needed. Geographically, though, building and obligation diverge sharply:
+Statewide, recent building would nearly suffice. New Jersey permitted about 35,600 homes a year in 2021–2025; if every one carried a 20% affordable set-aside, that would yield about 7,100 affordable homes a year against the obligation's 8,080 a year. Geographically, though, building and obligation diverge sharply:
 
 - **34%** of all permitted homes were in the 48 towns that owe no new affordable housing.
-- Among the 514 towns that do, **290 are building at under half the required pace even under that generous assumption. Together they hold 63% of the statewide obligation.**
+- Among the 514 towns that do, **290 permitted homes at less than half the pace their obligation implies**, even under that generous assumption. Together they hold 63% of the statewide obligation.
 
-This is a living analysis. A pipeline checks the Census Bureau every week, pulls each new monthly release, and updates every town's progress since the round began on July 1, 2025. It also reports when, and whether, the question can still be answered (§7.2). The **Live status** section below, with its town map (Figure 1) and county chart (Figure 2), is rewritten automatically, and every update is logged. Every number can be rebuilt from public files with one command.
+**How to read this.** This is an indicator built from building permits. It doesn't assess whether any town is complying with its obligation: towns meet obligations in several ways permits don't capture, and compliance is decided through the Affordable Housing Dispute Resolution Program and the courts. A low permit pace can reflect land, infrastructure and market conditions as much as local policy, and plans adopted in 2025–26 may not show up in permits for some time.
+
+This is a living analysis. A pipeline checks the Census Bureau every week, pulls each new monthly release, and updates every town's progress since the round began on July 1, 2025. It also reports when, and whether, the question can still be answered (§7.2). The map above (Figure 1) and the **Live status** section below, with its county chart (Figure 2), are rewritten automatically, and every update is logged. Every number can be rebuilt from public files with one command.
 
 <!-- LIVE:START -->
 ## Live status
@@ -27,26 +37,23 @@ This is a living analysis. A pipeline checks the Census Bureau every week, pulls
 | Homes permitted statewide | 35,461 |
 | Implied affordable at 20% | 7,092 |
 | Pro-rated obligation to date | 9,426 |
-| **Statewide progress** | **75%** |
-| Obligated towns on pace (≥ 1.0) | 110 of 514 |
-| Obligated towns below half pace | 329 of 514 |
+| **Statewide pace vs. pro-rated obligation** | **75%** |
+| Towns at or above the pro-rated pace | 110 of 514 |
+| Towns below half the pro-rated pace | 329 of 514 |
 | Share of permits in exempt towns | 36% |
 | Homes permitted, trailing 12 months | 30,305 |
 
-**Point of no return.** For each obligated town, could it still finish by June 2035 if it built at its best year since 2015?
-- **Inclusionary route closed** (20% of new homes affordable): **240 towns**, holding 42,569 units of obligation. Another 12 close within 12 months if their current pace holds.
-- **Every route closed** (even if *every* new home were affordable): **63 towns**, holding 9,960 units.
+**Best-year threshold.** For each town with an obligation: would reaching it by June 2035 take more than building every remaining year at the town's best year since 2015?
+- **At a 20% set-aside:** yes for **240 towns**, holding 42,569 units of obligation. Another 12 would cross this threshold within 12 months if their recent pace continued.
+- **Even if every new home were affordable:** yes for **63 towns**, holding 9,960 units.
+- This compares obligations with past building patterns. It doesn't assess compliance: rezoning, 100%-affordable projects and other routes can exceed past patterns.
 - Per-town status and dates are in `out/town_pace.csv` (`inclusionary_route_*`, `any_route_*`).
 
 First live run: no earlier release to compare against yet.
 
-![Figure 1](out/map_live_progress.png)
-
-*Figure 1. Every New Jersey town, colored by Fourth Round progress to date. Dark red: towns that couldn't finish even by building at their best year since 2015 with a 20% set-aside. Outlined: towns that couldn't finish even if every new home were affordable. Hatched gray: urban-aid towns exempt from new obligations.*
-
 ![Figure 2](out/county_live_progress.png)
 
-*Figure 2. The same measure aggregated by county.*
+*Figure 2. The same pace measure, aggregated by county.*
 
 **System health.** Overall: **OK**
 
@@ -117,7 +124,7 @@ The method was written down before any results were computed.
    - **Progress to date** = (homes permitted since July 1, 2025 × 0.20) ÷ (obligation × months elapsed ÷ 120). The law states the round begins "with the fourth round on July 1, 2025" [3]. A first version mistakenly started the clock in January 2025; the correction is recorded in `CHANGELOG.md` and in the run log.
    - **Trailing-12-month coverage** = (homes permitted in the last 12 months × 0.20) ÷ (obligation ÷ 10).
 
-   - **Point of no return**, at two thresholds. For each town: affordable units still owed = obligation − (homes permitted since July 2025 × 0.20). Its **inclusionary route** has closed when, even building every remaining year at its best year since 2015 with 20% affordable, it can't finish by June 30, 2035. Its **every route** has closed when it couldn't finish even if *every* new home were affordable. If a town is still open, the system projects the month the route closes if its trailing-12-month pace continues. A town's best year since 2015 is a historical yardstick, not a hard limit, since rezoning can push building beyond it.
+   - **Best-year threshold**, at two levels. For each town: affordable units still owed = obligation − (homes permitted since July 2025 × 0.20). The town has **passed the threshold at 20%** when reaching its obligation by June 30, 2035 would take more than building every remaining year at its best year since 2015, with 20% of new homes affordable. It has **passed the threshold for all homes** when that would be true even if *every* new home were affordable. For towns below the threshold, the system projects the month they would cross it if the trailing-12-month pace continued. A best year since 2015 is a historical yardstick, not a limit: rezoning and 100%-affordable projects can exceed past patterns.
 
    The 2021–2025 baseline in §4 stays frozen, so the original finding can always be compared with what happens next.
 7. **Verification.** Town totals were hand-summed from raw Census rows (for example, Jersey City 2023 = 2,339 units; Wall Township 2024 = 387). The statewide obligation was checked against the workbook's TOTAL row (80,798).
@@ -135,9 +142,9 @@ The method was written down before any results were computed.
 
 ### 4.2 But building and obligation are in different places
 
-- **Exempt towns build a third of the state's housing.** The 48 matched towns with zero prospective need account for **34%** of homes permitted in 2021–2025. Forty-seven of the 48 are Qualified Urban Aid municipalities. The largest builders among them are Jersey City (2,802 / yr), Newark (1,635), Lakewood (1,367), West New York (658) and Weehawken (641).
-- **Most obligated towns fall well short.** Of the 514 towns with an obligation, 133 have coverage of 1.0 or more, 91 are between 0.5 and 1.0, and **290 are below 0.5**. Eighteen permitted no housing at all. The below-0.5 group holds **51,168 units, or 63%** of the statewide obligation. Median coverage is **0.40**.
-- **County pattern.** Obligated towns fall short as a group in **17 of 21 counties** (Figure 3). Sussex (0.11), Hudson outside its urban-aid towns (0.14), Passaic (0.15) and Warren (0.31) are lowest. Only Cape May, Atlantic, Burlington and Ocean exceed 1.0.
+- **Towns without new obligations account for a third of permits.** The 48 matched towns with zero prospective need account for **34%** of homes permitted in 2021–2025. Forty-seven of the 48 are Qualified Urban Aid municipalities. The largest builders among them are Jersey City (2,802 / yr), Newark (1,635), Lakewood (1,367), West New York (658) and Weehawken (641).
+- **In most obligated towns, permit pace is below the pace the obligation implies.** Of the 514 towns with an obligation, 133 have coverage of 1.0 or more, 91 are between 0.5 and 1.0, and **290 are below 0.5**. Eighteen reported no permitted homes in 2021–2025. The below-0.5 group holds **51,168 units, or 63%** of the statewide obligation. Median coverage is **0.40**.
+- **County pattern.** In **17 of 21 counties**, permit pace in obligated towns as a group is below the obligation's implied pace (Figure 3). Sussex (0.11), Hudson outside its urban-aid towns (0.14), Passaic (0.15) and Warren (0.31) are lowest. Only Cape May, Atlantic, Burlington and Ocean exceed 1.0.
 
 ![Figure 3](out/county_coverage.png)
 
@@ -145,24 +152,24 @@ The method was written down before any results were computed.
 
 ### 4.3 The largest obligations
 
-| Municipality | County | Obligation (2025–35) | Permits / yr (2021–25) | Coverage | Years to meet at 20% |
-|---|---|---|---|---|---|
-| Paramus | Bergen | 1,000 | 62.4 | 0.12 | 80 |
-| Secaucus | Hudson | 1,000 | 7.0 | 0.01 | 714 |
-| Wayne | Passaic | 1,000 | 15.4 | 0.03 | 325 |
-| Roxbury | Morris | 989 | 28.4 | 0.06 | 174 |
-| South Brunswick | Middlesex | 959 | 161.6 | 0.34 | 30 |
-| Jackson | Ocean | 954 | 50.0 | 0.10 | 95 |
-| Linden | Union | 787 | 134.8 | 0.34 | 29 |
-| Monroe (Middlesex) | Middlesex | 751 | 305.4 | 0.81 | 12 |
-| Wall | Monmouth | 744 | 374.2 | 1.01 | 10 |
-| Edison | Middlesex | 727 | 154.4 | 0.42 | 24 |
+| Municipality | County | Obligation (2025–35) | Permits / yr (2021–25) | Coverage |
+|---|---|---|---|---|
+| Paramus | Bergen | 1,000 | 62.4 | 0.12 |
+| Secaucus | Hudson | 1,000 | 7.0 | 0.01 |
+| Wayne | Passaic | 1,000 | 15.4 | 0.03 |
+| Roxbury | Morris | 989 | 28.4 | 0.06 |
+| South Brunswick | Middlesex | 959 | 161.6 | 0.34 |
+| Jackson | Ocean | 954 | 50.0 | 0.10 |
+| Linden | Union | 787 | 134.8 | 0.34 |
+| Monroe (Middlesex) | Middlesex | 751 | 305.4 | 0.81 |
+| Wall | Monmouth | 744 | 374.2 | 1.01 |
+| Edison | Middlesex | 727 | 154.4 | 0.42 |
 
-*DCA calculated values; adopted or court-approved numbers may be lower (see §1.3).*
+*Listed for context, not as a ranking. DCA calculated values; adopted or court-approved numbers may be lower (see §1.3). Several of these towns have adopted compliance plans whose effect won't show in permits yet.*
 
 ## 5. Discussion
 
-The statute deliberately puts prospective need where land, income and commercial growth are, and exempts dense, lower-income municipalities [3, 4]. The finding is not that the formula is wrong. It is that **the towns the formula selects have, so far, built at a fraction of the rate their obligations assume.** The places that are building, chiefly the urban-aid cities, carry no new obligation by design.
+The statute deliberately puts prospective need where land, income and commercial growth are, and exempts dense, lower-income municipalities [3, 4]. The pattern doesn't show that the formula is wrong, or that any town is out of compliance. It shows that **permits in the towns the formula assigns obligations to have so far run well below the pace those obligations imply**, while much of the state's permitting happens in urban-aid municipalities that carry no new obligation by design.
 
 Two readings are possible, and the data can't separate them yet:
 
@@ -189,7 +196,7 @@ Monthly Census releases make this testable: the coverage ratio can be re-run eac
 | Build | `src/build.py` | Recomputes the frozen baseline and the live metrics for all 564 towns. Saves a dated snapshot to `data/history/` |
 | Log | `data/runs.jsonl` | Adds one line per run **whose inputs changed**: the input hashes plus the headline numbers. Lines are only ever added, never edited, so the log is the system's full history |
 | Interactive map | `src/web.py` → `docs/` | Rebuilds the web map (`docs/index.html`, `docs/data/towns.json`) from the same outputs. The workflow deploys `docs/` to GitHub Pages after each run, so the live site always matches the latest data. Also writes `out/web_preview.html`, a single-file copy with the data built in |
-| Charts, map and report | `src/chart.py`, `src/map.py`, `src/report.py` | Redraw Figures 1–3, rewrite the Live status block, and list towns that moved onto or off pace since the previous release |
+| Charts, map and report | `src/chart.py`, `src/map.py`, `src/report.py` | Redraw Figures 1–3, rewrite the Live status block, and list towns that reached or dropped below the pro-rated pace since the previous release |
 | Schedule | `.github/workflows/update.yml` | Runs every Monday on GitHub Actions and commits only when Census has published something new |
 
 Census revises earlier months, and in May the annual files, so the fetcher re-checks every file it uses on each run. A revision shows up as a new entry in the log.

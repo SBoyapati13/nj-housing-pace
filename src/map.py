@@ -16,11 +16,11 @@ OUT = ROOT / "out"
 SURFACE, INK, INK2, EDGE = "#fcfcfb", "#0b0b0b", "#52514e", "#ffffff"
 # diverging blue<->red, each arm validated as an ordinal ramp; neutral gray (+hatch) = no obligation
 CLASSES = [
-    ("closed",   "#a8262b", None, "Can't finish even at its best year since 2015 (20% route)"),
-    ("behind",   "#ef8a83", None, "Behind pace, still reachable"),
-    ("on_pace",  "#86b6ef", None, "On pace (1–2×)"),
-    ("ahead",    "#1c5cab", None, "Well ahead (2× or more)"),
-    ("exempt",   "#e4e3df", "////", "No new obligation (urban-aid exempt)"),
+    ("closed",   "#a8262b", None, "Would need more than its best year since 2015 (at 20%)"),
+    ("behind",   "#ef8a83", None, "Below pro-rated pace"),
+    ("on_pace",  "#86b6ef", None, "At or above pro-rated pace (1–2×)"),
+    ("ahead",    "#1c5cab", None, "More than twice the pro-rated pace"),
+    ("exempt",   "#e4e3df", "////", "No new obligation (Qualified Urban Aid)"),
     ("no_data",  "#ffffff", None, "No Census permit data"),
 ]
 COLOR = {k: c for k, c, _, _ in CLASSES}; HATCH = {k: h for k, _, h, _ in CLASSES}
@@ -82,18 +82,18 @@ def main():
     ax.autoscale_view(); ax.set_aspect("equal"); ax.axis("off")
     counts = cls.value_counts()
     handles = [Patch(facecolor=c, edgecolor="#b9b8b3", hatch=h, label=f"{lab} ({counts.get(key, 0)})") for key, c, h, lab in CLASSES if counts.get(key, 0)]
-    handles.append(Patch(facecolor="none", edgecolor=INK, linewidth=1.2, label=f"Outlined: can't finish even if every new home were affordable ({s['any_route_closed']})"))
+    handles.append(Patch(facecolor="none", edgecolor=INK, linewidth=1.2, label=f"Outlined: would need more than its best year since 2015\neven if every new home were affordable ({s['any_route_closed']})"))
     leg = fig.legend(handles=handles, loc="lower left", bbox_to_anchor=(0.03, 0.035), fontsize=7.6, frameon=True, framealpha=1, edgecolor="#e4e3df",
-                     title="Fourth Round progress, by town", title_fontsize=8.5, borderpad=0.8, alignment="left")
+                     title="Permit pace vs. pro-rated obligation, by town", title_fontsize=8.5, borderpad=0.8, alignment="left")
     leg.get_frame().set_facecolor(SURFACE)
     months = "January February March April May June July August September October November December".split()
-    fig.suptitle(f"{s['live_towns_below_half'] + 0} of {s['live_obligated_towns']} New Jersey towns with affordable-housing\nobligations are building at under half the pace they need",
+    fig.suptitle("Homes permitted since July 2025, compared with each town's\nFourth Round affordable-housing obligation",
                  x=0.03, ha="left", fontsize=13, fontweight="bold", color=INK, y=0.985)
-    fig.text(0.03, 0.932, f"Fourth Round to date: July 2025 – {months[vm - 1]} {vy} ({s['months_elapsed']} of 120 months). Progress = homes permitted × 20% ÷ obligation\npro-rated to date. Updates automatically with each Census release.",
+    fig.text(0.03, 0.932, f"Fourth Round to date: July 2025 – {months[vm - 1]} {vy} ({s['months_elapsed']} of 120 months). Pace = homes permitted × 20% ÷ obligation pro-rated\nto date. A building-permit indicator, not a compliance finding. Updates with each Census release.",
              fontsize=8, color=INK2, va="top")
     fig.text(0.03, 0.012, "Sources: U.S. Census Bureau Building Permits Survey; NJ DCA Fourth Round Calculation Workbook (2024); Census cartographic boundaries (2024).",
              fontsize=6.8, color=INK2)
-    fig.subplots_adjust(left=0.01, right=0.99, top=0.9, bottom=0.19)
+    fig.subplots_adjust(left=0.01, right=0.99, top=0.88, bottom=0.19)
     fig.savefig(OUT / "map_live_progress.png", facecolor=SURFACE); plt.close(fig)
     print("map written:", dict(counts))
 

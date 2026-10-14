@@ -17,8 +17,8 @@ def changes(vintage):
     up = j[(j.live_progress_prev < 1) & (j.live_progress >= 1)].municipality.tolist()
     down = j[(j.live_progress_prev >= 1) & (j.live_progress < 1)].municipality.tolist()
     fmt = lambda xs: ", ".join(xs[:8]) + (f" and {len(xs) - 8} more" if len(xs) > 8 else "") if xs else "none"
-    return (f"Since the previous release ({prev[-1].stem.split('_')[-1]}): towns that moved **onto** pace: {fmt(up)}. "
-            f"Towns that fell **off** pace: {fmt(down)}.")
+    return (f"Since the previous release ({prev[-1].stem.split('_')[-1]}): towns that reached the pro-rated pace: {fmt(up)}. "
+            f"Towns that dropped below it: {fmt(down)}.")
 
 def main():
     s = json.loads((ROOT / "out" / "summary.json").read_text())
@@ -45,26 +45,23 @@ def main():
 | Homes permitted statewide | {s['live_units_round_to_date']:,} |
 | Implied affordable at 20% | {s['live_implied_affordable_to_date']:,.0f} |
 | Pro-rated obligation to date | {s['live_target_to_date']:,.0f} |
-| **Statewide progress** | **{s['live_progress_statewide']:.0%}** |
-| Obligated towns on pace (≥ 1.0) | {s['live_towns_on_pace']} of {s['live_obligated_towns']} |
-| Obligated towns below half pace | {s['live_towns_below_half']} of {s['live_obligated_towns']} |
+| **Statewide pace vs. pro-rated obligation** | **{s['live_progress_statewide']:.0%}** |
+| Towns at or above the pro-rated pace | {s['live_towns_on_pace']} of {s['live_obligated_towns']} |
+| Towns below half the pro-rated pace | {s['live_towns_below_half']} of {s['live_obligated_towns']} |
 | Share of permits in exempt towns | {s['live_exempt_share_round_to_date']:.0%} |
 | Homes permitted, trailing 12 months | {s['live_units_ttm']:,} |
 
-**Point of no return.** For each obligated town, could it still finish by June 2035 if it built at its best year since 2015?
-- **Inclusionary route closed** (20% of new homes affordable): **{s['inclusionary_route_closed']} towns**, holding {s['inclusionary_route_closed_obligation']:,} units of obligation. Another {s['inclusionary_route_closing_next_12m']} close within 12 months if their current pace holds.
-- **Every route closed** (even if *every* new home were affordable): **{s['any_route_closed']} towns**, holding {s['any_route_closed_obligation']:,} units.
+**Best-year threshold.** For each town with an obligation: would reaching it by June 2035 take more than building every remaining year at the town's best year since 2015?
+- **At a 20% set-aside:** yes for **{s['inclusionary_route_closed']} towns**, holding {s['inclusionary_route_closed_obligation']:,} units of obligation. Another {s['inclusionary_route_closing_next_12m']} would cross this threshold within 12 months if their recent pace continued.
+- **Even if every new home were affordable:** yes for **{s['any_route_closed']} towns**, holding {s['any_route_closed_obligation']:,} units.
+- This compares obligations with past building patterns. It doesn't assess compliance: rezoning, 100%-affordable projects and other routes can exceed past patterns.
 - Per-town status and dates are in `out/town_pace.csv` (`inclusionary_route_*`, `any_route_*`).
 
 {changes(s['vintage'])}
 
-![Figure 1](out/map_live_progress.png)
-
-*Figure 1. Every New Jersey town, colored by Fourth Round progress to date. Dark red: towns that couldn't finish even by building at their best year since 2015 with a 20% set-aside. Outlined: towns that couldn't finish even if every new home were affordable. Hatched gray: urban-aid towns exempt from new obligations.*
-
 ![Figure 2](out/county_live_progress.png)
 
-*Figure 2. The same measure aggregated by county.*
+*Figure 2. The same pace measure, aggregated by county.*
 
 **System health.** Overall: **{icon[h['overall']]}**
 

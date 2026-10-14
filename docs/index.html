@@ -125,7 +125,7 @@ td.num, th.num { text-align: right; font-family: var(--f-data); font-variant-num
       <div class="panel">
         <h2>Legend</h2>
         <div class="legend" id="legend"></div>
-        <p class="hint">Click a category to highlight its towns.</p>
+        <p class="hint">Click a category to highlight its towns. Colors show a building-permit indicator, not a finding about any town's compliance.</p>
       </div>
     </aside>
   </section>
@@ -161,9 +161,9 @@ td.num, th.num { text-align: right; font-family: var(--f-data); font-variant-num
     b.textContent = (h.can_answer ? "Check needed: " : "This map can't currently answer its question. The figures below are from the last valid run. ") + bad;
   }
   const figs = [
-    [pct(S.live_progress_statewide), "of the pace needed statewide, Fourth Round to date"],
-    [`${fmt(S.live_towns_below_half)} / ${fmt(S.live_obligated_towns)}`, "towns with obligations below half the needed pace"],
-    [fmt(S.inclusionary_route_closed), "towns that can't finish even at their best year since 2015 (20% route)"],
+    [pct(S.live_progress_statewide), "statewide permit pace relative to the pro-rated obligation"],
+    [`${fmt(S.live_towns_below_half)} / ${fmt(S.live_obligated_towns)}`, "towns where permits are below half the pro-rated pace"],
+    [fmt(S.inclusionary_route_closed), "towns that would need more than their best year since 2015 to reach the obligation (at 20%)"],
     [pct(S.live_exempt_share_round_to_date), "of homes permitted are in towns with no new obligation"],
   ];
   $("#figures").innerHTML = figs.map(([v, k]) => `<div class="fig"><span class="v">${v}</span><span class="k">${k}</span></div>`).join("");
@@ -184,13 +184,13 @@ td.num, th.num { text-align: right; font-family: var(--f-data); font-variant-num
   }
   const VIEWS = {
     live: { key: "cls_live", note: "Homes permitted since July 2025 × 20%, against the obligation pro-rated to date.",
-      classes: [["closed", "var(--c-closed)", "Can't finish even at its best year since 2015 (20% route)"], ["behind", "var(--c-behind)", "Behind pace, still reachable"],
-                ["on_pace", "var(--c-on)", "On pace (1–2×)"], ["ahead", "var(--c-ahead)", "Well ahead (2× or more)"],
-                ["exempt", "url(#hatch)", "No new obligation (urban-aid exempt)"], ["no_data", "var(--c-nodata)", "No Census permit data"]] },
+      classes: [["closed", "var(--c-closed)", "Would need more than its best year since 2015 (at 20%)"], ["behind", "var(--c-behind)", "Below pro-rated pace"],
+                ["on_pace", "var(--c-on)", "At or above pro-rated pace (1–2×)"], ["ahead", "var(--c-ahead)", "More than twice the pro-rated pace"],
+                ["exempt", "url(#hatch)", "No new obligation (Qualified Urban Aid)"], ["no_data", "var(--c-nodata)", "No Census permit data"]] },
     base: { key: "cls_base", note: "Frozen baseline: average yearly permits 2021–2025 × 20%, against one-tenth of the obligation.",
-      classes: [["far", "var(--c-closed)", "Under half the needed pace"], ["behind", "var(--c-behind)", "Behind (half to full pace)"],
-                ["on_pace", "var(--c-on)", "On pace (1–2×)"], ["ahead", "var(--c-ahead)", "Well ahead (2× or more)"],
-                ["exempt", "url(#hatch)", "No new obligation (urban-aid exempt)"], ["no_data", "var(--c-nodata)", "No Census permit data"]] },
+      classes: [["far", "var(--c-closed)", "Below half the pro-rated pace"], ["behind", "var(--c-behind)", "Half to full pro-rated pace"],
+                ["on_pace", "var(--c-on)", "At or above pro-rated pace (1–2×)"], ["ahead", "var(--c-ahead)", "More than twice the pro-rated pace"],
+                ["exempt", "url(#hatch)", "No new obligation (Qualified Urban Aid)"], ["no_data", "var(--c-nodata)", "No Census permit data"]] },
   };
   let view = "live", hi = null, sel = null;
   function paint() {
@@ -203,7 +203,7 @@ td.num, th.num { text-align: right; font-family: var(--f-data); font-variant-num
     const outN = D.towns.filter(t => t.any_status === "past").length;
     $("#legend").innerHTML = V.classes.filter(c => counts[c[0]]).map(c =>
       `<button class="chip" data-c="${c[0]}" aria-pressed="${hi === c[0]}"><span class="sw" style="background:${c[1].startsWith("url") ? "repeating-linear-gradient(45deg,var(--c-exempt) 0 3px,var(--hatch) 3px 4.5px)" : c[1]}"></span><span>${c[2]}</span><span class="n">${counts[c[0]]}</span></button>`).join("")
-      + (view === "live" ? `<div class="chip" style="cursor:default"><span class="sw" style="background:transparent;border:1.6px solid var(--ink)"></span><span>Outlined: can't finish even if every new home were affordable</span><span class="n">${outN}</span></div>` : "");
+      + (view === "live" ? `<div class="chip" style="cursor:default"><span class="sw" style="background:transparent;border:1.6px solid var(--ink)"></span><span>Outlined: would need more than its best year since 2015 even if every new home were affordable</span><span class="n">${outN}</span></div>` : "");
     document.querySelectorAll("#legend button.chip").forEach(b => b.onclick = () => { hi = hi === b.dataset.c ? null : b.dataset.c; paint(); table(); });
     $("#viewnote").textContent = V.note;
     $("#v-live").setAttribute("aria-pressed", view === "live"); $("#v-base").setAttribute("aria-pressed", view === "base");
@@ -215,14 +215,14 @@ td.num, th.num { text-align: right; font-family: var(--f-data); font-variant-num
   const label = (t) => (VIEWS[view].classes.find(c => c[0] === t[VIEWS[view].key]) || [])[2] || "";
   const swatch = (t) => (VIEWS[view].classes.find(c => c[0] === t[VIEWS[view].key]) || [])[1] || "";
   function closes(status, date) {
-    return { past: "Already", projected: date ? monthName(date) : "–", open: "Not at current pace", met: "Already met at 20%" }[status] || "–";
+    return { past: "Passed", projected: date ? "Projected " + monthName(date) : "–", open: "Not reached at recent pace", met: "Obligation covered at 20%" }[status] || "–";
   }
   function detail(t) {
     const live = view === "live";
     const rows = t.pn > 0 ? (live ? [
       ["Obligation, 2025–35", fmt(t.pn) + " units"], ["Pro-rated to date", fmt(t.target, 0)], ["Homes permitted since July 2025", fmt(t.rtd)],
-      ["Progress vs. needed pace", pct(t.prog)], ["Homes permitted, last 12 months", fmt(t.ttm)], ["Best year since 2015", fmt(t.best) + " homes"],
-      ["20% route closes", closes(t.inc_status, t.inc_date)], ["Every route closes", closes(t.any_status, t.any_date)]] : [
+      ["Pace vs. pro-rated obligation", pct(t.prog)], ["Homes permitted, last 12 months", fmt(t.ttm)], ["Best year since 2015", fmt(t.best) + " homes"],
+      ["Best-year threshold (at 20%)", closes(t.inc_status, t.inc_date)], ["Best-year threshold (all homes affordable)", closes(t.any_status, t.any_date)]] : [
       ["Obligation, 2025–35", fmt(t.pn) + " units"], ["Avg. homes permitted / yr, 2021–25", fmt(t.avg, 1)], ["Coverage at 20%", pct(t.cov)]])
       : [["Obligation, 2025–35", t.f in byFips && t.cls_live === "exempt" ? "None (urban-aid exempt)" : "–"], ["Homes permitted since July 2025", fmt(t.rtd)], ["Avg. homes permitted / yr, 2021–25", fmt(t.avg, 1)]];
     $("#detail").innerHTML = `<div class="name">${t.n}</div><div class="m" style="color:var(--ink2);font-size:13px">${t.c} County</div>
@@ -254,7 +254,7 @@ td.num, th.num { text-align: right; font-family: var(--f-data); font-variant-num
   function table() {
     const live = view === "live";
     const rows = D.towns.filter(t => hi === null || t[VIEWS[view].key] === hi).sort((a, b) => (b.pn || 0) - (a.pn || 0) || a.n.localeCompare(b.n));
-    const head = live ? ["Town", "County", "Status", "Obligation", "Since Jul 2025", "Progress", "20% route closes"] : ["Town", "County", "Status", "Obligation", "Avg / yr 2021–25", "Coverage"];
+    const head = live ? ["Town", "County", "Status", "Obligation", "Since Jul 2025", "Pace", "Best-year threshold (20%)"] : ["Town", "County", "Status", "Obligation", "Avg / yr 2021–25", "Coverage"];
     const num = live ? [3, 4, 5] : [3, 4, 5];
     $("#table").innerHTML = `<thead><tr>${head.map((h, i) => `<th${num.includes(i) ? ' class="num"' : ""}>${h}</th>`).join("")}</tr></thead><tbody>` +
       rows.map(t => `<tr><td>${t.n}</td><td>${t.c}</td><td>${label(t)}</td><td class="num">${fmt(t.pn)}</td>` +
@@ -265,12 +265,11 @@ td.num, th.num { text-align: right; font-family: var(--f-data); font-variant-num
 
   // ---- method ----
   $("#method").innerHTML = `<h2>How this is measured</h2>
-    <p>Each town's affordable-housing obligation for 2025–2035 comes from the NJ Department of Community Affairs' Fourth Round calculation. Homes permitted come from the U.S. Census Bureau's Building Permits Survey. Progress assumes 20% of new homes are affordable, a generous upper bound, since not every project includes affordable units. Towns can also comply in ways permits don't capture, and some towns' final numbers differ from DCA's.</p>
+    <p>Each town's affordable-housing obligation for 2025–2035 comes from the NJ Department of Community Affairs' Fourth Round calculation. Homes permitted come from the U.S. Census Bureau's Building Permits Survey. Progress assumes 20% of new homes are affordable, a generous upper bound, since not every project includes affordable units. Towns can also comply in ways permits don't capture, and some towns' final numbers differ from DCA's. Compliance is determined through the Affordable Housing Dispute Resolution Program and the courts; this page doesn't assess it.</p>
     <p>The map, its data and these figures are rebuilt from public sources by one command (<code>python3 src/update.py</code>), and every update is logged. ${M.repo ? `Code, data and the full write-up: <a href="${M.repo}">${M.repo.replace("https://", "")}</a>.` : ""}</p>
     <div class="health">${(h ? h.checks : []).map(c => `<span>${c.check.replace(/_/g, " ")}: ${c.status}</span>`).join("")}</div>`;
 
   paint(); table();
-  const start = byFips[M.start_fips]; if (start) select(start);
 })();
 </script>
 

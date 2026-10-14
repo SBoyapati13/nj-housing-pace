@@ -28,7 +28,7 @@ def draw(g, fname, title, subtitle, xlabel):
         ax.text(v + 0.04, i, f"{v:.2f}", va="center", fontsize=8.5, color=INK2, zorder=4,
                 bbox=dict(boxstyle="square,pad=0.15", fc=SURFACE, ec="none"))
     ax.axvline(1.0, color=INK, linewidth=1.2, linestyle=(0, (4, 3)), zorder=3)
-    ax.text(1.03, len(g) - 0.4, "Pace needed", fontsize=9, color=INK, va="center")
+    ax.text(1.03, len(g) - 0.4, "Pro-rated pace", fontsize=9, color=INK, va="center")
     ax.set_yticks(y); ax.set_yticklabels(g.index, color=INK)
     ax.set_xlim(0, max(3.4, g.ratio.max() + 0.4))
     ax.set_xlabel(xlabel, color=INK2, fontsize=9)
@@ -49,14 +49,14 @@ def main():
     g = county(df, "avg_units_per_year", "annual_target")
     g.to_csv(OUT / "county_coverage.csv")
     draw(g, "county_coverage.png",
-         f"In {(g.ratio < 1).sum()} of {len(g)} NJ counties, towns with affordable-housing targets\naren't building fast enough to meet them",
+         "Permit pace relative to Fourth Round obligations, by county\n(towns with an obligation, 2021–25 average)",
          "Baseline (frozen): 2021–25 permits. Towns with a Fourth Round obligation only. Assumes a 20% set-aside on every unit (upper bound).",
          "Coverage: (avg yearly permits 2021–25 × 20%) ÷ (2025–35 obligation ÷ 10)")
 
     L = county(df, "live_units_round_to_date", "live_target_to_date")
     L.to_csv(OUT / "county_live_progress.csv")
     draw(L, "county_live_progress.png",
-         f"Fourth Round progress to date: {(L.ratio < 1).sum()} of {len(L)} counties behind\n(July 2025 – {MONTHS[vm - 1]} {vy})",
+         f"Permit pace relative to pro-rated obligations, by county\n(July 2025 – {MONTHS[vm - 1]} {vy})",
          f"Live, updates with each Census release. Permits since July 2025 × 20% ÷ obligation pro-rated to {s['months_elapsed']} of 120 months.",
          "Progress: (permits since July 2025 × 20%) ÷ (obligation × months elapsed ÷ 120)")
     print("charts written")

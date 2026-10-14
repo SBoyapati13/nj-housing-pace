@@ -73,10 +73,8 @@ def main():
             "inc_status": clean(r.inclusionary_route_status), "inc_date": clean(r.inclusionary_route_closes),
             "any_status": clean(r.any_route_status), "any_date": clean(r.any_route_closes),
         })
-    start = df[df.municipality == "Paramus borough"].index
     payload = {"meta": {"width": WIDTH, "height": height, "repo": REPO_URL,
-                        "built_utc": last_data_update(),
-                        "start_fips": start[0] if len(start) else None},
+                        "built_utc": last_data_update()},
                "summary": summary, "towns": towns}
     data = json.dumps(payload, separators=(",", ":"), allow_nan=False)
     (DOCS / "data").mkdir(parents=True, exist_ok=True)

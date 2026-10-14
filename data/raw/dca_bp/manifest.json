@@ -1,0 +1,181 @@
+{
+  "files": {
+    "house_01_2026.xls": {
+      "fetched_utc": "2026-10-14T01:38:36+00:00",
+      "last_modified": "Wed, 01 Apr 2026 13:28:29 GMT",
+      "sha256": "2dec51bc3dbdc06032b00e48d335a70c374a0eb3651bd96ab65e8a946b14e3e7",
+      "size": "1154560",
+      "url": "https://www.nj.gov/dca/codes/reporter/2026m/house_01_2026.xls"
+    },
+    "house_06_2025.xls": {
+      "fetched_utc": "2026-10-14T01:38:39+00:00",
+      "last_modified": "Wed, 03 Sep 2025 13:37:35 GMT",
+      "sha256": "85c3c16ff033d418b4c0c8b982f1265c01cc436a1025144771a7c685e96396f9",
+      "size": "1164800",
+      "url": "https://www.nj.gov/dca/codes/reporter/2025m/house_06_2025.xls"
+    },
+    "house_12_2015.xls": {
+      "fetched_utc": "2026-10-14T01:38:41+00:00",
+      "last_modified": "Wed, 03 Jan 2024 20:37:37 GMT",
+      "sha256": "251a5fd75ddf10f66bf1155e69ab99bf1e0b23f1062d63fd37d819624f731a2a",
+      "size": "585728",
+      "url": "https://www.nj.gov/dca/codes/reporter/2015monthly/house_12_2015.xls"
+    },
+    "house_12_2016.xls": {
+      "fetched_utc": "2026-10-14T01:38:43+00:00",
+      "last_modified": "Wed, 03 Jan 2024 19:39:56 GMT",
+      "sha256": "63e926386ab007f245366ca195a0d2498e60f7990ec78ee6f77d7a2ef41b277b",
+      "size": "585216",
+      "url": "https://www.nj.gov/dca/codes/reporter/2016monthly/house_12_2016.xls"
+    },
+    "house_12_2017.xls": {
+      "fetched_utc": "2026-10-14T01:38:45+00:00",
+      "last_modified": "Wed, 03 Jan 2024 17:24:14 GMT",
+      "sha256": "46ff836a218e5cc08ad79aa016b169ae7149267c4ae2111b2a1793cb2b1b6a95",
+      "size": "596480",
+      "url": "https://www.nj.gov/dca/codes/reporter/2017monthly/house_12_2017.xls"
+    },
+    "house_12_2018.xls": {
+      "fetched_utc": "2026-10-14T01:38:47+00:00",
+      "last_modified": "Mon, 27 Nov 2023 17:15:18 GMT",
+      "sha256": "ee00c3a69184e546baa544728a974d26221afd21c7265e4d3840b5fb95c24d23",
+      "size": "570368",
+      "url": "https://www.nj.gov/dca/codes/reporter/2018monthly/house_12_2018.xls"
+    },
+    "house_12_2019.xls": {
+      "fetched_utc": "2026-10-14T01:38:50+00:00",
+      "last_modified": "Mon, 27 Nov 2023 16:03:57 GMT",
+      "sha256": "0e442d9cab7617a33b55df290b9d4d4d92b4b3cff314006dc7538f80face564c",
+      "size": "879104",
+      "url": "https://www.nj.gov/dca/codes/reporter/2019monthly/house_12_2019.xls"
+    },
+    "house_12_2020.xls": {
+      "fetched_utc": "2026-10-14T01:38:56+00:00",
+      "last_modified": "Mon, 27 Nov 2023 15:37:40 GMT",
+      "sha256": "b7d9476564da5d78bc5e95dd2520387537a78f2068a4cf328027f5d8f6e7219e",
+      "size": "887296",
+      "url": "https://www.nj.gov/dca/codes/reporter/2020monthly/house_12_2020.xls"
+    },
+    "house_12_2021.xls": {
+      "fetched_utc": "2026-10-14T01:39:01+00:00",
+      "last_modified": "Fri, 24 Nov 2023 18:48:12 GMT",
+      "sha256": "5b9f081df3e49e286af449f4e1661a7d91b6cc877522facdef39464402549beb",
+      "size": "865792",
+      "url": "https://www.nj.gov/dca/codes/reporter/2021monthly/house_12_2021.xls"
+    },
+    "house_12_2022.xls": {
+      "fetched_utc": "2026-10-14T01:39:04+00:00",
+      "last_modified": "Fri, 24 Nov 2023 18:14:12 GMT",
+      "sha256": "330b18cdf4a4ed1a4e51b454a8b5839fd80cb953501c68e7ef04aece2f4c9e9d",
+      "size": "1162752",
+      "url": "https://www.nj.gov/dca/codes/reporter/2022monthly/house_12_2022.xls"
+    },
+    "house_12_2023.xls": {
+      "fetched_utc": "2026-10-14T01:39:06+00:00",
+      "last_modified": "Wed, 20 Mar 2024 13:32:26 GMT",
+      "sha256": "48749a56e5f816746d8c9880e59fa415fdb4a08c223d8787d2b133499a4ba548",
+      "size": "1160192",
+      "url": "https://www.nj.gov/dca/codes/reporter/2023monthly/house_12_2023.xls"
+    },
+    "house_12_2024.xls": {
+      "fetched_utc": "2026-10-14T01:39:08+00:00",
+      "last_modified": "Wed, 19 Feb 2025 15:27:28 GMT",
+      "sha256": "584350617c0a71e03839501fee3b42acb5c60cf1c58beec792146e796d4451e1",
+      "size": "1162240",
+      "url": "https://www.nj.gov/dca/codes/reporter/2024monthly/house_12_2024.xls"
+    },
+    "house_12_2025.xls": {
+      "fetched_utc": "2026-10-14T01:39:11+00:00",
+      "last_modified": "Tue, 24 Feb 2026 19:40:50 GMT",
+      "sha256": "4826b7c3c0bd6d23ddd748611868b1f42dd51ec8d557b0fb5830d1be3e689a70",
+      "size": "1163264",
+      "url": "https://www.nj.gov/dca/codes/reporter/2025m/house_12_2025.xls"
+    },
+    "house_yearly_2015.xls": {
+      "fetched_utc": "2026-10-14T01:39:15+00:00",
+      "last_modified": "Wed, 03 Jan 2024 19:45:47 GMT",
+      "sha256": "cdab61f8ea03f38730b3c7c42306011f779b2e8ffcbd9dfab73ca39d9bade8ff",
+      "size": "392192",
+      "url": "https://www.nj.gov/dca/codes/reporter/2015yearly/house_15.xls"
+    },
+    "house_yearly_2016.xls": {
+      "fetched_utc": "2026-10-14T01:39:18+00:00",
+      "last_modified": "Wed, 03 Jan 2024 17:29:49 GMT",
+      "sha256": "711a4a79b295bce7f24bf4a344a51baedab0e200b8290ec803bf14dfc4cd1d77",
+      "size": "395264",
+      "url": "https://www.nj.gov/dca/codes/reporter/2016yearly/house_16.xls"
+    },
+    "house_yearly_2017.xls": {
+      "fetched_utc": "2026-10-14T01:39:21+00:00",
+      "last_modified": "Wed, 03 Jan 2024 17:14:44 GMT",
+      "sha256": "d76d1d524a6cd978cfeb60974c7088f698b7361b2d0d7ecedadf286f6fd7ef44",
+      "size": "395776",
+      "url": "https://www.nj.gov/dca/codes/reporter/2017yearly/house_17.xls"
+    },
+    "house_yearly_2018.xls": {
+      "fetched_utc": "2026-10-14T01:39:23+00:00",
+      "last_modified": "Mon, 27 Nov 2023 18:06:22 GMT",
+      "sha256": "e345a531d183b326d45d3db04f2047ac9a98964000bf5b425017a8245397b15b",
+      "size": "379392",
+      "url": "https://www.nj.gov/dca/codes/reporter/2018yearly/house_18.xls"
+    },
+    "house_yearly_2019.xls": {
+      "fetched_utc": "2026-10-14T01:39:25+00:00",
+      "last_modified": "Mon, 27 Nov 2023 15:59:52 GMT",
+      "sha256": "10f553109617a9c279bb144036a8435fc8a383b1aaad79f4ae7bfc2d7cffc812",
+      "size": "390144",
+      "url": "https://www.nj.gov/dca/codes/reporter/2019yearly/house_19.xls"
+    },
+    "house_yearly_2020.xls": {
+      "fetched_utc": "2026-10-14T01:39:28+00:00",
+      "last_modified": "Mon, 27 Nov 2023 15:26:24 GMT",
+      "sha256": "d63a560823689bb1ee1754b900fdb47c8a9720f12c6e2b85d2b6f299c6b7f544",
+      "size": "387072",
+      "url": "https://www.nj.gov/dca/codes/reporter/2020yearly/house_20.xls"
+    },
+    "house_yearly_2021.xls": {
+      "fetched_utc": "2026-10-14T01:39:30+00:00",
+      "last_modified": "Fri, 24 Nov 2023 19:30:11 GMT",
+      "sha256": "3e0904e5a9dbac957b9fa8b91cb5e2a3accc1884e8620261878d50d8418a96ea",
+      "size": "558592",
+      "url": "https://www.nj.gov/dca/codes/reporter/2021yearly/house_21.xls"
+    },
+    "house_yearly_2022.xls": {
+      "fetched_utc": "2026-10-14T01:39:34+00:00",
+      "last_modified": "Fri, 24 Nov 2023 17:17:42 GMT",
+      "sha256": "35b2626f1f6850d5387b1738c2f399648bf6ee1c9138d6ba35367e825db4048a",
+      "size": "560640",
+      "url": "https://www.nj.gov/dca/codes/reporter/2022yearly/house_22.xls"
+    },
+    "house_yearly_2023.xls": {
+      "fetched_utc": "2026-10-14T01:39:39+00:00",
+      "last_modified": "Wed, 28 Aug 2024 19:47:47 GMT",
+      "sha256": "2ec4a49b1285905c4646c61e60ecc154b501c74e937f6befa2f2241e25cf3f48",
+      "size": "558080",
+      "url": "https://www.nj.gov/dca/codes/reporter/2023yearly/house_23.xls"
+    },
+    "house_yearly_2024.xls": {
+      "fetched_utc": "2026-10-14T01:39:43+00:00",
+      "last_modified": "Wed, 20 Aug 2025 18:05:05 GMT",
+      "sha256": "66c675b92faf5c61f6a95769c3c07117fdd7726e87841c085150075a56f1ce6c",
+      "size": "556544",
+      "url": "https://www.nj.gov/dca/codes/reporter/2024yearly/house_24.xls"
+    }
+  },
+  "vintage": {
+    "month": 1,
+    "year": 2026
+  },
+  "yearly_years": [
+    2015,
+    2016,
+    2017,
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024
+  ]
+}

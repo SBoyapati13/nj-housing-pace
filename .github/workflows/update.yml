@@ -1,8 +1,8 @@
-name: Update from new Census releases
+name: Update from new permit and completion data
 
 on:
   schedule:
-    - cron: "37 13 * * 1"   # every Monday 13:37 UTC; Census posts place files monthly
+    - cron: "37 13 * * 1"   # every Monday 13:37 UTC; Census and the state each post monthly
   workflow_dispatch:         # run on demand from the Actions tab
   push:
     branches: [main]
@@ -32,16 +32,18 @@ jobs:
         run: |
           git config user.name "nj-housing-pace bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          # New data = new or revised Census files, or a new run-log entry. Anything else
-          # (e.g. PNGs re-rendered with a different font stack) is discarded.
-          if git diff --quiet -- data/raw/bps/manifest.json data/raw/co/manifest.json data/runs.jsonl; then
-            echo "No new Census data this week."
+          # Commit when a source published new or revised files, the run log gained an entry,
+          # or the health status changed (so a stale-source warning is published even with no new data).
+          # Anything else (e.g. PNGs re-rendered with a different font stack) is discarded.
+          if git diff --quiet -- data/raw/bps/manifest.json data/raw/dca_bp/manifest.json data/raw/co/manifest.json data/runs.jsonl data/health.json; then
+            echo "No new data and no change in health this week."
             git checkout -- .
+            git clean -fdq -- data/history
             exit 0
           fi
           git add -A
-          VINTAGE=$(python -c "import json; print(json.load(open('out/summary.json'))['vintage'])")
-          git commit -m "Data update: Census permits through ${VINTAGE}"
+          V=$(python -c "import json; s=json.load(open('out/summary.json')); print(f\"Census through {s['vintage']}, state through {s['dca_vintage']}, health {s['health']['overall']}\")")
+          git commit -m "Data update: ${V}"
           git push
 
   deploy-map:

@@ -1,68 +1,98 @@
 {
+  "annual_years": [
+    2015,
+    2016,
+    2017,
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024,
+    2025
+  ],
   "dca_upstream": {
     "last_modified": "Fri, 18 Oct 2024 19:38:09 GMT",
     "size": "35464111"
   },
   "files": {
-    "ne1512y.txt": {
-      "fetched_utc": "2026-10-13T23:07:15+00:00",
-      "last_modified": "Fri, 30 Sep 2016 14:51:18 GMT",
-      "sha256": "0ef24bfef542ba9d819f4f78c33274b4090e32382be0dee3f109448e1d5c4f29",
-      "size": "378877"
+    "ne2015a.txt": {
+      "fetched_utc": "2026-10-14T01:38:00+00:00",
+      "last_modified": "Fri, 30 Sep 2016 14:51:26 GMT",
+      "sha256": "ac8a6d87f17d0fce60aba8210f99407193ea141f6de7a349bde9452f98742d72",
+      "size": "851431",
+      "url": "https://www2.census.gov/econ/bps/Place/Northeast%20Region/ne2015a.txt"
     },
-    "ne1612y.txt": {
-      "fetched_utc": "2026-10-13T23:07:17+00:00",
-      "last_modified": "Fri, 27 Jan 2017 12:36:15 GMT",
-      "sha256": "c62575080583c1c22e8450d08cf00fe3c26b29ea7184cf3f49fccc8794ec43cc",
-      "size": "379339"
+    "ne2016a.txt": {
+      "fetched_utc": "2026-10-14T01:38:02+00:00",
+      "last_modified": "Mon, 01 May 2017 12:08:18 GMT",
+      "sha256": "2c6cf120b64f201a156859e0758a078db5902b2c9ed4e6c39399095d315a640f",
+      "size": "851161",
+      "url": "https://www2.census.gov/econ/bps/Place/Northeast%20Region/ne2016a.txt"
     },
-    "ne1712y.txt": {
-      "fetched_utc": "2026-10-13T23:07:19+00:00",
-      "last_modified": "Thu, 25 Jan 2018 12:32:54 GMT",
-      "sha256": "c22a824ddab270a96d88cd951f245e0cd3dcf3868ee2448bab8a96b1beb79f34",
-      "size": "376519"
+    "ne2017a.txt": {
+      "fetched_utc": "2026-10-14T01:38:05+00:00",
+      "last_modified": "Tue, 01 May 2018 11:27:25 GMT",
+      "sha256": "38ede2bbcc27531e643c62397e164637b5ae71bfbcddcae4aceb9b985a8e0f6f",
+      "size": "843460",
+      "url": "https://www2.census.gov/econ/bps/Place/Northeast%20Region/ne2017a.txt"
     },
-    "ne1812y.txt": {
-      "fetched_utc": "2026-10-13T23:07:21+00:00",
-      "last_modified": "Tue, 26 Feb 2019 16:44:41 GMT",
-      "sha256": "a5ee3c7a0b5748bfb62d42c70a408ca1bdd6f2d9739356f6e45438dd29031467",
-      "size": "377103"
+    "ne2018a.txt": {
+      "fetched_utc": "2026-10-14T01:38:07+00:00",
+      "last_modified": "Thu, 20 Jun 2019 12:30:31 GMT",
+      "sha256": "4a21d06fc13c6797b310fbe44ceb108af30dc2198cfad0af4550abd3964f2bc2",
+      "size": "844138",
+      "url": "https://www2.census.gov/econ/bps/Place/Northeast%20Region/ne2018a.txt"
     },
-    "ne1912y.txt": {
-      "fetched_utc": "2026-10-13T23:07:23+00:00",
-      "last_modified": "Mon, 27 Jan 2020 14:34:34 GMT",
-      "sha256": "0a9f404d2b4de418e3b5e13c43a8b49af134469f522841978f84de19a1447009",
-      "size": "379220"
+    "ne2019a.txt": {
+      "fetched_utc": "2026-10-14T01:38:09+00:00",
+      "last_modified": "Fri, 01 May 2020 15:10:28 GMT",
+      "sha256": "474392792fc9f1ac2dd2bb76d31840391ddbbe6b2c5547212675f651f1d300f8",
+      "size": "845081",
+      "url": "https://www2.census.gov/econ/bps/Place/Northeast%20Region/ne2019a.txt"
     },
-    "ne2012y.txt": {
-      "fetched_utc": "2026-10-13T23:07:24+00:00",
-      "last_modified": "Thu, 28 Jan 2021 13:06:47 GMT",
-      "sha256": "51179981a845ad90b1ad70073fa73c48e84f9e587e8e4d5f21d73d7334be5d4b",
-      "size": "380061"
+    "ne2020a.txt": {
+      "fetched_utc": "2026-10-14T01:38:10+00:00",
+      "last_modified": "Mon, 03 May 2021 11:39:27 GMT",
+      "sha256": "4f53ac229eb89542df28f6f4df0ad49468b757b1f7ab99495a421c1cbc9ea818",
+      "size": "844772",
+      "url": "https://www2.census.gov/econ/bps/Place/Northeast%20Region/ne2020a.txt"
     },
-    "ne2112y.txt": {
-      "fetched_utc": "2026-10-13T23:07:26+00:00",
-      "last_modified": "Fri, 21 Jan 2022 19:12:05 GMT",
-      "sha256": "d20d96791a489f7fa2e500788fc9c6a43d3eb0a5f4f0f6db5630d0cfa40feeac",
-      "size": "380790"
+    "ne2021a.txt": {
+      "fetched_utc": "2026-10-14T01:38:12+00:00",
+      "last_modified": "Wed, 27 Apr 2022 21:07:48 GMT",
+      "sha256": "16d75cc7fc49b17a6e46f18e5419f70f76c6a0dedf344e263f1d686e2c6f4937",
+      "size": "848063",
+      "url": "https://www2.census.gov/econ/bps/Place/Northeast%20Region/ne2021a.txt"
     },
-    "ne2212y.txt": {
-      "fetched_utc": "2026-10-13T23:07:28+00:00",
-      "last_modified": "Mon, 23 Jan 2023 17:42:59 GMT",
-      "sha256": "9644ba3c423c85cdf1fa6fc6aca25508bb6d22d8a1f78bebede1d6f0faaf8ba7",
-      "size": "845647"
+    "ne2022a.txt": {
+      "fetched_utc": "2026-10-14T01:38:14+00:00",
+      "last_modified": "Tue, 02 Apr 2024 19:55:44 GMT",
+      "sha256": "fd363296c7b756e8c5a5b3c67f7e90fefff2a9b38210625ee5a986d7288515e9",
+      "size": "850359",
+      "url": "https://www2.census.gov/econ/bps/Place/Northeast%20Region/ne2022a.txt"
     },
-    "ne2312y.txt": {
-      "fetched_utc": "2026-10-13T23:07:30+00:00",
-      "last_modified": "Mon, 22 Jan 2024 17:02:52 GMT",
-      "sha256": "de2c0b51e9a5043938dc90405d3429b053f196594d0e32a8f94b83e45ad83d58",
-      "size": "844151"
+    "ne2023a.txt": {
+      "fetched_utc": "2026-10-14T01:38:16+00:00",
+      "last_modified": "Wed, 24 Apr 2024 19:28:11 GMT",
+      "sha256": "e5f34b2197ed420ab4de83c14b657a2406f7bf48286a5714f8130cb2e2423314",
+      "size": "846858",
+      "url": "https://www2.census.gov/econ/bps/Place/Northeast%20Region/ne2023a.txt"
     },
-    "ne2412y.txt": {
-      "fetched_utc": "2026-10-13T23:07:32+00:00",
-      "last_modified": "Mon, 27 Jan 2025 12:42:19 GMT",
-      "sha256": "2dbfd5f9a3e11fedf4e63465c113349250c5d0915961014cce5736f33a11255b",
-      "size": "846233"
+    "ne2024a.txt": {
+      "fetched_utc": "2026-10-14T01:38:18+00:00",
+      "last_modified": "Thu, 01 May 2025 12:07:46 GMT",
+      "sha256": "51d71f93324975bc337422ad5d3c3b9860ccb3411ca1dafbe9f731de00f64cc0",
+      "size": "847210",
+      "url": "https://www2.census.gov/econ/bps/Place/Northeast%20Region/ne2024a.txt"
+    },
+    "ne2025a.txt": {
+      "fetched_utc": "2026-10-14T01:38:21+00:00",
+      "last_modified": "Thu, 14 May 2026 12:15:24 GMT",
+      "sha256": "69d27190a552942370ef317a67918da3eae3c8d23ec8200229296f76434f4875",
+      "size": "847668",
+      "url": "https://www2.census.gov/econ/bps/Place/Northeast%20Region/ne2025a.txt"
     },
     "ne2506y.txt": {
       "fetched_utc": "2026-10-13T23:18:15+00:00",
@@ -70,17 +100,18 @@
       "sha256": "2b60a1ddfa2262445dda9f9bb0d7a38425dab6f4fe8d4ea2b52d84126d5c8ec5",
       "size": "832308"
     },
-    "ne2508y.txt": {
-      "fetched_utc": "2026-10-13T23:07:34+00:00",
-      "last_modified": "Wed, 24 Sep 2025 11:30:25 GMT",
-      "sha256": "70543a4958ba90e83732fe41b575770858a9011c8e4259dae377b6684dfcd3aa",
-      "size": "837174"
-    },
     "ne2512y.txt": {
       "fetched_utc": "2026-10-13T23:07:36+00:00",
       "last_modified": "Fri, 20 Feb 2026 12:45:27 GMT",
       "sha256": "27a5d2950a2574f46697bb003925b2a1d263480fd66c9bcc312debc05e708bd0",
       "size": "845724"
+    },
+    "ne2601y.txt": {
+      "fetched_utc": "2026-10-14T02:04:12+00:00",
+      "last_modified": "Thu, 19 Mar 2026 11:45:26 GMT",
+      "sha256": "2d9dba1b6cc2c15f9cbb77f51dcf844a1c41a05c7565a7be7d692b54059e1a8e",
+      "size": "808331",
+      "url": "https://www2.census.gov/econ/bps/Place/Northeast%20Region/ne2601y.txt"
     },
     "ne2608y.txt": {
       "fetched_utc": "2026-10-13T23:07:38+00:00",

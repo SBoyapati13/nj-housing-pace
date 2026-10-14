@@ -1,28 +1,20 @@
 """Interactive web map: docs/index.html + docs/data/towns.json (served by GitHub Pages from /docs).
 
 Rebuilt from out/town_pace.csv, out/summary.json and the Census boundary file on every run,
-so the published page always reflects the latest Census release. Also writes
+so the published page always reflects the latest data from both permit sources. Also writes
 out/web_preview.html: the same page with the data inlined, for previews and sharing.
 """
 import json, math
 from datetime import datetime, timezone
 from pathlib import Path
 import pandas as pd
-from map import shapes, classify
+from map import shapes
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT, DOCS = ROOT / "out", ROOT / "docs"
 REPO_URL = "https://github.com/SBoyapati13/nj-housing-pace"
 WIDTH = 600.0          # SVG viewBox width
 MIN_STEP = 0.35        # drop vertices closer than this (viewBox units) to the last kept one
-
-def base_class(row):
-    if not row.matched: return "no_data"
-    if not row.prospective_need > 0: return "exempt"
-    if row.coverage >= 2: return "ahead"
-    if row.coverage >= 1: return "on_pace"
-    if row.coverage >= 0.5: return "behind"
-    return "far"
 
 def clean(v, nd=None):
     if v is None or (isinstance(v, float) and math.isnan(v)): return None
@@ -63,17 +55,22 @@ def main():
     for f, d in paths.items():
         if f not in df.index: continue
         r = df.loc[f]
+        why = "Qualified Urban Aid municipality" if r.qualified_urban_aid == 1 else "calculated obligation of zero"
         towns.append({
-            "f": f, "n": r.municipality, "c": r.county, "d": d,
-            "cls_live": classify(r), "cls_base": base_class(r),
-            "pn": clean(r.prospective_need), "target": clean(r.live_target_to_date, 1),
-            "rtd": clean(r.live_units_round_to_date), "prog": clean(r.live_progress, 3),
-            "ttm": clean(r.live_units_ttm), "best": clean(r.best_year_units_since_2015),
-            "avg": clean(r.avg_units_per_year, 1), "cov": clean(r.coverage, 3),
-            "inc_status": clean(r.inclusionary_route_status), "inc_date": clean(r.inclusionary_route_closes),
-            "any_status": clean(r.any_route_status), "any_date": clean(r.any_route_closes),
-            "fin": clean(r.final_prospective_need), "fin_status": clean(r.final_status), "fin_src": clean(r.final_source),
-            "co_rtd": clean(r.co_reported_since_jul2025), "co_ratio": clean(r.completion_ratio_2015_2024, 3),
+            "f": f, "n": r.municipality, "c_": r.county, "d": d,
+            "cls": r.class_live, "clsb": r.class_base, "one": int(r.live_sources) == 1 and r.class_live in ("below_half", "half_to_one", "one_to_two", "two_plus"), "pn": clean(r.prospective_need), "why": why,
+            "tgt": clean(r.cw_target, 1),
+            "c": {"u": clean(r.cw_units), "m": clean(r.cw_months), "p": clean(r.cw_pace, 3), "ok": bool(r.cw_usable),
+                  "est": clean(round(r.cw_units - r.cw_reported_units, 1)) if pd.notna(r.cw_units) else None,
+                  "fu": clean(r.c_units), "fm": clean(r.c_months), "fp": clean(r.c_pace, 3), "fok": bool(r.c_usable),
+                  "best": clean(r.c_best_year), "b20": clean(r.c_best_20), "b100": clean(r.c_best_100)},
+            "s": {"u": clean(r.dw_units), "m": clean(r.dw_months), "p": clean(r.dw_pace, 3), "ok": bool(r.dw_usable),
+                  "zu": bool(r.dw_zero_unconfirmed),
+                  "best": clean(r.d_best_year), "b20": clean(r.d_best_20), "b100": clean(r.d_best_100)},
+            "cb": {"n": clean(r.c_base_years), "a": clean(r.c_base_avg, 1), "v": clean(r.c_base_cov, 3)},
+            "sb": {"n": clean(r.d_base_years), "a": clean(r.d_base_avg, 1), "v": clean(r.d_base_cov, 3)},
+            "fin": clean(r.final_prospective_need), "fin_status": clean(r.final_status), "fin_doc": clean(r.final_evidence), "fin_src": clean(r.final_source),
+            "co": clean(r.co_reported_since_jul2025), "cr": clean(r.completion_ratio_2015_2024, 3),
         })
     payload = {"meta": {"width": WIDTH, "height": height, "repo": REPO_URL,
                         "built_utc": last_data_update()},
@@ -86,7 +83,7 @@ def main():
     (DOCS / "index.html").write_text(
         '<!doctype html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n'
         '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n'
-        '<meta name="description" content="Live map: are New Jersey towns permitting enough homes to meet their Fourth Round affordable-housing obligations?">\n'
+        '<meta name="description" content="Live map of homes permitted in each New Jersey town since July 2025, compared with its Fourth Round affordable-housing obligation, from two public permit sources.">\n'
         + tpl.replace("<style>", "<style>\n[hidden]{display:none!important} body{margin:0}", 1)
         + "\n</html>\n")
     inline = '<script id="town-data" type="application/json">' + data.replace("</", "<\\/") + "</script>\n"

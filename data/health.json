@@ -1,0 +1,61 @@
+{
+  "overall": "ok",
+  "can_answer": true,
+  "checks": [
+    {
+      "check": "round_window",
+      "status": "ok",
+      "detail": "Fourth Round active: month 14 of 120 (Census), 7 (state data)."
+    },
+    {
+      "check": "census_freshness",
+      "status": "ok",
+      "detail": "Latest Census data is 2 months old (normal lag is 1\u20133)."
+    },
+    {
+      "check": "state_permits_freshness",
+      "status": "ok",
+      "detail": "Latest state permit data (NJ DCA) is 9 months old (normal lag is 8\u201310)."
+    },
+    {
+      "check": "census_format",
+      "status": "ok",
+      "detail": "41 columns (expected 41), 562 NJ places (expected 550+)."
+    },
+    {
+      "check": "town_match",
+      "status": "ok",
+      "detail": "564 of 564 towns matched to at least one permit source."
+    },
+    {
+      "check": "reporting_coverage",
+      "status": "ok",
+      "detail": "Towns holding 74% of the obligation have usable state permit data since July 2025, and 53% reported at least 75% of months to Census. Warns only when neither source covers 60%."
+    },
+    {
+      "check": "source_agreement",
+      "status": "ok",
+      "detail": "164 of 195 towns with both sources usable fall in the same class; 31 disagree."
+    },
+    {
+      "check": "negative_values",
+      "status": "ok",
+      "detail": "0 towns had negative homes permitted since July 2025 (clipped to 0)."
+    },
+    {
+      "check": "obligation_source",
+      "status": "ok",
+      "detail": "DCA obligation workbook unchanged upstream."
+    },
+    {
+      "check": "completions_freshness",
+      "status": "ok",
+      "detail": "Latest completions data (NJ DCA certificates of occupancy) is 9 months old (normal lag is 8\u201310). Completions are a secondary layer."
+    },
+    {
+      "check": "proxy_validity",
+      "status": "manual",
+      "detail": "Permits \u00d7 20% is a yardstick for affordable output, not a measure of it. Reviewed by hand each month (data/review_log.md)."
+    }
+  ]
+}

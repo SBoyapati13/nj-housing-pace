@@ -6,6 +6,9 @@
 [![Weekly data update](https://github.com/SBoyapati13/nj-housing-pace/actions/workflows/update.yml/badge.svg)](https://github.com/SBoyapati13/nj-housing-pace/actions/workflows/update.yml)
 [![Interactive map](https://img.shields.io/badge/interactive%20map-open-1c5cab)](https://sboyapati13.github.io/nj-housing-pace/)
 
+> [!WARNING]
+> **Under revision (October 13, 2026).** A review found errors in the figures below: some 2025 permit counts come from preliminary Census files that have since been revised; many towns' recent counts are Census estimates for months they didn't report; and the statewide figure includes permits in towns with no obligation. Please don't cite these numbers until the corrected version is posted. See the [CHANGELOG](CHANGELOG.md).
+
 [![Map of New Jersey towns: homes permitted since July 2025 compared with each town's Fourth Round obligation](out/map_live_progress.png)](https://sboyapati13.github.io/nj-housing-pace/)
 
 *Figure 1. Homes permitted since July 2025 in every New Jersey town, compared with its Fourth Round obligation pro-rated to date. Redrawn automatically with each Census release. **Click the map to open the interactive version**, where you can search for a town and see its numbers.*

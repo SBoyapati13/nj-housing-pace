@@ -1,0 +1,17 @@
+{
+  "single_year": {
+    "town_years": 1542,
+    "within_10pct": 0.3372,
+    "within_25pct": 0.5117,
+    "more_than_2x": 0.3093,
+    "median_state_over_census": 0.985
+  },
+  "summed_5plus_years": {
+    "towns": 132,
+    "within_10pct": 0.3636,
+    "within_25pct": 0.7727,
+    "more_than_2x": 0.0985
+  },
+  "state_zero_vs_census_full_report_20plus": 60,
+  "definition": "Fully reported = 12 months reported to Census and the state total not marked 'Missing Data' in its December file (for a year with no revised yearly file yet, nor its processing date); agreement rows also need both counts above 0 and at least 20 homes in one of them."
+}

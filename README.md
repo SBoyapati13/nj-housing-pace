@@ -263,6 +263,7 @@ The data problem is a finding too. Two public agencies count the same permits an
 | Log | `data/runs.jsonl` | Adds one line per run whose inputs changed: the input hashes plus the headline numbers. Lines are only ever added, never edited |
 | Health | `data/health.json` | The checks in §7.2, committed whenever they change, so a warning is published even when no new data arrives |
 | Figures, map and report | `src/chart.py`, `src/map.py`, `src/web.py`, `src/report.py` | Redraw Figures 1–2, rebuild the interactive map (`docs/`) and its single-file copy (`out/web_preview.html`), and rewrite the Live status block |
+| Source agreement | `src/source_agreement.py` | Compares the two permit sources year by year and over five or more years; writes `out/source_agreement.json` and `out/source_totals.csv` (figures for the note on how the sources disagree) |
 | Schedule | `.github/workflows/update.yml` | Runs every Monday on GitHub Actions; commits only when a source published something new or the health status changed, then redeploys the map |
 
 Census revises earlier months, and in May the annual files; the state revises with its yearly files. The fetcher re-checks every file it uses on each run, and a revision shows up as a new entry in the log.

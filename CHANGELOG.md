@@ -2,6 +2,38 @@
 
 Methodology changes are recorded here before results that depend on them are published. Data updates are not listed; they are in `data/runs.jsonl`.
 
+## v3 method, pre-registered 2026-10-13 (written before any v3 results were computed)
+What was looked at before writing this: reporting coverage and statewide totals in both permit sources for 2015–2025, the file formats, and a handful of named towns (Newark, Jersey City, Wayne, Manalapan, Linden, Edison). No v3 town classifications, statewide figures or maps had been computed.
+
+**Permits come from two sources, shown side by side.**
+- *Census Building Permits Survey.* Full years 2015 onward from the revised annual files (`neYYYYa.txt`). The current year from the latest year-to-date file. A town's months reported come from the file's "months reported" field. July–December 2025 = the revised 2025 annual total × the share of the preliminary December total that fell after June ((Dec − Jun) ÷ Dec, clipped to 0–1; 0.5 when the December total is 0). The same rule applies to any later year that is only partly inside the round.
+- *NJ DCA Construction Reporter, housing units authorized by building permits.* Months since July 2025 from the monthly files (the month block); a month marked "No report" is not reported. Full years 2015–2024 from the state's revised yearly files; a year without a yearly file uses the December year-to-date figure. A town-year is not reported if the December file marks its year-to-date total "Missing Data".
+
+**A source is usable for a town** when the town reported at least 75% of the round's elapsed months to that source.
+
+**Pace, per source** = homes permitted since July 1, 2025 × 0.20 ÷ (obligation × months elapsed in that source ÷ 120). Classes: below 0.5; 0.5 to 1; 1 to 2; 2 or more.
+
+**One map class per town**, in this order:
+1. No obligation: hatched, with the reason (Qualified Urban Aid, or a calculated obligation of zero).
+2. Too early to read: the obligation pro-rated to the latest month of either source is under 5 affordable homes.
+3. Both sources usable and in the same class: that class. In different classes: "Sources disagree".
+4. One source usable: that source's class, marked as one source.
+5. No source usable: "Not enough reports".
+
+**Statewide figures** cover obligated towns only, given per source. DCA: towns where DCA is usable. Census: all obligated towns, with the share that is Census estimates. Permits in towns with no obligation are reported separately.
+
+**Best-year threshold.** Per source, the best year from 2015 through the latest full year, counting only years the town fully reported (12 months to Census; not marked missing by DCA). It needs at least 5 such years. It is no longer shown on the map; it appears in the town detail and the README.
+
+**2021–25 baseline.** Re-derived from both sources' revised data. A town needs at least 4 of 5 years reported to a source to get a baseline figure from it. The v1 frozen baseline numbers are kept in `data/runs.jsonl` and marked superseded.
+
+**Negative values.** A town's homes permitted since July 2025 are clipped at 0 and flagged; the count of flagged towns appears in the health checks.
+
+**Completions.** The completion ratio and the pipeline are computed against DCA permits (same agency and town codes as the certificates of occupancy). A town-year of completions is treated as missing where the state marks the year-to-date processing date "Missing Data" and the total is 0. This replaces the v2.2 zero-with-permits rule.
+
+**Health.** Health is written to `data/health.json` (no timestamps) and committed whenever it changes, so a stale-source warning is published even when no new data arrives. A failed check of an upstream file no longer writes an error into a manifest.
+
+**Wording.** The 20% set-aside is described as a yardstick, not an upper bound: prior-round surplus credits, bonus credits, 100%-affordable projects and vacant-land adjustments can move delivered affordable homes either way. The map palette moves off red/blue.
+
 ## Notice of errors, 2026-10-13 (correction in progress)
 An adversarial review of v2.2 found errors that affect published figures. Until the corrected version (v3) is posted, the map and README carry an "under revision" notice.
 - **Preliminary 2024–25 permits.** Full years were read from the December year-to-date files, not from the revised annual files Census publishes each May. For 2025 the state total is 32,021 in the file used against 27,661 revised; some towns differ far more (Manalapan 1,451 vs. 366). The README wrongly said annual files and annual revisions were used.

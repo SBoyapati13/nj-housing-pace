@@ -41,12 +41,13 @@ def ytd(y, m):    return bps(f"ne{y % 100:02d}{m:02d}y.txt")
 def load_dca():
     """Obligations from the pinned extract of DCA's Final Summary sheet (see src/pin_dca.py)."""
     df = pd.read_csv(RAW / "dca_final_summary.csv", dtype={"fips": str})
-    df = df[["fips","municipality","county","present_need","qualified_urban_aid","households_2020","prospective_need"]]
+    df = df[["fips","dca_municode","municipality","county","present_need","qualified_urban_aid","households_2020","prospective_need"]]
+    df["dca_municode"] = df.dca_municode.astype(str).str.replace(r"\.0$", "", regex=True).str.zfill(4)
     for c in ["present_need","qualified_urban_aid","households_2020","prospective_need"]:
         df[c] = pd.to_numeric(df[c], errors="coerce")
     return df.set_index("fips")
 
-def health(manifest, vy, vm, n_towns, n_matched):
+def health(manifest, vy, vm, n_towns, n_matched, co_vintage=None, co_reporting=None):
     """Can this system still answer its question? Each check is ok / warn / stop."""
     checks = []
     def add(name, status, detail): checks.append({"check": name, "status": status, "detail": detail})
@@ -71,9 +72,33 @@ def health(manifest, vy, vm, n_towns, n_matched):
         add("obligation_source", "warn", "DCA's published workbook has changed since it was pinned. Review before adopting.")
     else:
         add("obligation_source", "ok", "DCA workbook unchanged upstream.")
-    add("proxy_validity", "manual", "Obligations are DCA-calculated, not adopted or court-approved; permits are a proxy for affordable output. Reviewed by hand each month.")
+    if co_vintage:
+        cy, cm = co_vintage
+        now = datetime.now(timezone.utc); co_lag = (now.year * 12 + now.month) - (cy * 12 + cm)
+        add("completions_freshness", "ok" if co_lag <= 10 else "warn",
+            f"Latest completions data (NJ DCA certificates of occupancy) is {co_lag} months old; this source normally runs 8-10 months behind. Completions are a secondary layer, so this check never stops the system.")
+        share = co_reporting / n_matched if n_matched else 0
+        add("completions_reporting", "ok" if share >= 0.85 else "warn",
+            f"{co_reporting} of {n_matched} towns filed usable completions reports for the latest full year ({share:.0%}). Missing reports, and zeros that look like missing reports, are left out of the completions figures.")
+    add("proxy_validity", "manual", "Obligations are DCA-calculated (final numbers are tracked for the 15 largest only); permits are a proxy for affordable output. Reviewed by hand each month.")
     worst = "stop" if any(c["status"] == "stop" for c in checks) else ("warn" if any(c["status"] == "warn" for c in checks) else "ok")
     return {"overall": worst, "can_answer": worst != "stop", "checks": checks}
+
+CO_DIR = RAW / "co"
+FIRM_STATUSES = {"court order", "settlement", "accepted DCA number"}
+
+def co_ytd(name):
+    """Year-to-date housing units certified (certificates of occupancy) per DCA municode."""
+    path = CO_DIR / name
+    x = pd.ExcelFile(path)
+    raw = pd.read_excel(path, sheet_name=x.sheet_names[0], header=None)
+    r = raw.iloc[3:, 7:13].copy()
+    r.columns = ["code", "name", "total", "onetwo", "multi", "mixed"]
+    r = r[pd.to_numeric(r.code, errors="coerce").notna()].copy()
+    r["code"] = r.code.astype(int).astype(str).str.zfill(4)
+    r = r[r.code != "9999"]
+    r["total"] = pd.to_numeric(r.total, errors="coerce").fillna(0)
+    return r.groupby("code").total.sum()          # Princeton appears twice in 2017-21 files; merged
 
 def sha(p): return hashlib.sha256(p.read_bytes()).hexdigest()[:16]
 
@@ -145,13 +170,75 @@ def main():
     df["any_route_status"], df["any_route_closes"] = no_return(need_aff, 1.0)
     df["required_units_per_year_at_20pct"] = need_aff / SET_ASIDE / (m_rem / 12) if m_rem else float("nan")
 
+    # ---- final / adopted obligations (sourced; DCA number stays primary) ----
+    fin = pd.read_csv(RAW / "obligation_final.csv", dtype={"fips": str}).set_index("fips")
+    df["final_prospective_need"] = fin.final_prospective_need.reindex(idx)
+    df["final_status"] = fin.status.reindex(idx)
+    df["final_source"] = fin.source_url.reindex(idx)
+    firm = df.final_status.isin(FIRM_STATUSES) & df.final_prospective_need.notna()
+    df["obligation_sensitivity"] = df.prospective_need.where(~firm, df.final_prospective_need)
+    sens_target = df.obligation_sensitivity * months / ROUND_MONTHS
+    df["live_progress_sensitivity"] = df.live_units_round_to_date * SET_ASIDE / sens_target.where(sens_target > 0)
+
+    # ---- reported completions (certificates of occupancy, NJ DCA) ----
+    com = json.loads((CO_DIR / "manifest.json").read_text())
+    cy, cm = com["vintage"]["year"], com["vintage"]["month"]
+    code = df.dca_municode
+    def by_town(series):
+        return pd.Series(series.reindex(code.values).values, index=idx)
+    def present(name):
+        return pd.Series(code.isin(co_ytd(name).index).values, index=idx)
+    SUSPECT_MIN_PERMITS = 100   # zero completions despite >=100 homes permitted in the prior two years
+    def reported_year(y):
+        """Town listed in year y's December report and not a likely missing report recorded as zero."""
+        listed = present(f"certs_12_{y}.xls")
+        cos = by_town(co_ytd(f"certs_12_{y}.xls")).fillna(0)
+        recent_permits = sum((z(full_year(k)) for k in (y - 1, y - 2) if k >= HIST_FIRST), 0)   # permit files start in 2015
+        return listed & ~((cos == 0) & (recent_permits >= SUSPECT_MIN_PERMITS))
+    co_files = [f"certs_12_{y}.xls" for y in range(2015, cy)] + ["certs_06_2025.xls", f"certs_{cm:02d}_{cy}.xls"]
+    co_files = list(dict.fromkeys(co_files))
+    # since July 2025
+    if cy == 2025:
+        rtd_files = ["certs_06_2025.xls", f"certs_{cm:02d}_{cy}.xls"]
+        co_rtd = by_town(co_ytd(f"certs_{cm:02d}_{cy}.xls")) - by_town(co_ytd("certs_06_2025.xls"))
+    else:
+        rtd_files = ["certs_06_2025.xls", "certs_12_2025.xls"] + [f"certs_12_{y}.xls" for y in range(2026, cy)] + [f"certs_{cm:02d}_{cy}.xls"]
+        co_rtd = by_town(co_ytd("certs_12_2025.xls")) - by_town(co_ytd("certs_06_2025.xls"))
+        for y in range(2026, cy):
+            co_rtd = co_rtd + by_town(co_ytd(f"certs_12_{y}.xls"))
+        co_rtd = co_rtd + by_town(co_ytd(f"certs_{cm:02d}_{cy}.xls"))
+    # A town absent from the latest partial-year file usually just hasn't filed yet that year,
+    # so presence is required only in the complete files (June 2025 and each December).
+    need = [f for f in dict.fromkeys(rtd_files) if not (f == f"certs_{cm:02d}_{cy}.xls" and cm < 12)]
+    rtd_ok = pd.concat([present(f) for f in need], axis=1).all(axis=1)
+    rtd_ok &= ~((co_rtd.fillna(0) == 0) & ((z(full_year(2024)) + z(full_year(2025))) >= SUSPECT_MIN_PERMITS))
+    df["co_vintage"] = f"{cy}-{cm:02d}"
+    df["co_reported_since_jul2025"] = co_rtd.where(rtd_ok & df.matched)
+    # completion ratio 2015-2024 (towns reporting every year)
+    ratio_years = range(2015, 2025)
+    full_rep = pd.concat([reported_year(y) for y in ratio_years], axis=1).all(axis=1)
+    co_sum = sum(by_town(co_ytd(f"certs_12_{y}.xls")).fillna(0) for y in ratio_years)
+    pm_sum = sum(z(full_year(y)) for y in ratio_years)
+    df["co_2015_2024"] = co_sum.where(full_rep & df.matched)
+    df["permits_2015_2024"] = pm_sum.where(df.matched)
+    df["completion_ratio_2015_2024"] = (co_sum / pm_sum.where(pm_sum > 0)).where(full_rep & df.matched)
+    # two-year pipeline: permits 2024-25 minus reported completions 2024-25
+    two = ["certs_12_2024.xls", "certs_12_2025.xls"]
+    two_rep = reported_year(2024) & reported_year(2025)
+    co_two = sum(by_town(co_ytd(f)).fillna(0) for f in two)
+    pm_two = z(full_year(2024)) + z(full_year(2025))
+    df["pipeline_2024_2025"] = (pm_two - co_two).where(two_rep & df.matched)
+    last_full = cy - 1 if cm < 12 else cy
+    co_last_full = reported_year(last_full)
+    co_suspect_last_full = present(f"certs_12_{last_full}.xls") & ~co_last_full
+
     OUT.mkdir(exist_ok=True); HIST.mkdir(parents=True, exist_ok=True)
     df.reset_index().to_csv(OUT / "town_pace.csv", index=False)
     df.reset_index().to_csv(HIST / f"town_pace_{vy}-{vm:02d}.csv", index=False)
 
     m = df[df.matched]; has = m[m.prospective_need > 0]
     s = {
-        "method": "v2", "vintage": f"{vy}-{vm:02d}", "months_elapsed": months,
+        "method": "v2.2", "vintage": f"{vy}-{vm:02d}", "months_elapsed": months,
         "towns": int(len(df)), "towns_matched": int(df.matched.sum()),
         "obligation_total": int(df.prospective_need.sum()),
         "baseline_avg_units_per_year": round(float(m.avg_units_per_year.sum()), 1),
@@ -172,13 +259,28 @@ def main():
         "any_route_closed": int((has.any_route_status == "past").sum()),
         "any_route_closed_obligation": int(has[has.any_route_status == "past"].prospective_need.sum()),
         "met_at_20pct": int((has.inclusionary_route_status == "met").sum()),
+        "final_numbers_found": int(df.final_prospective_need.notna().sum()),
+        "final_numbers_firm": int(firm.sum()),
+        "live_progress_statewide_sensitivity": round(float(m.live_units_round_to_date.sum() * SET_ASIDE / (df.obligation_sensitivity.sum() * months / ROUND_MONTHS)), 4),
+        "obligation_total_sensitivity": int(df.obligation_sensitivity.sum()),
+        "co_vintage": f"{cy}-{cm:02d}",
+        "co_months_since_round_start": 12 * (cy - 2025) + cm - 6,
+        "co_reported_since_jul2025": int(df.co_reported_since_jul2025.sum()),
+        "co_towns_reporting_since_jul2025": int(df.co_reported_since_jul2025.notna().sum()),
+        "co_towns_reporting_last_full_year": int((co_last_full & df.matched).sum()),
+        "co_completion_ratio_2015_2024": round(float(df.co_2015_2024.sum() / df.permits_2015_2024[df.co_2015_2024.notna()].sum()), 4),
+        "co_towns_reporting_every_year_2015_2024": int(df.completion_ratio_2015_2024.notna().sum()),
+        "co_pipeline_2024_2025": int(df.pipeline_2024_2025.sum()),
+        "co_likely_unreported_last_full_year": int((co_suspect_last_full & df.matched).sum()),
+        "co_towns_in_pipeline_measure": int(df.pipeline_2024_2025.notna().sum()),
         "live_exempt_share_round_to_date": round(float(m[m.prospective_need == 0].live_units_round_to_date.sum() / m.live_units_round_to_date.sum()), 4),
     }
-    s["health"] = health(manifest, vy, vm, len(df), int(df.matched.sum()))
+    s["health"] = health(manifest, vy, vm, len(df), int(df.matched.sum()), (cy, cm), s["co_towns_reporting_last_full_year"])
     (OUT / "summary.json").write_text(json.dumps(s, indent=2))
 
     inputs = {f["sha256"][:16]: n for n, f in manifest["files"].items()}
-    inputs_key = sorted(list(inputs) + [json.loads((RAW / "dca_pin.json").read_text())["sha256"][:16]])
+    co_inputs = [f["sha256"][:16] for f in json.loads((CO_DIR / "manifest.json").read_text())["files"].values()]
+    inputs_key = sorted(list(inputs) + co_inputs + [json.loads((RAW / "dca_pin.json").read_text())["sha256"][:16], sha(RAW / "obligation_final.csv")])
     runs = [json.loads(l) for l in LEDGER.read_text().splitlines() if l.strip()] if LEDGER.exists() else []
     runs = [r for r in runs if "inputs" in r]
     last = runs[-1] if runs else None

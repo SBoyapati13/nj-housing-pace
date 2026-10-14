@@ -34,7 +34,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           # New data = new or revised Census files, or a new run-log entry. Anything else
           # (e.g. PNGs re-rendered with a different font stack) is discarded.
-          if git diff --quiet -- data/raw/bps/manifest.json data/runs.jsonl; then
+          if git diff --quiet -- data/raw/bps/manifest.json data/raw/co/manifest.json data/runs.jsonl; then
             echo "No new Census data this week."
             git checkout -- .
             exit 0

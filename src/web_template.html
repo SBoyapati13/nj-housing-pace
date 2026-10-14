@@ -70,6 +70,8 @@ input[type=search] { font: 15px var(--f-body); padding: 8px 10px; border: 1px so
 .detail .status { display: inline-flex; gap: 6px; align-items: center; font-size: 13px; font-weight: 600; }
 .detail .status i { width: 12px; height: 12px; border-radius: 2px; display: inline-block; }
 .empty { color: var(--ink2); font-size: 13.5px; }
+.finnote { margin: 0; font-size: 13px; color: var(--ink2); }
+.finnote a { color: var(--accent); }
 details { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; }
 summary { cursor: pointer; font-weight: 600; }
 .tablewrap { overflow-x: auto; margin-top: 10px; }
@@ -215,12 +217,17 @@ td.num, th.num { text-align: right; font-family: var(--f-data); font-variant-num
     const rows = t.pn > 0 ? (live ? [
       ["Obligation, 2025–35", fmt(t.pn) + " units"], ["Pro-rated to date", fmt(t.target, 0)], ["Homes permitted since July 2025", fmt(t.rtd)],
       ["Pace vs. pro-rated obligation", pct(t.prog)], ["Homes permitted, last 12 months", fmt(t.ttm)], ["Best year since 2015", fmt(t.best) + " homes"],
-      ["Best-year threshold (at 20%)", closes(t.inc_status, t.inc_date)], ["Best-year threshold (all homes affordable)", closes(t.any_status, t.any_date)]] : [
+      ["Best-year threshold (at 20%)", closes(t.inc_status, t.inc_date)], ["Best-year threshold (all homes affordable)", closes(t.any_status, t.any_date)],
+      ["Reported completions since July 2025", t.co_rtd == null ? "Not reported" : fmt(t.co_rtd)],
+      ["Reported completions ÷ permits, 2015–24", t.co_ratio == null ? "Incomplete reporting" : pct(t.co_ratio)]] : [
       ["Obligation, 2025–35", fmt(t.pn) + " units"], ["Avg. homes permitted / yr, 2021–25", fmt(t.avg, 1)], ["Coverage at 20%", pct(t.cov)]])
       : [["Obligation, 2025–35", t.f in byFips && t.cls_live === "exempt" ? "None (urban-aid exempt)" : "–"], ["Homes permitted since July 2025", fmt(t.rtd)], ["Avg. homes permitted / yr, 2021–25", fmt(t.avg, 1)]];
+    const fin = t.fin_status && t.fin_status !== "not found"
+      ? `<p class="finnote">Final or adopted obligation: <b>${fmt(t.fin)}</b> (${t.fin_status}). <a href="${t.fin_src}">Source</a>. Figures above use the state's calculated ${fmt(t.pn)}.</p>`
+      : (t.fin_status === "not found" ? `<p class="finnote">No final or adopted number found yet; figures use the state's calculation.</p>` : "");
     $("#detail").innerHTML = `<div class="name">${t.n}</div><div class="m" style="color:var(--ink2);font-size:13px">${t.c} County</div>
       <div class="status"><i style="background:${swatch(t).startsWith("url") ? "var(--hatch)" : swatch(t)}"></i>${label(t)}</div>
-      <dl>${rows.map(([a, b]) => `<dt>${a}</dt><dd>${b}</dd>`).join("")}</dl>`;
+      <dl>${rows.map(([a, b]) => `<dt>${a}</dt><dd>${b}</dd>`).join("")}</dl>${view === "live" ? fin : ""}`;
   }
   function select(t) { if (sel) sel.el.classList.remove("sel"); sel = t; t.el.classList.add("sel"); gTowns.appendChild(t.el); detail(t); }
   const tip = $("#tip"), box = $(".mapbox");
@@ -259,6 +266,7 @@ td.num, th.num { text-align: right; font-family: var(--f-data); font-variant-num
   // ---- method ----
   $("#method").innerHTML = `<h2>How this is measured</h2>
     <p>Each town's affordable-housing obligation for 2025–2035 comes from the NJ Department of Community Affairs' Fourth Round calculation. Homes permitted come from the U.S. Census Bureau's Building Permits Survey. Progress assumes 20% of new homes are affordable, a generous upper bound, since not every project includes affordable units. Towns can also comply in ways permits don't capture, and some towns' final numbers differ from DCA's. Compliance is determined through the Affordable Housing Dispute Resolution Program and the courts; this page doesn't assess it.</p>
+    <p>Completions are certificates of occupancy reported to the NJ Department of Community Affairs (through ${monthName(S.co_vintage)}; this source runs months behind). A town that didn't report can't be told apart from one with no completions, so completions are shown as reported and don't affect the colors.</p>
     <p>The map, its data and these figures are rebuilt from public sources by one command (<code>python3 src/update.py</code>), and every update is logged. ${M.repo ? `Code, data and the full write-up: <a href="${M.repo}">${M.repo.replace("https://", "")}</a>.` : ""}</p>
     <div class="health">${(h ? h.checks : []).map(c => `<span>${c.check.replace(/_/g, " ")}: ${c.status}</span>`).join("")}</div>`;
 

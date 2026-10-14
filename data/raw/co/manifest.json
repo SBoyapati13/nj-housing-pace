@@ -1,0 +1,99 @@
+{
+  "files": {
+    "certs_01_2026.xls": {
+      "fetched_utc": "2026-10-14T00:55:02+00:00",
+      "last_modified": "Wed, 01 Apr 2026 13:28:27 GMT",
+      "sha256": "07ffca826759f111a56f525ed0ecc300bbefe018a988c112a7e3436543c86d75",
+      "size": "670208",
+      "url": "https://www.nj.gov/dca/codes/reporter/2026m/certs_01_2026.xls"
+    },
+    "certs_06_2025.xls": {
+      "fetched_utc": "2026-10-14T00:55:05+00:00",
+      "last_modified": "Wed, 03 Sep 2025 13:37:29 GMT",
+      "sha256": "8935cc61b0bd154e1952a0973c26d62832f100475e46899cd228aa9daae8ee46",
+      "size": "663552",
+      "url": "https://www.nj.gov/dca/codes/reporter/2025m/certs_06_2025.xls"
+    },
+    "certs_12_2015.xls": {
+      "fetched_utc": "2026-10-14T00:55:07+00:00",
+      "last_modified": "Wed, 03 Jan 2024 20:37:08 GMT",
+      "sha256": "ec9b975ca232038ae594537da65aeceb53dcfdb243e6334e89c1dd3e23076f45",
+      "size": "453120",
+      "url": "https://www.nj.gov/dca/codes/reporter/2015monthly/certs_12_2015.xls"
+    },
+    "certs_12_2016.xls": {
+      "fetched_utc": "2026-10-14T00:55:09+00:00",
+      "last_modified": "Wed, 03 Jan 2024 19:38:30 GMT",
+      "sha256": "0a7c074cb3996eb770178b3114c3d0226d018f672adbf0e620221229a6f82836",
+      "size": "453120",
+      "url": "https://www.nj.gov/dca/codes/reporter/2016monthly/certs_12_2016.xls"
+    },
+    "certs_12_2017.xls": {
+      "fetched_utc": "2026-10-14T00:55:11+00:00",
+      "last_modified": "Wed, 03 Jan 2024 17:19:45 GMT",
+      "sha256": "cd93e5366912b4f6f9b4525fb9c8a6e852eaf874a4570c9ad940445fe572577d",
+      "size": "453120",
+      "url": "https://www.nj.gov/dca/codes/reporter/2017monthly/certs_12_2017.xls"
+    },
+    "certs_12_2018.xls": {
+      "fetched_utc": "2026-10-14T00:55:14+00:00",
+      "last_modified": "Mon, 27 Nov 2023 17:13:43 GMT",
+      "sha256": "a27950ee7ea67450e9c36298aa43cd65ffa9883ccdf2dfb97d7def889c83f227",
+      "size": "435200",
+      "url": "https://www.nj.gov/dca/codes/reporter/2018monthly/certs_12_2018.xls"
+    },
+    "certs_12_2019.xls": {
+      "fetched_utc": "2026-10-14T00:55:16+00:00",
+      "last_modified": "Mon, 27 Nov 2023 16:02:12 GMT",
+      "sha256": "ff0557d80b6506028addeea848a6494698eeae17fd8b9ca671b9ea715a82a803",
+      "size": "435200",
+      "url": "https://www.nj.gov/dca/codes/reporter/2019monthly/certs_12_2019.xls"
+    },
+    "certs_12_2020.xls": {
+      "fetched_utc": "2026-10-14T00:55:18+00:00",
+      "last_modified": "Mon, 27 Nov 2023 15:35:44 GMT",
+      "sha256": "dc53f7a52bccfdebdd5ad0c477fd467fb9c1d02fc3476dca622f9915b08b3e2d",
+      "size": "438272",
+      "url": "https://www.nj.gov/dca/codes/reporter/2020monthly/certs_12_2020.xls"
+    },
+    "certs_12_2021.xls": {
+      "fetched_utc": "2026-10-14T00:55:20+00:00",
+      "last_modified": "Fri, 24 Nov 2023 18:46:22 GMT",
+      "sha256": "26f3c42c0712eb2d980bc63fbaaed9dd7b2408e07360c2fdb88ccfea1273074e",
+      "size": "437248",
+      "url": "https://www.nj.gov/dca/codes/reporter/2021monthly/certs_12_2021.xls"
+    },
+    "certs_12_2022.xls": {
+      "fetched_utc": "2026-10-14T00:55:22+00:00",
+      "last_modified": "Fri, 24 Nov 2023 18:07:57 GMT",
+      "sha256": "b51f4db4721566693c4386f456a64700ecd03bdc17dc733fee15de637da0cfa4",
+      "size": "668672",
+      "url": "https://www.nj.gov/dca/codes/reporter/2022monthly/certs_12_2022.xls"
+    },
+    "certs_12_2023.xls": {
+      "fetched_utc": "2026-10-14T00:55:25+00:00",
+      "last_modified": "Wed, 20 Mar 2024 15:05:23 GMT",
+      "sha256": "9950247ad53eb65565b4588fdc47566afd9f8b1d3daf54161bba179f13f98f86",
+      "size": "658432",
+      "url": "https://www.nj.gov/dca/codes/reporter/2023monthly/certs_12_2023.xls"
+    },
+    "certs_12_2024.xls": {
+      "fetched_utc": "2026-10-14T00:55:27+00:00",
+      "last_modified": "Wed, 19 Feb 2025 15:27:16 GMT",
+      "sha256": "2540e5c9dfef1cbbf17de7e3603520ab958129c773c6fd6054fac8a381758c0e",
+      "size": "661504",
+      "url": "https://www.nj.gov/dca/codes/reporter/2024monthly/certs_12_2024.xls"
+    },
+    "certs_12_2025.xls": {
+      "fetched_utc": "2026-10-14T00:55:30+00:00",
+      "last_modified": "Tue, 24 Feb 2026 19:40:49 GMT",
+      "sha256": "1bf39d02c3c279e16c7d481b10e4aecb4ca7da5cdfb5b4c80df8062372e97a44",
+      "size": "661504",
+      "url": "https://www.nj.gov/dca/codes/reporter/2025m/certs_12_2025.xls"
+    }
+  },
+  "vintage": {
+    "month": 1,
+    "year": 2026
+  }
+}

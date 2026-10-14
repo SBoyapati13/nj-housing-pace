@@ -57,6 +57,14 @@ def main():
 - This compares obligations with past building patterns. It doesn't assess compliance: rezoning, 100%-affordable projects and other routes can exceed past patterns.
 - Per-town status and dates are in `out/town_pace.csv` (`inclusionary_route_*`, `any_route_*`).
 
+**Final obligation numbers.** {s['final_numbers_found']} of the 15 largest obligations have a final or adopted number on record ({s['final_numbers_firm']} settled, court-ordered or accepted as calculated); see `data/raw/obligation_final.csv` for each number's status, source and quote. Using those firm numbers in place of the state's calculation, statewide pace is **{s['live_progress_statewide_sensitivity']:.0%}** (vs. {s['live_progress_statewide']:.0%}).
+
+**Reported completions** (certificates of occupancy, NJ DCA; data through {MONTHS[int(s['co_vintage'][5:]) - 1]} {s['co_vintage'][:4]}, which runs months behind permits):
+- {s['co_reported_since_jul2025']:,} homes reported completed since July 2025 in the {s['co_towns_reporting_since_jul2025']} towns with complete reports for that period.
+- Over 2015–2024, reported completions equalled **{s['co_completion_ratio_2015_2024']:.0%}** of homes permitted, in the {s['co_towns_reporting_every_year_2015_2024']} towns that reported every year. The gap mixes projects still under way, permits never built and incomplete reporting; the data can't separate them.
+- Homes permitted in 2024–25 minus homes reported completed in 2024–25: **{s['co_pipeline_2024_2025']:,}** across {s['co_towns_in_pipeline_measure']} towns, a rough size of the recent pipeline.
+- {s['co_likely_unreported_last_full_year']} towns show zero completions in the latest full year despite substantial recent permitting; these are treated as likely missing reports and left out of the figures above.
+
 {changes(s['vintage'])}
 
 ![Figure 2](out/county_live_progress.png)

@@ -49,6 +49,14 @@ This is a living analysis. A pipeline checks the Census Bureau every week, pulls
 - This compares obligations with past building patterns. It doesn't assess compliance: rezoning, 100%-affordable projects and other routes can exceed past patterns.
 - Per-town status and dates are in `out/town_pace.csv` (`inclusionary_route_*`, `any_route_*`).
 
+**Final obligation numbers.** 12 of the 15 largest obligations have a final or adopted number on record (9 settled, court-ordered or accepted as calculated); see `data/raw/obligation_final.csv` for each number's status, source and quote. Using those firm numbers in place of the state's calculation, statewide pace is **76%** (vs. 75%).
+
+**Reported completions** (certificates of occupancy, NJ DCA; data through January 2026, which runs months behind permits):
+- 9,419 homes reported completed since July 2025 in the 363 towns with complete reports for that period.
+- Over 2015–2024, reported completions equalled **55%** of homes permitted, in the 423 towns that reported every year. The gap mixes projects still under way, permits never built and incomplete reporting; the data can't separate them.
+- Homes permitted in 2024–25 minus homes reported completed in 2024–25: **23,329** across 469 towns, a rough size of the recent pipeline.
+- 20 towns show zero completions in the latest full year despite substantial recent permitting; these are treated as likely missing reports and left out of the figures above.
+
 First live run: no earlier release to compare against yet.
 
 ![Figure 2](out/county_live_progress.png)
@@ -64,7 +72,9 @@ First live run: no earlier release to compare against yet.
 | census format | OK | 41 columns (expected 41), 562 NJ places (expected 550+). |
 | town match | OK | 562 of 564 towns matched between DCA and Census. |
 | obligation source | OK | DCA workbook unchanged upstream. |
-| proxy validity | MANUAL | Obligations are DCA-calculated, not adopted or court-approved; permits are a proxy for affordable output. Reviewed by hand each month. |
+| completions freshness | OK | Latest completions data (NJ DCA certificates of occupancy) is 9 months old; this source normally runs 8-10 months behind. Completions are a secondary layer, so this check never stops the system. |
+| completions reporting | OK | 495 of 562 towns filed usable completions reports for the latest full year (88%). Missing reports, and zeros that look like missing reports, are left out of the completions figures. |
+| proxy validity | MANUAL | Obligations are DCA-calculated (final numbers are tracked for the 15 largest only); permits are a proxy for affordable output. Reviewed by hand each month. |
 
 *Run history (last 12 updates; full log in `data/runs.jsonl`):*
 
@@ -72,6 +82,7 @@ First live run: no earlier release to compare against yet.
 |---|---|---|---|---|---|
 | 2026-08 | 2026-10-13 | v1 (superseded) | 51,655 | 77% | 319 |
 | 2026-08 | 2026-10-13 | v2 | 35,461 | 75% | 329 |
+| 2026-08 | 2026-10-14 | v2.2 | 35,461 | 75% | 329 |
 <!-- LIVE:END -->
 
 ## 1. Background
@@ -96,6 +107,26 @@ Towns could accept DCA's number or adopt their own. By the February 2025 deadlin
 
 The process has also been contested. A coalition led by Montvale sued to block the law; its mayor said the mandates "from Trenton go too far" [9]. Montvale's own dispute shows how much numbers can move: DCA assigned it 348 units, and the Dispute Resolution Program recommended 255, noting that "Prospective Need is not mandated to be perfect" [10].
 
+For the 15 largest obligations, this project records each town's final or adopted number where one could be found and verified (`data/raw/obligation_final.csv`, with source and quote for each):
+
+| Town | State calculation | Final / adopted | Basis |
+|---|---|---|---|
+| Paramus | 1,000 | 1,000 | Accepted the state number (plan reports vacant-land capacity of 87) |
+| Secaucus | 1,000 | 1,000 | Court order, Apr 2025 |
+| Wayne | 1,000 | 1,000 | Court order, Mar 2025 |
+| Roxbury | 989 | 358 | Adopted resolution, Jan 2025; outcome of any challenge unknown |
+| South Brunswick | 959 | 1,070 | Settlement, Sep 2024 |
+| Jackson | 954 | 1,000 | Settlement, Dec 2024 |
+| Monroe (Middlesex) | 751 | 460 | Settlement |
+| Wall | 744 | 650 | Court order, Apr 2025 |
+| Franklin (Somerset) | 714 | 659 | Settlement, Apr 2025 (news report) |
+| Hardyston | 674 | 647 | Settlement filed with the court, Dec 2025 |
+| Toms River | 670 | 649 | Settlement pending, Mar 2026 (news report) |
+| West Windsor | 661 | 392 | Adopted resolution, Jan 2025; outcome of any challenge unknown |
+| Linden, Edison, Old Bridge | 787, 727, 685 | – | Not found |
+
+The state's calculation remains the main measure because it's available and comparable for every town. Final numbers are used in a sensitivity figure (§3, item 8).
+
 ### 1.4 The gap this project fills
 
 Obligations come from DCA. Permits come from the Census Bureau. The two are published separately and use different town identifiers, so no public source puts each town's obligation next to how much that town actually builds. This project makes that join.
@@ -106,6 +137,8 @@ Obligations come from DCA. Permits come from the Census Bureau. The two are publ
 |---|---|---|
 | NJ DCA, *Fourth Round Calculation Workbook*, "Final Summary" sheet [6] | Present need, prospective need (capped), 2020 households, county-subdivision FIPS | 564 municipalities |
 | NJ DCA, *Fair Share Housing Obligations for 2025–2035: Methodology and Background* [4] | Definitions and formula; source of quoted methodology | — |
+| NJ DCA, *Construction Reporter*: housing units certified (certificates of occupancy) by municipality [13] | Reported completions, year to date, by structure type | Municipalities that report; 2015 to the latest published month |
+| Municipal resolutions, court orders, settlements and plans (listed in `data/raw/obligation_final.csv`) | Final or adopted obligations for the 15 largest | 12 of 15 found |
 | U.S. Census Bureau, cartographic boundary files, NJ county subdivisions, 2024 [12] | Town boundaries for the map (Figure 1), joined on the same 10-digit FIPS | 564 municipalities |
 | U.S. Census Bureau, Building Permits Survey (BPS), place-level annual files [5] | Housing units authorized by permit, by structure type (1, 2, 3–4, 5+ units) | NJ permit-issuing places, full years 2015 onward plus the latest year-to-date release (refreshed automatically) |
 
@@ -127,7 +160,14 @@ The method was written down before any results were computed.
    - **Best-year threshold**, at two levels. For each town: affordable units still owed = obligation − (homes permitted since July 2025 × 0.20). The town has **passed the threshold at 20%** when reaching its obligation by June 30, 2035 would take more than building every remaining year at its best year since 2015, with 20% of new homes affordable. It has **passed the threshold for all homes** when that would be true even if *every* new home were affordable. For towns below the threshold, the system projects the month they would cross it if the trailing-12-month pace continued. A best year since 2015 is a historical yardstick, not a limit: rezoning and 100%-affordable projects can exceed past patterns.
 
    The 2021–2025 baseline in §4 stays frozen, so the original finding can always be compared with what happens next.
-7. **Verification.** Town totals were hand-summed from raw Census rows (for example, Jersey City 2023 = 2,339 units; Wall Township 2024 = 387). The statewide obligation was checked against the workbook's TOTAL row (80,798).
+8. **Final obligations and completions** (specified October 13, 2026, before either was computed; logged in `CHANGELOG.md` as v2.2).
+   - **Sensitivity to final numbers.** Where a court order, settlement or accepted state number exists, the final number replaces the state's calculation in a second statewide figure. Adopted resolutions with an unknown challenge outcome, and pending settlements, are recorded but not used.
+   - **Reported completions since July 2025** = certificates of occupancy from the June 2025 year-to-date report through the latest month published. Only towns present in every complete report for that window are counted.
+   - **Completion ratio, 2015–2024** = reported completions ÷ homes permitted, for towns that appear in every year's report. 2025 is excluded because recent permits haven't had time to finish.
+   - **Two-year pipeline** = homes permitted in 2024–25 minus homes reported completed in 2024–25, for towns in both years' reports.
+   - **Likely missing reports.** A town-year showing zero completions despite at least 100 homes permitted in the prior two years is treated as not reported. This rule was added after inspecting the data: Jersey City reported over 1,000 completions a year in 2019–2023 and zero in 2024–25.
+   - Completions are a secondary layer: they don't change the map colors or the coverage ratio.
+9. **Verification.** Town totals were hand-summed from raw Census rows (for example, Jersey City 2023 = 2,339 units; Wall Township 2024 = 387). The statewide obligation was checked against the workbook's TOTAL row (80,798).
 
 ## 4. Baseline results (frozen, 2021–2025)
 
@@ -183,7 +223,7 @@ Monthly Census releases make this testable: the coverage ratio can be re-run eac
 - **Upper bound.** Not every market project is inclusionary, and rental set-asides are often below 20%. Real affordable output from market building is lower than shown.
 - **Other compliance routes.** Towns also comply through 100%-affordable projects, supportive housing, accessory units, rehabilitation (present need) and bonus credits. Permits capture only part of this.
 - **DCA numbers, not final numbers.** Many towns adopted lower numbers or had them adjusted, for example Montvale from 348 to 255 [10].
-- **Permits aren't completions.** Permits authorize construction; some projects are delayed or never built.
+- **Permits aren't completions, and completions are under-reported.** Permits authorize construction; some projects are delayed or never built. The completions layer (§3, item 8) shows how many permitted homes were reported finished. But towns that don't file reports can't be told apart from towns with no completions, and the number of reporting towns has fallen from 558 (2015) to 516 (2025). The state also publishes this data months after Census publishes permits.
 - **Imputation.** Census estimates activity for places that don't report every month [11].
 
 ## 7. How the system stays current
@@ -192,7 +232,7 @@ Monthly Census releases make this testable: the coverage ratio can be re-run eac
 
 | Step | Script | What it does |
 |---|---|---|
-| Fetch | `src/fetch.py` | Lists the Census directory, finds the newest release, and downloads only new or revised files. Records size, Last-Modified time and SHA-256 hash in `data/raw/bps/manifest.json` |
+| Fetch | `src/fetch.py` | Lists the Census directory and the state's certificate-of-occupancy pages, finds the newest releases, and downloads only new or revised files. Records size, Last-Modified time and SHA-256 hash in `data/raw/bps/manifest.json` |
 | Build | `src/build.py` | Recomputes the frozen baseline and the live metrics for all 564 towns. Saves a dated snapshot to `data/history/` |
 | Log | `data/runs.jsonl` | Adds one line per run **whose inputs changed**: the input hashes plus the headline numbers. Lines are only ever added, never edited, so the log is the system's full history |
 | Interactive map | `src/web.py` → `docs/` | Rebuilds the web map (`docs/index.html`, `docs/data/towns.json`) from the same outputs. The workflow deploys `docs/` to GitHub Pages after each run, so the live site always matches the latest data. Also writes `out/web_preview.html`, a single-file copy with the data built in |
@@ -240,6 +280,7 @@ Raw inputs are in `data/raw/`. DCA's 35 MB workbook isn't stored in the repo. It
 11. U.S. Census Bureau, "Building Permits Survey: Methodology." https://www.census.gov/construction/bps/methodology.html
 
 12. U.S. Census Bureau, Cartographic Boundary Files, county subdivisions, New Jersey, 1:500,000 (2024). https://www2.census.gov/geo/tiger/GENZ2024/shp/cb_2024_34_cousub_500k.zip
+13. NJ Department of Community Affairs, *Construction Reporter*: Certificates of Occupancy, monthly data. https://www.nj.gov/dca/codes/reporter/co2026.shtml (earlier years at co2015–co2025)
 
 All sources accessed October 13, 2026.
 

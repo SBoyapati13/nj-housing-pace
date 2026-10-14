@@ -72,6 +72,8 @@ def main():
             "avg": clean(r.avg_units_per_year, 1), "cov": clean(r.coverage, 3),
             "inc_status": clean(r.inclusionary_route_status), "inc_date": clean(r.inclusionary_route_closes),
             "any_status": clean(r.any_route_status), "any_date": clean(r.any_route_closes),
+            "fin": clean(r.final_prospective_need), "fin_status": clean(r.final_status), "fin_src": clean(r.final_source),
+            "co_rtd": clean(r.co_reported_since_jul2025), "co_ratio": clean(r.completion_ratio_2015_2024, 3),
         })
     payload = {"meta": {"width": WIDTH, "height": height, "repo": REPO_URL,
                         "built_utc": last_data_update()},

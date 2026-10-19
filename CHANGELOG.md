@@ -2,6 +2,12 @@
 
 Methodology changes are recorded here before results that depend on them are published. Data updates are not listed; they are in `data/runs.jsonl`.
 
+## v3.2 method, registered 2026-10-19 (before v3.2 results were computed)
+One change, closing the inconsistency disclosed in v3.1 (README §6): the too-early test used the obligation pro-rated to the latest month of either source (Census, 14 months), while map colors compare both sources over the shared period (7 months), so 74 colored towns had a shared-period target under 5 affordable homes.
+- **Too early to read** now means the obligation pro-rated over the shared period (July 2025 through the earlier of the two sources' latest months) is under 5 affordable homes. The threshold (5) is unchanged.
+- Nothing else changes: sources, usable-source rule, missing-data and unconfirmed-zero rules, classes and their order, statewide figures. Figure 2 and the "below half" counts keep leaving out too-early towns.
+- Expected before computing: more towns move to "too early" (any obligation under about 86 units at a 7-month shared period), none move out of it; colored-town counts fall accordingly.
+
 ## v3.1, published 2026-10-13
 Implemented as registered below. Also in this release, none of which changes a figure:
 - The interactive map, the static map and Figure 2 compare both sources over the same period. Each source's own full-period figures stay in the statewide table and the town detail.

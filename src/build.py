@@ -20,14 +20,14 @@ warnings.filterwarnings("ignore", category=pd.errors.PerformanceWarning)
 ROOT = Path(__file__).resolve().parents[1]
 RAW, OUT, HIST = ROOT / "data" / "raw", ROOT / "out", ROOT / "data" / "history"
 LEDGER, HEALTH = ROOT / "data" / "runs.jsonl", ROOT / "data" / "health.json"
-METHOD = "v3.1"
+METHOD = "v3.2"
 BASELINE_YEARS = [2021, 2022, 2023, 2024, 2025]
 ROUND_START, WINDOW_YEARS = (2025, 7), 10           # July 1, 2025 - June 30, 2035 (P.L.2024, c.2)
 ROUND_MONTHS = WINDOW_YEARS * 12
 HIST_FIRST = 2015
 SET_ASIDE = 0.20               # yardstick, not a bound (credits and 100%-affordable projects move it either way)
 USABLE_SHARE = 0.75            # a source is usable for a town that reported >= 75% of elapsed months to it
-TOO_EARLY = 5                  # obligation pro-rated to date < 5 affordable homes -> too early to read
+TOO_EARLY = 5                  # obligation pro-rated over the shared period < 5 affordable homes -> too early to read
 BASELINE_MIN_YEARS, BEST_MIN_YEARS = 4, 5
 CLASS_ORDER = ["below_half", "half_to_one", "one_to_two", "two_plus"]
 FIRM_STATUSES = {"court order", "settlement", "accepted DCA number"}
@@ -220,7 +220,7 @@ def main():
     df["d_zero_unconfirmed"] = unconfirmed_zero(df.d_units, cd_rep, cd_mon, d_elapsed) & df.d_usable
     df.loc[df.d_zero_unconfirmed, "d_usable"] = False
 
-    too_early = df.prospective_need * max(c_elapsed, d_elapsed) / ROUND_MONTHS < TOO_EARLY
+    too_early = df.prospective_need * w_el / ROUND_MONTHS < TOO_EARLY          # v3.2: judged on the shared period
     df["too_early"] = too_early & has_ob
     df["class_live"] = [combine(r, "cw", "dw", te) for (_, r), te in zip(df.iterrows(), df.too_early)]
     df["live_sources"] = df.cw_usable.astype(int) + df.dw_usable.astype(int)

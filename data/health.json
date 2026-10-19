@@ -35,7 +35,7 @@
     {
       "check": "source_agreement",
       "status": "ok",
-      "detail": "164 of 195 towns with both sources usable fall in the same class; 31 disagree."
+      "detail": "120 of 143 towns with both sources usable fall in the same class; 23 disagree."
     },
     {
       "check": "negative_values",

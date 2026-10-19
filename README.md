@@ -26,8 +26,8 @@ Town-level permit counts turn out to be the hard part. New Jersey has two public
 So the project shows both sources side by side, uses a source for a town only when the town reported most months to it, compares the sources over the same period, and treats a town as unreadable when they disagree. At the first release under this method (Census data through August 2026, state data through January 2026):
 
 - Homes permitted in obligated towns since July 2025, × 20%, came to **38%** of the obligation pro-rated to date on state data (313 towns with usable reports, July 2025 – January 2026) and **45%** on Census data (all obligated towns through August 2026, 36% of it Census estimates).
-- Where both sources were usable for a town, they put it in the same class 164 times out of 195.
-- **223 of 515** obligated towns are below half the pro-rated pace (133 on both sources agreeing, 90 on the only usable one). **251** can't be read yet: their sources disagree, they reported too few months, or their obligation is too small to read this early.
+- Where both sources were usable for a town, they put it in the same class 120 times out of 143.
+- **168 of 515** obligated towns are below half the pro-rated pace (103 on both sources agreeing, 65 on the only usable one). **325** can't be read yet: 266 because their obligation is too small to read over seven months (a number that falls as months accumulate), 36 for too few reports and 23 because the sources disagree.
 - About **36–37%** of all homes permitted were in the 49 towns that carry no new obligation, mostly by design (47 are Qualified Urban Aid municipalities).
 
 **How to read this.** This is an indicator built from building permits. It doesn't assess whether any town is complying with its obligation: towns meet obligations in several ways permits don't capture (credits, 100%-affordable projects, adjustments), and compliance is decided through the Affordable Housing Dispute Resolution Program and the courts. A low permit pace can reflect land, infrastructure and market conditions as much as local policy, and plans adopted in 2025–26 may not show up in permits for some time.
@@ -49,7 +49,7 @@ This is a living analysis. A pipeline checks both permit sources and the state's
 | Towns counted | 313 with usable reports (holding 74% of the obligation) | all 514 with a Census record; 202 reported at least 75% of months |
 | Homes permitted | 6,720 | 21,243, of which 36% are Census estimates |
 | **Pace vs. pro-rated obligation** | **38%** | **45%** (towns that reported: 46%) |
-| Towns below half the pro-rated pace (excluding towns too early to read) | 192 | 114 |
+| Towns below half the pro-rated pace (excluding towns too early to read) | 150 | 95 |
 | Share of all permits in towns with no obligation | 36% | 37% |
 
 Pace = homes permitted × 20% ÷ obligation pro-rated to date. The 20% is a yardstick, not a bound (see §3 and §6).
@@ -58,16 +58,16 @@ Pace = homes permitted × 20% ÷ obligation pro-rated to date. The 20% is a yard
 
 | Class | Towns |
 |---|---|
-| Below half the pro-rated pace | 223 |
-| Half to full pro-rated pace | 16 |
-| At or above pro-rated pace (1–2×) | 12 |
-| More than twice the pro-rated pace | 13 |
-| The two permit sources disagree | 31 |
-| Not enough reports to read | 54 |
-| Too early to read (small obligation) | 166 |
+| Below half the pro-rated pace | 168 |
+| Half to full pro-rated pace | 8 |
+| At or above pro-rated pace (1–2×) | 9 |
+| More than twice the pro-rated pace | 5 |
+| The two permit sources disagree | 23 |
+| Not enough reports to read | 36 |
+| Too early to read (small obligation) | 266 |
 | No new obligation | 49 |
 
-Of the 264 colored obligated towns, 164 rest on both sources agreeing and 100 (38%) on one usable source. 74 colored towns have an obligation pro-rated over the shared period of under 5 affordable homes (the too-early test uses the longer Census period; see §6), and 19 are colored from Census alone with no homes actually reported (their Census figure is all estimates for the unreported months, or zero). Where both sources were usable (195 towns), they put the town in the same class 164 times and disagreed 31 times.
+Of the 190 colored obligated towns, 120 rest on both sources agreeing and 70 (37%) on one usable source. 12 are colored from Census alone with no homes actually reported (their Census figure is all estimates for the unreported months, or zero). Where both sources were usable (143 towns), they put the town in the same class 120 times and disagreed 23 times.
 
 32 obligated towns have a state figure of 0 for the period that their Census reports don't confirm; those zeros are treated as not reported (§3, item 4).
 
@@ -100,7 +100,7 @@ First run under the current method: no earlier release to compare against yet.
 | census format | OK | 41 columns (expected 41), 562 NJ places (expected 550+). |
 | town match | OK | 564 of 564 towns matched to at least one permit source. |
 | reporting coverage | OK | Towns holding 74% of the obligation have usable state permit data since July 2025, and 53% reported at least 75% of months to Census. Warns only when neither source covers 60%. |
-| source agreement | OK | 164 of 195 towns with both sources usable fall in the same class; 31 disagree. |
+| source agreement | OK | 120 of 143 towns with both sources usable fall in the same class; 23 disagree. |
 | negative values | OK | 0 towns had negative homes permitted since July 2025 (clipped to 0). |
 | obligation source | OK | DCA obligation workbook unchanged upstream. |
 | completions freshness | OK | Latest completions data (NJ DCA certificates of occupancy) is 9 months old (normal lag is 8–10). Completions are a secondary layer. |
@@ -110,7 +110,7 @@ First run under the current method: no earlier release to compare against yet.
 
 | Census data through | State data through | Run date | Pace, state data | Pace, Census | Towns below half (map) |
 |---|---|---|---|---|---|
-| 2026-08 | 2026-01 | 2026-10-14 | 38% | 45% | 223 |
+| 2026-08 | 2026-01 | 2026-10-19 | 38% | 45% | 168 |
 <!-- LIVE:END -->
 
 ## 1. Background
@@ -180,7 +180,7 @@ Census matches towns by county and minor-civil-division code; the state by its o
 
 ## 3. Methods
 
-The current method (v3.1) is recorded in `CHANGELOG.md`. Its base (v3) was registered on October 13, 2026 before any v3 results were computed, and amended once before results when a rule didn't fit the state's files. Three corrections (v3.1, in items 4 and 7 below) were registered **after** v3 results had been computed, in response to an independent check, and before v3.1 results were computed. Earlier versions are listed there too, including what was wrong with them.
+The current method (v3.2) is recorded in `CHANGELOG.md`. Its base (v3) was registered on October 13, 2026 before any v3 results were computed, and amended once before results when a rule didn't fit the state's files. Three corrections (v3.1, in items 4 and 7 below) were registered **after** v3 results had been computed, in response to an independent check, and before v3.1 results were computed. v3.2 (October 19, registered before its results) judges "too early to read" on the shared period. Earlier versions are listed there too, including what was wrong with them.
 
 1. **Obligation.** For each town: DCA prospective need after the 1,000-unit / 20% cap, covering July 2025 – June 2035. The law states the round begins "with the fourth round on July 1, 2025" [3].
 2. **Yardstick.** Much affordable housing in New Jersey comes from inclusionary development, where a share of new homes is reserved as affordable; the law names "mandatory set-asides or density bonuses" among the tools [3]. Pace multiplies homes permitted by 20%. This is a yardstick, not a bound in either direction: some market projects carry no set-aside, while 100%-affordable projects, prior-round surplus credits, bonus credits and vacant-land adjustments can all change how many affordable homes a town needs or delivers.
@@ -188,7 +188,7 @@ The current method (v3.1) is recorded in `CHANGELOG.md`. Its base (v3) was regis
 4. **State permits.** July–December 2025 = December minus June 2025 year-to-date totals, counted as 6 reported months when neither file marks the town's total or processing date "Missing Data". The current year = the latest year-to-date total, counted as all its months on the same condition. Full years use the state's revised yearly files. A state figure of exactly 0 counts as a report only if the town reported at least 75% of the same months to Census and those reports total fewer than 5 homes; otherwise it's treated as not reported (in 60 town-years since 2015, by this project's reading of the state's markers, the state recorded 0 while the town reported 20 or more homes to Census for the full year).
 5. **Usable source.** A source is used for a town only if the town reported at least 75% of the elapsed months to it.
 6. **Pace, per source** = homes permitted since July 1, 2025 × 0.20 ÷ (obligation × months elapsed ÷ 120). Classes: below 0.5, 0.5–1, 1–2, 2 or more.
-7. **Map class**, in order: no obligation; too early to read (obligation pro-rated to the latest month of either source under 5 affordable homes; see §6); both sources usable and in the same class, that class; in different classes, "sources disagree"; one usable source, its class (marked in the town detail and counted separately in the Live status); none, "not enough reports". **Both sources are compared over the same period** (July 2025 through the latest month both have published) and the 75% test applies to that period. Each source's figures over its own full period are shown alongside.
+7. **Map class**, in order: no obligation; too early to read (obligation pro-rated over the shared period under 5 affordable homes; v3.2); both sources usable and in the same class, that class; in different classes, "sources disagree"; one usable source, its class (marked in the town detail and counted separately in the Live status); none, "not enough reports". **Both sources are compared over the same period** (July 2025 through the latest month both have published) and the 75% test applies to that period. Each source's figures over its own full period are shown alongside.
 8. **Best-year threshold**, per source. Would reaching the obligation by June 2035 take more than permitting every remaining year at the town's best fully reported year since 2015 (at least 5 such years needed), at a 20% set-aside, and even if every new home were affordable? A historical yardstick, not a limit. Shown in the town detail and the Live status, not on the map.
 9. **Final numbers.** A sensitivity figure replaces the state's calculation with the final number where it is recorded as a court order, settlement or accepted state number.
 10. **Completions.** Certificates of occupancy from the state, from the June 2025 report onward. A town-year is treated as missing where the state marks it "Missing Data" with a total of 0. The completion ratio and pipeline compare completions with *state* permits, so both sides come from the same agency.
@@ -244,9 +244,9 @@ The data problem is a finding too. Two public agencies count the same permits an
 - **The yardstick isn't a bound.** Not every market project is inclusionary, and rental set-asides are often below 20%; that pushes real affordable output below the yardstick. 100%-affordable projects, surplus and bonus credits, and adjustments push the other way.
 - **Other compliance routes.** Towns also comply through supportive housing, accessory units, rehabilitation (present need) and extensions of existing affordability controls. Permits capture only part of this.
 - **The sources disagree, and both have gaps.** Census estimates for non-reporting towns can be far off; the state marks missing towns but some of its zeros are missing reports, and it runs about eight months behind, so the map's shared period is set by the state. Even towns that reported fully to both can differ widely, likely from timing and definitions (for example, when a large project's permits are counted).
-- **One-source towns.** 100 of the 264 colored obligated towns (38%) rest on one usable source. Their class is marked as such in the town detail and the map legend.
-- **Too early is judged on the longer period.** The too-early test uses the obligation pro-rated to the latest month of either source (Census, 14 months), while colors compare the shared 7-month period. So 74 colored towns have an obligation pro-rated over the shared period of under 5 affordable homes, where one project can change the class. Changing this would need a new registered method version.
-- **Census figures aren't checked the way state zeros are.** 19 towns are colored from Census alone with no homes actually reported over the shared period: their Census figure is zero, or estimates for months they didn't report.
+- **One-source towns.** 70 of the 190 colored obligated towns (37%) rest on one usable source. Their class is marked as such in the town detail and the map legend.
+- **Many towns are too early to read.** Because the state's data run about eight months behind, the shared period is short (7 months at the first v3.2 release), so 266 obligated towns with obligations under about 86 units are shown as too early to read. That count falls as months accumulate.
+- **Census figures aren't checked the way state zeros are.** 12 towns are colored from Census alone with no homes actually reported over the shared period: their Census figure is zero, or estimates for months they didn't report.
 - **State towns behind on reports.** A town that reported July–December 2025 but not yet January 2026 is usable on state data (6 of 7 months) and its missing month counts as 0, so its state figure leans low.
 - **State calculations, not final numbers.** Final numbers are on file for 13 towns; most of the "court order" and "settlement" statuses come from documents describing them.
 - **Small numbers.** For a town with a small obligation, one project changes its class. Towns whose obligation pro-rated to date is under 5 affordable homes are shown as too early to read.

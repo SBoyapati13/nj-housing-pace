@@ -67,7 +67,7 @@ Pace = homes permitted × 20% ÷ obligation pro-rated to date. The 20% is a yard
 |---|---|
 {class_rows}
 
-Of the {s['colored_one_source'] + s['colored_two_sources']} colored obligated towns, {s['colored_two_sources']} rest on both sources agreeing and {s['colored_one_source']} ({s['colored_one_source'] / (s['colored_one_source'] + s['colored_two_sources']):.0%}) on one usable source. {s['colored_small_window_target']} colored towns have an obligation pro-rated over the shared period of under 5 affordable homes (the too-early test uses the longer Census period; see §6), and {s['colored_census_only_no_reports']} are colored from Census alone with no homes actually reported (their Census figure is all estimates for the unreported months, or zero). Where both sources were usable ({s['both_usable']} towns), they put the town in the same class {s['sources_agree']} times and disagreed {s['sources_disagree']} times.
+Of the {s['colored_one_source'] + s['colored_two_sources']} colored obligated towns, {s['colored_two_sources']} rest on both sources agreeing and {s['colored_one_source']} ({s['colored_one_source'] / (s['colored_one_source'] + s['colored_two_sources']):.0%}) on one usable source. {s['colored_census_only_no_reports']} are colored from Census alone with no homes actually reported (their Census figure is all estimates for the unreported months, or zero). Where both sources were usable ({s['both_usable']} towns), they put the town in the same class {s['sources_agree']} times and disagreed {s['sources_disagree']} times.
 
 {s['state_zero_unconfirmed']} obligated towns have a state figure of 0 for the period that their Census reports don't confirm; those zeros are treated as not reported (§3, item 4).
 

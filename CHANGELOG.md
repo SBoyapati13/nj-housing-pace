@@ -2,6 +2,9 @@
 
 Methodology changes are recorded here before results that depend on them are published. Data updates are not listed; they are in `data/runs.jsonl`.
 
+## v3.2, published 2026-10-19
+Implemented as registered below. As expected, 100 towns moved to "too early to read" (all with obligations of 84 units or fewer) and none moved out; statewide pace figures are unchanged. Colored obligated towns: 190 (120 on both sources agreeing, 70 on one). The disclosure of colored towns with a small shared-period target is dropped, since there are none.
+
 ## v3.2 method, registered 2026-10-19 (before v3.2 results were computed)
 One change, closing the inconsistency disclosed in v3.1 (README §6): the too-early test used the obligation pro-rated to the latest month of either source (Census, 14 months), while map colors compare both sources over the shared period (7 months), so 74 colored towns had a shared-period target under 5 affordable homes.
 - **Too early to read** now means the obligation pro-rated over the shared period (July 2025 through the earlier of the two sources' latest months) is under 5 affordable homes. The threshold (5) is unchanged.

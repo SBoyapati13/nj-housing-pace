@@ -174,7 +174,7 @@ Obligations come from DCA. Permits come from two agencies with different town id
 | Municipal resolutions, plans, a court order and news reports (listed in `data/raw/obligation_final.csv`) | Final or adopted obligations for 16 towns | 13 of 16 found |
 | U.S. Census Bureau, cartographic boundary files, NJ county subdivisions, 2024 [12] | Town boundaries for the map | 564 municipalities |
 
-On estimates, the Census Bureau states that its figures "are based on received reports for places in the monthly survey and imputed activity for non-reporters and those not surveyed monthly" [11]. Every place file has a "months reported" field, which this project uses to separate a town's own reports from Census estimates.
+On estimates, the Census Bureau states that its figures "are based on received reports for places in the monthly survey and imputed activity for non-reporters and those not surveyed monthly" [11]. Every place file has a "months reported" field, which this project uses to separate a town's own reports from Census estimates. The state's Division of Codes and Standards says it does not send its data to Census (email, October 20, 2026), so the two sources rest on separate reports from the same towns.
 
 Census matches towns by county and minor-civil-division code; the state by its own four-digit town code. Both join to the obligation table, which carries both codes. All 564 towns match at least one source. Netcong stops appearing in Census files after 2017 and Tavistock has no Census record; both are in the state data.
 

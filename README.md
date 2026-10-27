@@ -76,7 +76,7 @@ Of the 190 colored obligated towns, 120 rest on both sources agreeing and 70 (37
 - Even if every new home were affordable: yes for 111 (state) and 92 (Census).
 - This compares obligations with past building patterns. It doesn't assess compliance: rezoning, 100%-affordable projects, credits and other routes can exceed past patterns. It isn't shown on the map.
 
-**Final obligation numbers.** 13 towns have a final or adopted number on file (10 recorded as settled, court-ordered or accepted as calculated; most of these statuses come from town documents describing the order, see `evidence` in `data/raw/obligation_final.csv`). Using those numbers in place of the state's calculation, pace is 39% on state data (vs. 38%) and 45% on Census data (vs. 45%).
+**Final obligation numbers.** 14 towns have a final or adopted number on file (10 recorded as settled, court-ordered or accepted as calculated; most of these statuses come from town documents describing the order, see `evidence` in `data/raw/obligation_final.csv`). Using those numbers in place of the state's calculation, pace is 39% on state data (vs. 38%) and 45% on Census data (vs. 45%).
 
 **Reported completions** (certificates of occupancy, NJ DCA; through January 2026):
 - 9,735 homes reported completed since July 2025 in the 384 towns not marked missing in the state's files.
@@ -84,7 +84,7 @@ Of the 190 colored obligated towns, 120 rest on both sources agreeing and 70 (37
 - Homes permitted in 2024–25 minus homes reported completed in 2024–25: **19,172** across 341 towns, a rough size of the recent pipeline.
 - 90 towns are marked missing in the state's completions file for the latest full year and are left out.
 
-First run under the current method: no earlier release to compare against yet.
+No town changed class since the previous release.
 
 ![Figure 2](out/county_live_progress.png)
 
@@ -111,6 +111,7 @@ First run under the current method: no earlier release to compare against yet.
 | Census data through | State data through | Run date | Pace, state data | Pace, Census | Towns below half (map) |
 |---|---|---|---|---|---|
 | 2026-08 | 2026-01 | 2026-10-19 | 38% | 45% | 168 |
+| 2026-08 | 2026-01 | 2026-10-27 | 38% | 45% | 168 |
 <!-- LIVE:END -->
 
 ## 1. Background
@@ -147,6 +148,7 @@ Final numbers are recorded for the 15 largest obligations, and for Montvale, whe
 | Roxbury | 989 | 358 | Adopted resolution, Jan 2025; outcome of any challenge unknown | The resolution |
 | South Brunswick | 959 | 1,070 | Settlement, Sep 2024 | Town housing plan describing it |
 | Jackson | 954 | 1,000 | Settlement, Dec 2024 | Final-draft housing plan describing it |
+| Linden | 787 | 738 | Adopted resolution, Jan 2025; outcome of any challenge unknown | The resolution |
 | Monroe (Middlesex) | 751 | 460 | Settlement | Town housing element describing it |
 | Wall | 744 | 650 | Court order, Apr 2025 | Letter resubmitting its plan |
 | Franklin (Somerset) | 714 | 659 | Settlement, Apr 2025 | News report |
@@ -154,7 +156,7 @@ Final numbers are recorded for the 15 largest obligations, and for Montvale, whe
 | Toms River | 670 | 649 | Settlement pending, Mar 2026 | News report |
 | West Windsor | 661 | 392 | Adopted resolution, Jan 2025; outcome of any challenge unknown | The resolution |
 | Montvale | 348 | 205 | Court order, Jun 2025 | The order [15] |
-| Linden, Edison, Old Bridge | 787, 727, 685 | – | Not found | – |
+| Edison, Old Bridge | 727, 685 | – | Not found | – |
 
 The state's calculation remains the main measure because it's available and comparable for every town. Final numbers are used in a sensitivity figure (§3, item 9). The 158 towns that adopted their own numbers aren't covered, so the sensitivity figure is narrow.
 

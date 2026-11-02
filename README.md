@@ -37,7 +37,7 @@ This is a living analysis. A pipeline checks both permit sources and the state's
 <!-- LIVE:START -->
 ## Live status
 
-*Rewritten automatically whenever either permit source publishes. Census data through August 2026; state data through January 2026. Every update is logged in `data/runs.jsonl`.*
+*Rewritten automatically whenever either permit source publishes. Census data through September 2026; state data through January 2026. Every update is logged in `data/runs.jsonl`.*
 
 **Interactive map:** https://sboyapati13.github.io/nj-housing-pace/ (search any town to see both sources side by side; switch between Fourth Round to date and the 2021–25 baseline).
 
@@ -45,11 +45,11 @@ This is a living analysis. A pipeline checks both permit sources and the state's
 
 | | State Construction Reporter | Census Building Permits Survey |
 |---|---|---|
-| Period | July 2025 – January 2026 (7 months) | July 2025 – August 2026 (14 months) |
-| Towns counted | 313 with usable reports (holding 74% of the obligation) | all 514 with a Census record; 202 reported at least 75% of months |
-| Homes permitted | 6,720 | 21,243, of which 36% are Census estimates |
-| **Pace vs. pro-rated obligation** | **38%** | **45%** (towns that reported: 46%) |
-| Towns below half the pro-rated pace (excluding towns too early to read) | 150 | 95 |
+| Period | July 2025 – January 2026 (7 months) | July 2025 – September 2026 (15 months) |
+| Towns counted | 313 with usable reports (holding 74% of the obligation) | all 514 with a Census record; 201 reported at least 75% of months |
+| Homes permitted | 6,720 | 22,324, of which 37% are Census estimates |
+| **Pace vs. pro-rated obligation** | **38%** | **44%** (towns that reported: 42%) |
+| Towns below half the pro-rated pace (excluding towns too early to read) | 150 | 98 |
 | Share of all permits in towns with no obligation | 36% | 37% |
 
 Pace = homes permitted × 20% ÷ obligation pro-rated to date. The 20% is a yardstick, not a bound (see §3 and §6).
@@ -72,11 +72,11 @@ Of the 190 colored obligated towns, 120 rest on both sources agreeing and 70 (37
 32 obligated towns have a state figure of 0 for the period that their Census reports don't confirm; those zeros are treated as not reported (§3, item 4).
 
 **Best-year threshold.** Would reaching the obligation by June 2035 take more than permitting at the town's best fully reported year since 2015, every remaining year?
-- At a 20% set-aside: yes for 265 of 505 towns on state data, 233 of 426 on Census data.
+- At a 20% set-aside: yes for 265 of 505 towns on state data, 236 of 426 on Census data.
 - Even if every new home were affordable: yes for 111 (state) and 92 (Census).
 - This compares obligations with past building patterns. It doesn't assess compliance: rezoning, 100%-affordable projects, credits and other routes can exceed past patterns. It isn't shown on the map.
 
-**Final obligation numbers.** 14 towns have a final or adopted number on file (10 recorded as settled, court-ordered or accepted as calculated; most of these statuses come from town documents describing the order, see `evidence` in `data/raw/obligation_final.csv`). Using those numbers in place of the state's calculation, pace is 39% on state data (vs. 38%) and 45% on Census data (vs. 45%).
+**Final obligation numbers.** 14 towns have a final or adopted number on file (10 recorded as settled, court-ordered or accepted as calculated; most of these statuses come from town documents describing the order, see `evidence` in `data/raw/obligation_final.csv`). Using those numbers in place of the state's calculation, pace is 39% on state data (vs. 38%) and 44% on Census data (vs. 44%).
 
 **Reported completions** (certificates of occupancy, NJ DCA; through January 2026):
 - 9,735 homes reported completed since July 2025 in the 384 towns not marked missing in the state's files.
@@ -94,16 +94,16 @@ No town changed class since the previous release.
 
 | Check | Status | Detail |
 |---|---|---|
-| round window | OK | Fourth Round active: month 14 of 120 (Census), 7 (state data). |
+| round window | OK | Fourth Round active: month 15 of 120 (Census), 7 (state data). |
 | census freshness | OK | Latest Census data is 2 months old (normal lag is 1–3). |
-| state permits freshness | OK | Latest state permit data (NJ DCA) is 9 months old (normal lag is 8–10). |
+| state permits freshness | OK | Latest state permit data (NJ DCA) is 10 months old (normal lag is 8–10). |
 | census format | OK | 41 columns (expected 41), 562 NJ places (expected 550+). |
 | town match | OK | 564 of 564 towns matched to at least one permit source. |
-| reporting coverage | OK | Towns holding 74% of the obligation have usable state permit data since July 2025, and 53% reported at least 75% of months to Census. Warns only when neither source covers 60%. |
+| reporting coverage | OK | Towns holding 74% of the obligation have usable state permit data since July 2025, and 54% reported at least 75% of months to Census. Warns only when neither source covers 60%. |
 | source agreement | OK | 120 of 143 towns with both sources usable fall in the same class; 23 disagree. |
 | negative values | OK | 0 towns had negative homes permitted since July 2025 (clipped to 0). |
 | obligation source | OK | DCA obligation workbook unchanged upstream. |
-| completions freshness | OK | Latest completions data (NJ DCA certificates of occupancy) is 9 months old (normal lag is 8–10). Completions are a secondary layer. |
+| completions freshness | OK | Latest completions data (NJ DCA certificates of occupancy) is 10 months old (normal lag is 8–10). Completions are a secondary layer. |
 | proxy validity | MANUAL | Permits × 20% is a yardstick for affordable output, not a measure of it. Reviewed by hand each month (data/review_log.md). |
 
 *Run history under the current method (last 12 updates; full log, including superseded methods, in `data/runs.jsonl`):*
@@ -112,6 +112,7 @@ No town changed class since the previous release.
 |---|---|---|---|---|---|
 | 2026-08 | 2026-01 | 2026-10-19 | 38% | 45% | 168 |
 | 2026-08 | 2026-01 | 2026-10-27 | 38% | 45% | 168 |
+| 2026-09 | 2026-01 | 2026-11-02 | 38% | 44% | 168 |
 <!-- LIVE:END -->
 
 ## 1. Background

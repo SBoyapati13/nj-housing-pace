@@ -5,7 +5,7 @@
     {
       "check": "round_window",
       "status": "ok",
-      "detail": "Fourth Round active: month 14 of 120 (Census), 7 (state data)."
+      "detail": "Fourth Round active: month 15 of 120 (Census), 7 (state data)."
     },
     {
       "check": "census_freshness",
@@ -15,7 +15,7 @@
     {
       "check": "state_permits_freshness",
       "status": "ok",
-      "detail": "Latest state permit data (NJ DCA) is 9 months old (normal lag is 8\u201310)."
+      "detail": "Latest state permit data (NJ DCA) is 10 months old (normal lag is 8\u201310)."
     },
     {
       "check": "census_format",
@@ -30,7 +30,7 @@
     {
       "check": "reporting_coverage",
       "status": "ok",
-      "detail": "Towns holding 74% of the obligation have usable state permit data since July 2025, and 53% reported at least 75% of months to Census. Warns only when neither source covers 60%."
+      "detail": "Towns holding 74% of the obligation have usable state permit data since July 2025, and 54% reported at least 75% of months to Census. Warns only when neither source covers 60%."
     },
     {
       "check": "source_agreement",
@@ -50,7 +50,7 @@
     {
       "check": "completions_freshness",
       "status": "ok",
-      "detail": "Latest completions data (NJ DCA certificates of occupancy) is 9 months old (normal lag is 8\u201310). Completions are a secondary layer."
+      "detail": "Latest completions data (NJ DCA certificates of occupancy) is 10 months old (normal lag is 8\u201310). Completions are a secondary layer."
     },
     {
       "check": "proxy_validity",

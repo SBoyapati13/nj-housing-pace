@@ -118,10 +118,17 @@
       "last_modified": "Thu, 24 Sep 2026 11:46:16 GMT",
       "sha256": "de5a2f05803807ce36d148c3f0744b89cbf9435fac0a2a9ef455222c6959ae70",
       "size": "836682"
+    },
+    "ne2609y.txt": {
+      "fetched_utc": "2026-11-02T22:28:51+00:00",
+      "last_modified": "Tue, 27 Oct 2026 11:45:26 GMT",
+      "sha256": "2b584a657cdd6d1c429469c24620867557aee81406b9985209a7527c1d585d7b",
+      "size": "838409",
+      "url": "https://www2.census.gov/econ/bps/Place/Northeast%20Region/ne2609y.txt"
     }
   },
   "vintage": {
-    "month": 8,
+    "month": 9,
     "year": 2026
   }
 }

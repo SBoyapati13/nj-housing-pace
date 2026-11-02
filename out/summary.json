@@ -1,8 +1,8 @@
 {
   "method": "v3.2",
-  "vintage": "2026-08",
+  "vintage": "2026-09",
   "dca_vintage": "2026-01",
-  "months_elapsed": 14,
+  "months_elapsed": 15,
   "dca_months_elapsed": 7,
   "towns": 564,
   "towns_matched": 564,
@@ -12,19 +12,19 @@
   "dca_pace_usable": 0.3828,
   "dca_towns_usable": 313,
   "dca_obligation_share_usable": 0.7449,
-  "census_units_all": 21243,
-  "census_pace_all": 0.451,
+  "census_units_all": 22324,
+  "census_pace_all": 0.4424,
   "census_obligated_towns": 514,
-  "census_estimate_share": 0.3644,
-  "census_units_usable": 11498,
-  "census_pace_usable": 0.4606,
-  "census_towns_usable": 202,
-  "census_obligation_share_usable": 0.5297,
+  "census_estimate_share": 0.3694,
+  "census_units_usable": 11535,
+  "census_pace_usable": 0.4238,
+  "census_towns_usable": 201,
+  "census_obligation_share_usable": 0.5391,
   "dca_below_half": 150,
   "dca_below_half_obligation": 45168,
-  "census_below_half": 95,
-  "census_below_half_obligation": 29255,
-  "exempt_share_census": 0.3697,
+  "census_below_half": 98,
+  "census_below_half_obligation": 30860,
+  "exempt_share_census": 0.3736,
   "exempt_share_dca": 0.3611,
   "class_counts": {
     "too_early": 266,
@@ -100,7 +100,7 @@
   "base_census_obligated": 295,
   "base_dca_below_half": 285,
   "base_dca_obligated": 419,
-  "census_best_exceeds_20": 233,
+  "census_best_exceeds_20": 236,
   "census_best_exceeds_100": 92,
   "census_best_assessed": 426,
   "dca_best_exceeds_20": 265,
@@ -109,7 +109,7 @@
   "final_numbers_found": 14,
   "final_numbers_firm": 10,
   "dca_pace_usable_sensitivity": 0.3851,
-  "census_pace_all_sensitivity": 0.4535,
+  "census_pace_all_sensitivity": 0.4448,
   "co_vintage": "2026-01",
   "co_months_since_round_start": 7,
   "co_reported_since_jul2025": 9735,
@@ -126,7 +126,7 @@
       {
         "check": "round_window",
         "status": "ok",
-        "detail": "Fourth Round active: month 14 of 120 (Census), 7 (state data)."
+        "detail": "Fourth Round active: month 15 of 120 (Census), 7 (state data)."
       },
       {
         "check": "census_freshness",
@@ -136,7 +136,7 @@
       {
         "check": "state_permits_freshness",
         "status": "ok",
-        "detail": "Latest state permit data (NJ DCA) is 9 months old (normal lag is 8\u201310)."
+        "detail": "Latest state permit data (NJ DCA) is 10 months old (normal lag is 8\u201310)."
       },
       {
         "check": "census_format",
@@ -151,7 +151,7 @@
       {
         "check": "reporting_coverage",
         "status": "ok",
-        "detail": "Towns holding 74% of the obligation have usable state permit data since July 2025, and 53% reported at least 75% of months to Census. Warns only when neither source covers 60%."
+        "detail": "Towns holding 74% of the obligation have usable state permit data since July 2025, and 54% reported at least 75% of months to Census. Warns only when neither source covers 60%."
       },
       {
         "check": "source_agreement",
@@ -171,7 +171,7 @@
       {
         "check": "completions_freshness",
         "status": "ok",
-        "detail": "Latest completions data (NJ DCA certificates of occupancy) is 9 months old (normal lag is 8\u201310). Completions are a secondary layer."
+        "detail": "Latest completions data (NJ DCA certificates of occupancy) is 10 months old (normal lag is 8\u201310). Completions are a secondary layer."
       },
       {
         "check": "proxy_validity",

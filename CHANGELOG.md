@@ -2,6 +2,24 @@
 
 Methodology changes are recorded here before results that depend on them are published. Data updates are not listed; they are in `data/runs.jsonl`.
 
+## v4, published 2026-11-23
+
+The v4 method registered below was implemented as written, with no change to any rule, threshold or band edge after results were computed. First results (Census data through September 2026, state data through January 2026; shared window July 2025 – January 2026, 7 months):
+
+- Obligated towns permitted 80% of their 2021–25 rate on state data (139 comparable towns) and 82% on Census data (114). Towns with no new obligation: 116% (21) and 102% (15).
+- Coverage: comparable obligated towns hold 55% of the obligation (47% state, 36% Census, 28% both). The new comparison-coverage health check warns under 60%, so the release shows WARN.
+- Map classes: well below 83, below 28, about the same 30, above 19, at least twice 12, sources disagree 10, too few homes to compare 211, reporting gap 122, no new obligation 49. Of 172 colored obligated towns, 61 rest on both sources and 111 on one. 24 towns are shown under the one-band-apart rule.
+- 48 past large producers can't be compared on either source (37 obligated, holding 12% of the obligation); the largest is Jersey City, which has no obligation.
+- Sensitivity only: × 20%, homes permitted equal 38% (state) and 44% (Census) of the obligation pro-rated to date, as under v3.2.
+
+**Against the spec's estimate.** The spec estimated coverage from usable reports and baselines without the at-least-10-expected-homes test that the registered rule includes, so it overstated coverage. The rule was implemented as registered; the estimate, not the rule, was wrong.
+
+**Display choices made while building (not method):** the "about the same" fill is #e9dcb8 instead of the spec's #f3eee2, because the lighter cream was too close to the gray used for towns that can't be compared; the large-producer outline's legend reads "Outline: past large producer (200+ homes in a year), not comparable on either source"; the no-obligation hatch runs the other way from the reporting-gap hatch so the two can be told apart.
+
+**Class moves from v3.2** (same data vintages): of v3.2's 266 "too early to read" towns, 138 are now "too few homes to compare", 76 "reporting gap" and 52 colored. Of its 168 "below half", 60 are now "well below", 13 "below", 15 "about the same" or higher, 70 "too few homes to compare", 8 "reporting gap" and 2 "sources disagree". All 36 "not enough reports" towns are "reporting gap"; the 49 no-obligation towns are unchanged.
+
+**Checks.** Regression tests confirm v4 reproduces v3.2's window figures and the sensitivity figures exactly. A separate reviewer recomputed all 564 towns from the raw files: every class, flag and summary count matched (`data/review_log.md`, 2026-11-23).
+
 ## v4 method, registered 2026-11-23 (before any v4 results were computed)
 
 Why: Fair Share Housing Center's review (Nov 5) pointed out that homes permitted × 20% can't say whether a town is on track, that the state data carry no affordable-unit tag, and that most projects under the new zoning were not yet approved. v4 stops grading towns on pace and compares each town's permitting with its own past.

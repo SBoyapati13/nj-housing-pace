@@ -1,5 +1,5 @@
 {
-  "overall": "ok",
+  "overall": "warn",
   "can_answer": true,
   "checks": [
     {
@@ -33,9 +33,14 @@
       "detail": "Towns holding 74% of the obligation have usable state permit data since July 2025, and 54% reported at least 75% of months to Census. Warns only when neither source covers 60%."
     },
     {
+      "check": "comparison_coverage",
+      "status": "warn",
+      "detail": "Obligated towns holding 55% of the obligation can be compared with their 2021\u201325 rate on at least one source (47% state, 36% Census, 28% both). Warns under 60%."
+    },
+    {
       "check": "source_agreement",
       "status": "ok",
-      "detail": "120 of 143 towns with both sources usable fall in the same class; 23 disagree."
+      "detail": "Of 71 obligated towns comparable on both sources, 37 fall in the same band, 24 are one band apart and 10 are two or more bands apart."
     },
     {
       "check": "negative_values",
@@ -55,7 +60,7 @@
     {
       "check": "proxy_validity",
       "status": "manual",
-      "detail": "Permits \u00d7 20% is a yardstick for affordable output, not a measure of it. Reviewed by hand each month (data/review_log.md)."
+      "detail": "Figures are all homes permitted; neither source tags affordable units. Reviewed by hand each month (data/review_log.md)."
     }
   ]
 }

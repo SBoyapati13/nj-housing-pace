@@ -1,5 +1,6 @@
-"""NJ housing pace (method v3): are homes being permitted where New Jersey's
-Fourth Round (2025-2035) affordable-housing obligations are?
+"""NJ housing pace (method v4): are homes being permitted in the towns that carry New Jersey's
+Fourth Round (2025-2035) affordable-housing obligations, compared with each town's own 2021-25 rate
+and with towns that have no new obligation?
 
 Permits come from two public sources, shown side by side:
   census  U.S. Census Bureau Building Permits Survey (revised annual files + latest year to date).
@@ -8,7 +9,7 @@ Permits come from two public sources, shown side by side:
   dca     NJ DCA Construction Reporter, housing units authorized by building permits (state data;
           marks towns with no report as "Missing Data" instead of estimating). Runs months behind.
 
-The method (thresholds, classes, order of rules) was registered in CHANGELOG.md before any v3
+The method (thresholds, classes, order of rules) was registered in CHANGELOG.md before any v4
 results were computed. Every run whose inputs changed appends one line to data/runs.jsonl.
 """
 import hashlib, json, warnings
@@ -20,16 +21,20 @@ warnings.filterwarnings("ignore", category=pd.errors.PerformanceWarning)
 ROOT = Path(__file__).resolve().parents[1]
 RAW, OUT, HIST = ROOT / "data" / "raw", ROOT / "out", ROOT / "data" / "history"
 LEDGER, HEALTH = ROOT / "data" / "runs.jsonl", ROOT / "data" / "health.json"
-METHOD = "v3.2"
+METHOD = "v4"
 BASELINE_YEARS = [2021, 2022, 2023, 2024, 2025]
 ROUND_START, WINDOW_YEARS = (2025, 7), 10           # July 1, 2025 - June 30, 2035 (P.L.2024, c.2)
 ROUND_MONTHS = WINDOW_YEARS * 12
 HIST_FIRST = 2015
-SET_ASIDE = 0.20               # yardstick, not a bound (credits and 100%-affordable projects move it either way)
+SET_ASIDE = 0.20               # v4: used only by the labelled affordable sensitivity (*_aff_sens, sens_affordable_*)
 USABLE_SHARE = 0.75            # a source is usable for a town that reported >= 75% of elapsed months to it
-TOO_EARLY = 5                  # obligation pro-rated over the shared period < 5 affordable homes -> too early to read
+MIN_EXPECTED = 10              # a source is comparable only when the town's 2021-25 rate predicts >= 10 homes in the window
+LARGE_PRODUCER = 200           # past peak (homes in a fully reported year 2015-24) that makes a reporting gap notable
+PEAK_YEARS = range(2015, 2025)
 BASELINE_MIN_YEARS, BEST_MIN_YEARS = 4, 5
-CLASS_ORDER = ["below_half", "half_to_one", "one_to_two", "two_plus"]
+RATIO_BANDS = [(0.5, "well_below"), (0.8, "below"), (1.25, "about_same"), (2.0, "above")]   # 2 or more: well_above
+CLASS_ORDER = ["well_below", "below", "about_same", "above", "well_above"]
+ORDINANCES_DUE = "2026-03"     # implementing ordinances due (P.L.2024, c.2)
 FIRM_STATUSES = {"court order", "settlement", "accepted DCA number"}
 
 # ---------------------------------------------------------------- Census BPS
@@ -87,19 +92,30 @@ def load_obligations():
         df[c] = pd.to_numeric(df[c], errors="coerce")
     return df.set_index("fips")
 
-def pace_class(p):
-    if pd.isna(p): return None
-    return "two_plus" if p >= 2 else "one_to_two" if p >= 1 else "half_to_one" if p >= 0.5 else "below_half"
+def ratio_class(r):
+    """Band of the ratio to baseline (CHANGELOG v4)."""
+    if r is None or pd.isna(r): return None
+    for edge, key in RATIO_BANDS:
+        if r < edge: return key
+    return "well_above"
 
-def combine(row, a, b, too_early):
-    """One class per town from two per-source results (rules in CHANGELOG v3, in order)."""
-    if not row.matched: return "no_data"
-    if not row.prospective_need > 0: return "exempt"
-    if too_early: return "too_early"
-    ca = row[f"{a}_class"] if row[f"{a}_usable"] else None
-    cb = row[f"{b}_class"] if row[f"{b}_usable"] else None
-    if ca and cb: return ca if ca == cb else "disagree"
-    return ca or cb or "not_enough_reports"
+def combine(row, a="cw", b="dw"):
+    """One class per town from two per-source results (rules in CHANGELOG v4, in order).
+    Returns (class, one_band_apart)."""
+    if not row.matched: return "no_data", False
+    if not row.prospective_need > 0: return "exempt", False
+    ca = row[f"{a}_class"] if row[f"{a}_comparable"] else None
+    cb = row[f"{b}_class"] if row[f"{b}_comparable"] else None
+    if ca and cb:
+        ia, ib = CLASS_ORDER.index(ca), CLASS_ORDER.index(cb)
+        if ia == ib: return ca, False
+        if abs(ia - ib) == 1:
+            mid = CLASS_ORDER.index("about_same")
+            return (ca if abs(ia - mid) < abs(ib - mid) else cb), True
+        return "disagree", False
+    if ca or cb: return ca or cb, False
+    if row[f"{a}_measurable"] or row[f"{b}_measurable"]: return "too_few", False
+    return "reporting_gap", False
 
 def sha(p): return hashlib.sha256(p.read_bytes()).hexdigest()[:16]
 
@@ -189,9 +205,9 @@ def main():
         df[f"{prefix}_units"] = units.clip(lower=0).round(1).where(in_src)
         df[f"{prefix}_months"] = months.where(in_src)
         df[f"{prefix}_target"] = df.prospective_need * el / ROUND_MONTHS
-        df[f"{prefix}_pace"] = (df[f"{prefix}_units"] * SET_ASIDE / df[f"{prefix}_target"].where(df[f"{prefix}_target"] > 0)).round(4)
+        # v4: the old pace, kept only as a labelled sensitivity (no class, count or chart reads it)
+        df[f"{prefix}_aff_sens"] = (df[f"{prefix}_units"] * SET_ASIDE / df[f"{prefix}_target"].where(df[f"{prefix}_target"] > 0)).round(4)
         df[f"{prefix}_usable"] = (df[f"{prefix}_months"] >= USABLE_SHARE * el).fillna(False)
-        df[f"{prefix}_class"] = df[f"{prefix}_pace"].map(pace_class)
 
     # each source over its own full period (statewide table, town detail)
     c_units, c_rep, c_mon = census_period(vy, vm)
@@ -220,12 +236,7 @@ def main():
     df["d_zero_unconfirmed"] = unconfirmed_zero(df.d_units, cd_rep, cd_mon, d_elapsed) & df.d_usable
     df.loc[df.d_zero_unconfirmed, "d_usable"] = False
 
-    too_early = df.prospective_need * w_el / ROUND_MONTHS < TOO_EARLY          # v3.2: judged on the shared period
-    df["too_early"] = too_early & has_ob
-    df["class_live"] = [combine(r, "cw", "dw", te) for (_, r), te in zip(df.iterrows(), df.too_early)]
-    df["live_sources"] = df.cw_usable.astype(int) + df.dw_usable.astype(int)
-
-    # ================= 2021-25 baseline, per source =================
+    # ================= 2021-25 baseline, per source (v4: read before the class step) =================
     df["annual_target"] = df.prospective_need / WINDOW_YEARS
     yrs_c = [y for y in BASELINE_YEARS if f"c_units_{y}" in df]
     rep_c = pd.concat([df[f"c_months_{y}"] >= 12 for y in yrs_c], axis=1)
@@ -237,31 +248,37 @@ def main():
         n = rep.sum(axis=1)
         df[f"{s}_base_years"] = n
         df[f"{s}_base_avg"] = val.where(rep.values).mean(axis=1).where(n >= BASELINE_MIN_YEARS).round(1)
-        df[f"{s}_base_cov"] = (df[f"{s}_base_avg"] * SET_ASIDE / df.annual_target.where(df.annual_target > 0)).round(4)
         df[f"{s}_base_usable"] = df[f"{s}_base_avg"].notna()
-        df[f"{s}_base_class"] = df[f"{s}_base_cov"].map(pace_class)
-    tmp = df.rename(columns={"c_base_usable": "cb_usable", "d_base_usable": "db_usable", "c_base_class": "cb_class", "d_base_class": "db_class"})
-    df["class_base"] = [combine(r, "cb", "db", False) for _, r in tmp.iterrows()]
 
-    # ================= best-year threshold, per source =================
-    m_rem = max(ROUND_MONTHS - c_elapsed, 0)
+    # ================= v4: ratio to the town's own 2021-25 rate, over the shared window =================
+    for w, s in (("cw", "c"), ("dw", "d")):
+        df[f"{w}_expected"] = (df[f"{s}_base_avg"] * w_el / 12).round(2)
+        df[f"{w}_ratio"] = (df[f"{w}_units"] / df[f"{w}_expected"].where(df[f"{w}_expected"] > 0)).round(4)
+        df[f"{w}_measurable"] = (df[f"{w}_usable"] & df[f"{s}_base_usable"]).astype(bool)
+        df[f"{w}_comparable"] = (df[f"{w}_measurable"] & (df[f"{w}_expected"] >= MIN_EXPECTED)).fillna(False).astype(bool)
+        df[f"{w}_class"] = df[f"{w}_ratio"].map(ratio_class).where(df[f"{w}_comparable"])
+        df[f"{w}_months_missing"] = (w_el - df[f"{w}_months"]).where(df[f"{w}_months"].notna())
+    res = [combine(r) for _, r in df.iterrows()]
+    df["class_live"] = [c for c, _ in res]
+    df["one_band_apart"] = [o for _, o in res]
+    df["live_sources"] = df.cw_comparable.astype(int) + df.dw_comparable.astype(int)
+
+    # ================= best year since 2015, per source (v4: a descriptive figure only) =================
     for s, years, reported in (("c", range(HIST_FIRST, vy), lambda y: df[f"c_months_{y}"] >= 12),
                                ("d", dca_full_years, lambda y: df[f"d_reported_{y}"])):
         rep = pd.concat([reported(y) for y in years], axis=1)
         val = pd.concat([df[f"{s}_units_{y}"] for y in years], axis=1)
         n = rep.sum(axis=1)
-        best = val.where(rep.values).max(axis=1).where(n >= BEST_MIN_YEARS)
-        df[f"{s}_best_year"] = best
-        owed = (df.prospective_need - df[f"{s}_units"].fillna(0) * SET_ASIDE).clip(lower=0)
-        months_left = max(ROUND_MONTHS - (c_elapsed if s == "c" else d_elapsed), 0)
-        for tag, share in (("20", SET_ASIDE), ("100", 1.0)):
-            cap = best * share * months_left / 12
-            st = pd.Series("insufficient", index=idx)
-            ok = best.notna() & has_ob
-            st[ok & (owed <= 0)] = "covered"
-            st[ok & (owed > 0) & (owed > cap)] = "exceeds"
-            st[ok & (owed > 0) & (owed <= cap)] = "within"
-            df[f"{s}_best_{tag}"] = st
+        df[f"{s}_best_year"] = val.where(rep.values).max(axis=1).where(n >= BEST_MIN_YEARS)
+
+    # ================= v4: past large producers with no comparable source =================
+    peaks = [df[f"c_units_{y}"].where(df[f"c_months_{y}"] >= 12) for y in PEAK_YEARS if f"c_units_{y}" in df]
+    peaks += [df[f"d_units_{y}"].where(df[f"d_reported_{y}"]) for y in PEAK_YEARS if f"d_units_{y}" in df]
+    df["past_peak"] = pd.concat(peaks, axis=1).max(axis=1)
+    df["gap_large_producer"] = (df.past_peak >= LARGE_PRODUCER) & ~df.cw_comparable & ~df.dw_comparable & df.matched
+    # obligations: DCA's calculation for every town in v4; final numbers are a later, separately registered change
+    df["obligation_source"] = "dca"
+    df["obligation_used"] = df.prospective_need
 
     # ================= final / adopted obligations (sensitivity) =================
     fin = pd.read_csv(RAW / "obligation_final.csv", dtype={"fips": str}).set_index("fips")
@@ -318,65 +335,82 @@ def main():
     df.reset_index().to_csv(OUT / "town_pace.csv", index=False)
 
     ob = df[has_ob & df.matched]
-    def statewide(s, mask):
+    non = df[~has_ob & df.matched]
+    def own_period(s, mask):
+        """Homes permitted in obligated towns over the source's own full period (sensitivity and totals only)."""
         t = ob[mask]
         units = float(t[f"{s}_units"].sum())
         return units, round(units * SET_ASIDE / float(t[f"{s}_target"].sum()), 4) if len(t) else None, int(len(t))
-    d_units_u, d_pace_u, d_n = statewide("d", ob.d_usable)
-    c_units_all, c_pace_all, c_n_all = statewide("c", ob.in_census)
-    c_units_u, c_pace_u, c_n_u = statewide("c", ob.c_usable)
+    d_units_u, d_sens_u, d_n = own_period("d", ob.d_usable)
+    c_units_all, c_sens_all, c_n_all = own_period("c", ob.in_census)
+    c_units_u, c_sens_u, c_n_u = own_period("c", ob.c_usable)
     c_est_share = 1 - float(ob.c_reported_units.sum()) / float(ob.c_units.sum())
     sens = lambda s, mask: round(float(ob[mask][f"{s}_units"].sum()) * SET_ASIDE /
                                  float((ob[mask].obligation_sensitivity * (c_elapsed if s == "c" else d_elapsed) / ROUND_MONTHS).sum()), 4)
     allm = df[df.matched]
     exempt_share = lambda s: round(float(allm[allm.prospective_need == 0][f"{s}_units"].sum()) / float(allm[f"{s}_units"].sum()), 4)
     counts = df[df.matched].class_live.value_counts().to_dict()
-    base_counts = df[df.matched].class_base.value_counts().to_dict()
-    def below_half(s):
-        t = ob[ob[f"{s}_usable"] & ~ob.too_early]
-        return int((t[f"{s}_pace"] < 0.5).sum()), int(len(t)), int(t[t[f"{s}_pace"] < 0.5].prospective_need.sum())
-    s = {
-        "method": METHOD, "vintage": f"{vy}-{vm:02d}", "dca_vintage": f"{dy}-{dmo:02d}",
-        "months_elapsed": c_elapsed, "dca_months_elapsed": d_elapsed,
-        "towns": int(len(df)), "towns_matched": int(df.matched.sum()), "obligated_towns": int(has_ob.sum()),
-        "obligation_total": int(df.prospective_need.sum()),
-        # live, per source
-        "dca_units_usable": int(d_units_u), "dca_pace_usable": d_pace_u, "dca_towns_usable": d_n,
-        "dca_obligation_share_usable": round(float(ob[ob.d_usable].prospective_need.sum()) / float(ob.prospective_need.sum()), 4),
-        "census_units_all": int(c_units_all), "census_pace_all": c_pace_all, "census_obligated_towns": c_n_all, "census_estimate_share": round(c_est_share, 4),
-        "census_units_usable": int(c_units_u), "census_pace_usable": c_pace_u, "census_towns_usable": c_n_u,
-        "census_obligation_share_usable": round(float(ob[ob.c_usable].prospective_need.sum()) / float(ob.prospective_need.sum()), 4),
-        "dca_below_half": below_half("d")[0], "dca_below_half_obligation": below_half("d")[2],
-        "census_below_half": below_half("c")[0], "census_below_half_obligation": below_half("c")[2],
-        "exempt_share_census": exempt_share("c"), "exempt_share_dca": exempt_share("d"),
+    ob_total = float(ob.prospective_need.sum())
+
+    def group(t, w):
+        """Sum of all homes permitted / sum of expected homes over the group's comparable towns on one source."""
+        g = t[t[f"{w}_comparable"]]
+        u, e = float(g[f"{w}_units"].sum()), float(g[f"{w}_expected"].sum())
+        return round(u, 1), round(e, 1), (round(u / e, 4) if e > 0 else None), int(len(g))
+    s = {"method": METHOD, "vintage": f"{vy}-{vm:02d}", "dca_vintage": f"{dy}-{dmo:02d}",
+         "months_elapsed": c_elapsed, "dca_months_elapsed": d_elapsed,
+         "towns": int(len(df)), "towns_matched": int(df.matched.sum()), "obligated_towns": int(has_ob.sum()),
+         "obligation_total": int(df.prospective_need.sum()),
+         "window_end": f"{wy}-{wm:02d}", "window_months": w_el, "ordinances_due": ORDINANCES_DUE,
+         "min_expected": MIN_EXPECTED, "large_producer": LARGE_PRODUCER}
+    # headline: ratio to each town's own 2021-25 rate, obligated vs no new obligation, per source
+    for gname, t in (("obl", ob), ("non", non)):
+        for w, src in (("dw", "dca"), ("cw", "census")):
+            u, e, r, n = group(t, w)
+            s.update({f"units_{gname}_{src}": u, f"expected_{gname}_{src}": e, f"ratio_{gname}_{src}": r, f"towns_{gname}_{src}": n})
+    s.update({
+        "cov_dca": round(float(ob[ob.dw_comparable].prospective_need.sum()) / ob_total, 4),
+        "cov_census": round(float(ob[ob.cw_comparable].prospective_need.sum()) / ob_total, 4),
+        "cov_any": round(float(ob[ob.cw_comparable | ob.dw_comparable].prospective_need.sum()) / ob_total, 4),
+        "cov_both": round(float(ob[ob.cw_comparable & ob.dw_comparable].prospective_need.sum()) / ob_total, 4),
+        "towns_obl_neither": int((~ob.cw_comparable & ~ob.dw_comparable).sum()),
         "class_counts": {k: int(v) for k, v in counts.items()},
-        "window_end": f"{wy}-{wm:02d}", "window_months": w_el,
-        "both_usable": int((ob.cw_usable & ob.dw_usable & ~ob.too_early).sum()),
-        "sources_agree": int(((ob.class_live.isin(CLASS_ORDER)) & ob.cw_usable & ob.dw_usable).sum()),
+        "towns_too_few": int((ob.class_live == "too_few").sum()),
+        "towns_reporting_gap": int((ob.class_live == "reporting_gap").sum()),
+        "both_usable": int((ob.cw_comparable & ob.dw_comparable).sum()),
+        "sources_agree": int((ob.cw_comparable & ob.dw_comparable & (ob.cw_class == ob.dw_class)).sum()),
+        "sources_one_band_apart": int(ob.one_band_apart.sum()),
         "sources_disagree": int((ob.class_live == "disagree").sum()),
         "colored_one_source": int((ob.class_live.isin(CLASS_ORDER) & (ob.live_sources == 1)).sum()),
         "colored_two_sources": int((ob.class_live.isin(CLASS_ORDER) & (ob.live_sources == 2)).sum()),
-        "colored_small_window_target": int((ob.class_live.isin(CLASS_ORDER) & (ob.cw_target < TOO_EARLY)).sum()),
-        "colored_census_only_no_reports": int((ob.class_live.isin(CLASS_ORDER) & (ob.live_sources == 1) & ob.cw_usable & (ob.cw_reported_units < 1)).sum()),
-        "towns_not_enough_reports": int((ob.class_live == "not_enough_reports").sum()),
-        "towns_too_early": int((ob.class_live == "too_early").sum()),
+        "colored_census_only_no_reports": int((ob.class_live.isin(CLASS_ORDER) & (ob.live_sources == 1) & ob.cw_comparable & (ob.cw_reported_units < 1)).sum()),
+    })
+    gl = df[df.gap_large_producer].sort_values("past_peak", ascending=False)
+    s.update({
+        "gap_large_n": int(len(gl)), "gap_large_obligated": int((gl.prospective_need > 0).sum()),
+        "gap_large_names": gl.municipality.tolist(),
+        "gap_large": [{"name": r.municipality, "county": r.county, "past_peak": int(r.past_peak), "obligated": bool(r.prospective_need > 0)}
+                      for r in gl.itertuples()],
         "negatives_clipped": int((df.c_negative_clipped | df.d_negative_clipped).sum()),
         "state_zero_unconfirmed": int((df.dw_zero_unconfirmed & has_ob).sum()),
         "state_zero_unconfirmed_towns": sorted(df[df.dw_zero_unconfirmed & has_ob].municipality.tolist()),
+        # each source over its own full period: all homes permitted (obligated towns)
+        "dca_units_usable": int(d_units_u), "dca_towns_usable": d_n,
+        "dca_obligation_share_usable": round(float(ob[ob.d_usable].prospective_need.sum()) / ob_total, 4),
+        "census_units_all": int(c_units_all), "census_obligated_towns": c_n_all, "census_estimate_share": round(c_est_share, 4),
+        "census_units_usable": int(c_units_u), "census_towns_usable": c_n_u,
+        "census_obligation_share_usable": round(float(ob[ob.c_usable].prospective_need.sum()) / ob_total, 4),
+        "exempt_share_census": exempt_share("c"), "exempt_share_dca": exempt_share("d"),
+        # labelled sensitivity only: homes permitted x 20% / obligation pro-rated to date (feeds no class, count or chart)
+        "sens_affordable_dca": d_sens_u, "sens_affordable_census": c_sens_all, "sens_affordable_census_usable": c_sens_u,
         # baseline
-        "base_class_counts": {k: int(v) for k, v in base_counts.items()},
         "base_census_avg_units": round(float(df.c_base_avg.sum()), 1), "base_census_towns": int(df.c_base_usable.sum()),
         "base_dca_avg_units": round(float(df.d_base_avg.sum()), 1), "base_dca_towns": int(df.d_base_usable.sum()),
-        "base_census_below_half": int((ob[ob.c_base_usable].c_base_cov < 0.5).sum()), "base_census_obligated": int(ob.c_base_usable.sum()),
-        "base_dca_below_half": int((ob[ob.d_base_usable].d_base_cov < 0.5).sum()), "base_dca_obligated": int(ob.d_base_usable.sum()),
-        # best-year threshold
-        "census_best_exceeds_20": int((ob.c_best_20 == "exceeds").sum()), "census_best_exceeds_100": int((ob.c_best_100 == "exceeds").sum()),
-        "census_best_assessed": int((ob.c_best_20 != "insufficient").sum()),
-        "dca_best_exceeds_20": int((ob.d_best_20 == "exceeds").sum()), "dca_best_exceeds_100": int((ob.d_best_100 == "exceeds").sum()),
-        "dca_best_assessed": int((ob.d_best_20 != "insufficient").sum()),
-        # final numbers
+        "base_census_obligated": int(ob.c_base_usable.sum()), "base_dca_obligated": int(ob.d_base_usable.sum()),
+        # final numbers (sensitivity; obligations used are DCA's for every town in v4)
+        "obligation_source": "dca",
         "final_numbers_found": int(df.final_prospective_need.notna().sum()), "final_numbers_firm": int(firm.sum()),
-        "dca_pace_usable_sensitivity": sens("d", ob.d_usable), "census_pace_all_sensitivity": sens("c", ob.in_census),
+        "sens_affordable_final_dca": sens("d", ob.d_usable), "sens_affordable_final_census": sens("c", ob.in_census),
         # completions
         "co_vintage": f"{co_y}-{co_m:02d}", "co_months_since_round_start": 12 * (co_y - ry) + co_m - rm + 1,
         "co_reported_since_jul2025": int(df.co_reported_since_jul2025.sum()),
@@ -386,7 +420,7 @@ def main():
         "co_pipeline_2024_2025": int(df.pipeline_2024_2025.sum()),
         "co_towns_in_pipeline_measure": int(df.pipeline_2024_2025.notna().sum()),
         "co_marked_missing_last_full_year": int(co_missing_last.sum()),
-    }
+    })
     s["health"] = health(bm, pm, (vy, vm), (dy, dmo), (co_y, co_m), df, s)
     (OUT / "summary.json").write_text(json.dumps(s, indent=2))
     HEALTH.write_text(json.dumps(s["health"], indent=2) + "\n")
@@ -436,7 +470,12 @@ def health(bm, pm, cv, dv, cov, df, s):
     add("reporting_coverage", "ok" if max(cu, du) >= 0.6 else "warn",
         f"Towns holding {du:.0%} of the obligation have usable state permit data since July 2025, and {cu:.0%} reported at least 75% of months to Census. "
         "Warns only when neither source covers 60%.")
-    add("source_agreement", "ok", f"{s['sources_agree']} of {s['both_usable']} towns with both sources usable fall in the same class; {s['sources_disagree']} disagree.")
+    ca = s["cov_any"]
+    add("comparison_coverage", "ok" if ca >= 0.6 else "warn",
+        f"Obligated towns holding {ca:.0%} of the obligation can be compared with their 2021–25 rate on at least one source "
+        f"({s['cov_dca']:.0%} state, {s['cov_census']:.0%} Census, {s['cov_both']:.0%} both). Warns under 60%.")
+    add("source_agreement", "ok", f"Of {s['both_usable']} obligated towns comparable on both sources, {s['sources_agree']} fall in the same band, "
+        f"{s['sources_one_band_apart']} are one band apart and {s['sources_disagree']} are two or more bands apart.")
     add("negative_values", "ok" if s["negatives_clipped"] == 0 else "warn", f"{s['negatives_clipped']} towns had negative homes permitted since July 2025 (clipped to 0).")
     up, local = bm.get("dca_upstream", {}), json.loads((RAW / "dca_pin.json").read_text())["size"]
     if up.get("size") and int(up["size"]) != local:
@@ -445,7 +484,7 @@ def health(bm, pm, cv, dv, cov, df, s):
         add("obligation_source", "ok", "DCA obligation workbook unchanged upstream.")
     clag = months_old(*cov)
     add("completions_freshness", "ok" if clag <= 11 else "warn", f"Latest completions data (NJ DCA certificates of occupancy) is {clag} months old (normal lag is 8–10). Completions are a secondary layer.")
-    add("proxy_validity", "manual", "Permits × 20% is a yardstick for affordable output, not a measure of it. Reviewed by hand each month (data/review_log.md).")
+    add("proxy_validity", "manual", "Figures are all homes permitted; neither source tags affordable units. Reviewed by hand each month (data/review_log.md).")
     worst = "stop" if any(c["status"] == "stop" for c in checks) else ("warn" if any(c["status"] == "warn" for c in checks) else "ok")
     return {"overall": worst, "can_answer": worst != "stop", "checks": checks}
 

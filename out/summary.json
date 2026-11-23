@@ -1,5 +1,5 @@
 {
-  "method": "v3.2",
+  "method": "v4",
   "vintage": "2026-09",
   "dca_vintage": "2026-01",
   "months_elapsed": 15,
@@ -8,45 +8,394 @@
   "towns_matched": 564,
   "obligated_towns": 515,
   "obligation_total": 80798,
-  "dca_units_usable": 6720,
-  "dca_pace_usable": 0.3828,
-  "dca_towns_usable": 313,
-  "dca_obligation_share_usable": 0.7449,
-  "census_units_all": 22324,
-  "census_pace_all": 0.4424,
-  "census_obligated_towns": 514,
-  "census_estimate_share": 0.3694,
-  "census_units_usable": 11535,
-  "census_pace_usable": 0.4238,
-  "census_towns_usable": 201,
-  "census_obligation_share_usable": 0.5391,
-  "dca_below_half": 150,
-  "dca_below_half_obligation": 45168,
-  "census_below_half": 98,
-  "census_below_half_obligation": 30860,
-  "exempt_share_census": 0.3736,
-  "exempt_share_dca": 0.3611,
-  "class_counts": {
-    "too_early": 266,
-    "below_half": 168,
-    "exempt": 49,
-    "not_enough_reports": 36,
-    "disagree": 23,
-    "one_to_two": 9,
-    "half_to_one": 8,
-    "two_plus": 5
-  },
   "window_end": "2026-01",
   "window_months": 7,
-  "both_usable": 143,
-  "sources_agree": 120,
-  "sources_disagree": 23,
-  "colored_one_source": 70,
-  "colored_two_sources": 120,
-  "colored_small_window_target": 0,
+  "ordinances_due": "2026-03",
+  "min_expected": 10,
+  "large_producer": 200,
+  "units_obl_dca": 6175.0,
+  "expected_obl_dca": 7683.7,
+  "ratio_obl_dca": 0.8037,
+  "towns_obl_dca": 139,
+  "units_obl_census": 4241.9,
+  "expected_obl_census": 5180.9,
+  "ratio_obl_census": 0.8188,
+  "towns_obl_census": 114,
+  "units_non_dca": 3658.0,
+  "expected_non_dca": 3164.3,
+  "ratio_non_dca": 1.156,
+  "towns_non_dca": 21,
+  "units_non_census": 2869.0,
+  "expected_non_census": 2799.2,
+  "ratio_non_census": 1.0249,
+  "towns_non_census": 15,
+  "cov_dca": 0.4734,
+  "cov_census": 0.3557,
+  "cov_any": 0.5474,
+  "cov_both": 0.2817,
+  "towns_obl_neither": 333,
+  "class_counts": {
+    "too_few": 211,
+    "reporting_gap": 122,
+    "well_below": 83,
+    "exempt": 49,
+    "about_same": 30,
+    "below": 28,
+    "above": 19,
+    "well_above": 12,
+    "disagree": 10
+  },
+  "towns_too_few": 211,
+  "towns_reporting_gap": 122,
+  "both_usable": 71,
+  "sources_agree": 37,
+  "sources_one_band_apart": 24,
+  "sources_disagree": 10,
+  "colored_one_source": 111,
+  "colored_two_sources": 61,
   "colored_census_only_no_reports": 12,
-  "towns_not_enough_reports": 36,
-  "towns_too_early": 266,
+  "gap_large_n": 48,
+  "gap_large_obligated": 37,
+  "gap_large_names": [
+    "Jersey City",
+    "Long Branch city",
+    "Weehawken township",
+    "Hoboken city",
+    "Elizabeth city",
+    "Secaucus town",
+    "City of Orange township",
+    "Atlantic City",
+    "Springfield township",
+    "Hillsborough township",
+    "Wood-Ridge borough",
+    "Evesham township",
+    "Pennsauken township",
+    "Princeton",
+    "Highland Park borough",
+    "Westampton township",
+    "Bound Brook borough",
+    "Boonton town",
+    "Tinton Falls borough",
+    "Delran township",
+    "West Orange township",
+    "Carlstadt borough",
+    "Washington township",
+    "Jackson township",
+    "Trenton city",
+    "Garwood borough",
+    "Montclair township",
+    "Absecon city",
+    "Mount Arlington borough",
+    "Gloucester township",
+    "Bogota borough",
+    "Fairview borough",
+    "North Brunswick township",
+    "Roselle borough",
+    "Totowa borough",
+    "Maplewood township",
+    "Mendham borough",
+    "Bridgewater township",
+    "Berkeley Heights township",
+    "Englewood city",
+    "Cedar Grove township",
+    "Cranford township",
+    "Flemington borough",
+    "Caldwell borough",
+    "Ridgewood village",
+    "Wyckoff township",
+    "Clinton town",
+    "Berlin borough"
+  ],
+  "gap_large": [
+    {
+      "name": "Jersey City",
+      "county": "Hudson",
+      "past_peak": 6365,
+      "obligated": false
+    },
+    {
+      "name": "Long Branch city",
+      "county": "Monmouth",
+      "past_peak": 1062,
+      "obligated": false
+    },
+    {
+      "name": "Weehawken township",
+      "county": "Hudson",
+      "past_peak": 946,
+      "obligated": false
+    },
+    {
+      "name": "Hoboken city",
+      "county": "Hudson",
+      "past_peak": 692,
+      "obligated": false
+    },
+    {
+      "name": "Elizabeth city",
+      "county": "Union",
+      "past_peak": 676,
+      "obligated": false
+    },
+    {
+      "name": "Secaucus town",
+      "county": "Hudson",
+      "past_peak": 643,
+      "obligated": true
+    },
+    {
+      "name": "City of Orange township",
+      "county": "Essex",
+      "past_peak": 622,
+      "obligated": false
+    },
+    {
+      "name": "Atlantic City",
+      "county": "Atlantic",
+      "past_peak": 503,
+      "obligated": false
+    },
+    {
+      "name": "Springfield township",
+      "county": "Union",
+      "past_peak": 482,
+      "obligated": true
+    },
+    {
+      "name": "Hillsborough township",
+      "county": "Somerset",
+      "past_peak": 416,
+      "obligated": true
+    },
+    {
+      "name": "Wood-Ridge borough",
+      "county": "Bergen",
+      "past_peak": 407,
+      "obligated": true
+    },
+    {
+      "name": "Evesham township",
+      "county": "Burlington",
+      "past_peak": 392,
+      "obligated": true
+    },
+    {
+      "name": "Pennsauken township",
+      "county": "Camden",
+      "past_peak": 380,
+      "obligated": false
+    },
+    {
+      "name": "Princeton",
+      "county": "Mercer",
+      "past_peak": 379,
+      "obligated": true
+    },
+    {
+      "name": "Highland Park borough",
+      "county": "Middlesex",
+      "past_peak": 368,
+      "obligated": true
+    },
+    {
+      "name": "Westampton township",
+      "county": "Burlington",
+      "past_peak": 363,
+      "obligated": true
+    },
+    {
+      "name": "Bound Brook borough",
+      "county": "Somerset",
+      "past_peak": 353,
+      "obligated": true
+    },
+    {
+      "name": "Boonton town",
+      "county": "Morris",
+      "past_peak": 351,
+      "obligated": true
+    },
+    {
+      "name": "Tinton Falls borough",
+      "county": "Monmouth",
+      "past_peak": 348,
+      "obligated": true
+    },
+    {
+      "name": "Delran township",
+      "county": "Burlington",
+      "past_peak": 340,
+      "obligated": true
+    },
+    {
+      "name": "West Orange township",
+      "county": "Essex",
+      "past_peak": 326,
+      "obligated": true
+    },
+    {
+      "name": "Carlstadt borough",
+      "county": "Bergen",
+      "past_peak": 314,
+      "obligated": true
+    },
+    {
+      "name": "Washington township",
+      "county": "Gloucester",
+      "past_peak": 308,
+      "obligated": true
+    },
+    {
+      "name": "Jackson township",
+      "county": "Ocean",
+      "past_peak": 304,
+      "obligated": true
+    },
+    {
+      "name": "Trenton city",
+      "county": "Mercer",
+      "past_peak": 298,
+      "obligated": false
+    },
+    {
+      "name": "Garwood borough",
+      "county": "Union",
+      "past_peak": 291,
+      "obligated": true
+    },
+    {
+      "name": "Montclair township",
+      "county": "Essex",
+      "past_peak": 290,
+      "obligated": false
+    },
+    {
+      "name": "Absecon city",
+      "county": "Atlantic",
+      "past_peak": 279,
+      "obligated": true
+    },
+    {
+      "name": "Mount Arlington borough",
+      "county": "Morris",
+      "past_peak": 274,
+      "obligated": true
+    },
+    {
+      "name": "Gloucester township",
+      "county": "Camden",
+      "past_peak": 268,
+      "obligated": true
+    },
+    {
+      "name": "Bogota borough",
+      "county": "Bergen",
+      "past_peak": 267,
+      "obligated": true
+    },
+    {
+      "name": "Fairview borough",
+      "county": "Bergen",
+      "past_peak": 259,
+      "obligated": true
+    },
+    {
+      "name": "North Brunswick township",
+      "county": "Middlesex",
+      "past_peak": 257,
+      "obligated": true
+    },
+    {
+      "name": "Roselle borough",
+      "county": "Union",
+      "past_peak": 244,
+      "obligated": false
+    },
+    {
+      "name": "Totowa borough",
+      "county": "Passaic",
+      "past_peak": 240,
+      "obligated": true
+    },
+    {
+      "name": "Maplewood township",
+      "county": "Essex",
+      "past_peak": 237,
+      "obligated": true
+    },
+    {
+      "name": "Mendham borough",
+      "county": "Morris",
+      "past_peak": 232,
+      "obligated": true
+    },
+    {
+      "name": "Bridgewater township",
+      "county": "Somerset",
+      "past_peak": 229,
+      "obligated": true
+    },
+    {
+      "name": "Berkeley Heights township",
+      "county": "Union",
+      "past_peak": 228,
+      "obligated": true
+    },
+    {
+      "name": "Englewood city",
+      "county": "Bergen",
+      "past_peak": 221,
+      "obligated": true
+    },
+    {
+      "name": "Cedar Grove township",
+      "county": "Essex",
+      "past_peak": 219,
+      "obligated": true
+    },
+    {
+      "name": "Cranford township",
+      "county": "Union",
+      "past_peak": 219,
+      "obligated": true
+    },
+    {
+      "name": "Flemington borough",
+      "county": "Hunterdon",
+      "past_peak": 212,
+      "obligated": true
+    },
+    {
+      "name": "Caldwell borough",
+      "county": "Essex",
+      "past_peak": 212,
+      "obligated": true
+    },
+    {
+      "name": "Ridgewood village",
+      "county": "Bergen",
+      "past_peak": 207,
+      "obligated": true
+    },
+    {
+      "name": "Wyckoff township",
+      "county": "Bergen",
+      "past_peak": 207,
+      "obligated": true
+    },
+    {
+      "name": "Clinton town",
+      "county": "Hunterdon",
+      "past_peak": 207,
+      "obligated": true
+    },
+    {
+      "name": "Berlin borough",
+      "county": "Camden",
+      "past_peak": 205,
+      "obligated": true
+    }
+  ],
   "negatives_clipped": 0,
   "state_zero_unconfirmed": 32,
   "state_zero_unconfirmed_towns": [
@@ -83,33 +432,31 @@
     "Somerdale borough",
     "Wood-Ridge borough"
   ],
-  "base_class_counts": {
-    "below_half": 286,
-    "not_enough_reports": 62,
-    "disagree": 54,
-    "exempt": 49,
-    "half_to_one": 49,
-    "one_to_two": 35,
-    "two_plus": 29
-  },
+  "dca_units_usable": 6720,
+  "dca_towns_usable": 313,
+  "dca_obligation_share_usable": 0.7449,
+  "census_units_all": 22324,
+  "census_obligated_towns": 514,
+  "census_estimate_share": 0.3694,
+  "census_units_usable": 11535,
+  "census_towns_usable": 201,
+  "census_obligation_share_usable": 0.5391,
+  "exempt_share_census": 0.3736,
+  "exempt_share_dca": 0.3611,
+  "sens_affordable_dca": 0.3828,
+  "sens_affordable_census": 0.4424,
+  "sens_affordable_census_usable": 0.4238,
   "base_census_avg_units": 15393.1,
   "base_census_towns": 314,
   "base_dca_avg_units": 22832.1,
   "base_dca_towns": 451,
-  "base_census_below_half": 194,
   "base_census_obligated": 295,
-  "base_dca_below_half": 285,
   "base_dca_obligated": 419,
-  "census_best_exceeds_20": 236,
-  "census_best_exceeds_100": 92,
-  "census_best_assessed": 426,
-  "dca_best_exceeds_20": 265,
-  "dca_best_exceeds_100": 111,
-  "dca_best_assessed": 505,
+  "obligation_source": "dca",
   "final_numbers_found": 14,
   "final_numbers_firm": 10,
-  "dca_pace_usable_sensitivity": 0.3851,
-  "census_pace_all_sensitivity": 0.4448,
+  "sens_affordable_final_dca": 0.3851,
+  "sens_affordable_final_census": 0.4448,
   "co_vintage": "2026-01",
   "co_months_since_round_start": 7,
   "co_reported_since_jul2025": 9735,
@@ -120,7 +467,7 @@
   "co_towns_in_pipeline_measure": 341,
   "co_marked_missing_last_full_year": 90,
   "health": {
-    "overall": "ok",
+    "overall": "warn",
     "can_answer": true,
     "checks": [
       {
@@ -154,9 +501,14 @@
         "detail": "Towns holding 74% of the obligation have usable state permit data since July 2025, and 54% reported at least 75% of months to Census. Warns only when neither source covers 60%."
       },
       {
+        "check": "comparison_coverage",
+        "status": "warn",
+        "detail": "Obligated towns holding 55% of the obligation can be compared with their 2021\u201325 rate on at least one source (47% state, 36% Census, 28% both). Warns under 60%."
+      },
+      {
         "check": "source_agreement",
         "status": "ok",
-        "detail": "120 of 143 towns with both sources usable fall in the same class; 23 disagree."
+        "detail": "Of 71 obligated towns comparable on both sources, 37 fall in the same band, 24 are one band apart and 10 are two or more bands apart."
       },
       {
         "check": "negative_values",
@@ -176,7 +528,7 @@
       {
         "check": "proxy_validity",
         "status": "manual",
-        "detail": "Permits \u00d7 20% is a yardstick for affordable output, not a measure of it. Reviewed by hand each month (data/review_log.md)."
+        "detail": "Figures are all homes permitted; neither source tags affordable units. Reviewed by hand each month (data/review_log.md)."
       }
     ]
   }

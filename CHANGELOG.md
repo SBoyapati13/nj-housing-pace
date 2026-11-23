@@ -2,6 +2,32 @@
 
 Methodology changes are recorded here before results that depend on them are published. Data updates are not listed; they are in `data/runs.jsonl`.
 
+## v4 method, registered 2026-11-23 (before any v4 results were computed)
+
+Why: Fair Share Housing Center's review (Nov 5) pointed out that homes permitted × 20% can't say whether a town is on track, that the state data carry no affordable-unit tag, and that most projects under the new zoning were not yet approved. v4 stops grading towns on pace and compares each town's permitting with its own past.
+
+What was looked at before writing this: v3.2 outputs at Census data through September 2026 and state data through January 2026, namely reporting coverage under the new comparable rule (share of the obligation in comparable towns), the list of towns with 200+ homes in a past year and no usable reports, Census's 2025 June and December year-to-date totals (for seasonality), and how closely the two sources' window counts agree in towns usable on both (for the disagreement rule). While drafting, the statewide ratio of homes permitted to the 2021–25 rate was computed once for obligated and non-obligated towns. No v4 town classes, county figures or maps were computed, and the band edges below were not tuned to any result.
+
+**Measure.** Ratio to baseline, per source = all homes permitted in the shared window (July 2025 through the earlier of the two sources' latest months) ÷ (the town's 2021–25 average homes permitted per year × window months ÷ 12). The baseline rules (at least 4 of 5 fully reported years) are those of v3.
+
+**Comparable.** A source is comparable for a town when it is usable over the window (v3.1 rules, including unconfirmed state zeros), the town has a baseline from that source, and the expected homes over the window are at least 10.
+
+**Bands.** Under 0.5; 0.5 to under 0.8; 0.8 to under 1.25; 1.25 to under 2; 2 or more.
+
+**One map class per town, in order:** no permit data; no new obligation; both sources comparable and in the same band, that band; one band apart, the band nearer "about the same", marked as one band apart; two or more bands apart, "sources disagree"; one comparable source, its band, marked as one source; usable with a baseline but under 10 expected homes on every such source, "too few homes to compare"; otherwise "reporting gap".
+
+**Large-producer gap.** A town whose most homes permitted in any fully reported year 2015–2024, on either source, is 200 or more, and that is comparable on neither source, is outlined on the map and listed by name.
+
+**Statewide figures,** per source: Σ homes permitted ÷ Σ expected homes over comparable towns, separately for obligated towns and towns with no new obligation, with coverage (share of the obligation held by comparable obligated towns).
+
+**Removed:** the 20% set-aside from the headline, map classes and best-year threshold; the pace classes and "below half" counts; the best-year threshold (the best year stays as a descriptive figure); the 2021–25 coverage view at 20%; "too early to read".
+
+**Kept as a labelled sensitivity:** homes permitted × 20% ÷ obligation pro-rated to date, per source, shown in one line and used by no class or count.
+
+**Obligations:** unchanged (DCA's calculation). A new `obligation_source` field is "dca" for every town; switching to final numbers is a later, separately registered change.
+
+**Expected before computing:** many towns move from the old classes to "too few homes to compare" or "reporting gap", because the small-number test now rests on each town's own past permits rather than its obligation.
+
 ## v3.2, published 2026-10-19
 Implemented as registered below. As expected, 100 towns moved to "too early to read" (all with obligations of 84 units or fewer) and none moved out; statewide pace figures are unchanged. Colored obligated towns: 190 (120 on both sources agreeing, 70 on one). The disclosure of colored towns with a small shared-period target is dropped, since there are none.
 

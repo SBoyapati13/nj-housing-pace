@@ -6,7 +6,7 @@
 /* Layout: civic data tool. Headline + stamp, four figures, then map (left) beside a legend/search/detail rail (right); table and method below. */
 :root {
   --bg: #f5f6f7; --surface: #ffffff; --ink: #14181d; --ink2: #4c5560; --line: #dde1e6; --accent: #1c5cab;
-  --c-below: #b35806; --c-half: #f1a340; --c-one: #a497d1; --c-two: #542788; --c-dis: #a3a9b0; --c-ne: #d5d9dd; --c-te: #eceef0; --c-exempt: #e4e3df; --c-nodata: #ffffff;
+  --c-wb: #b35806; --c-b: #f1a340; --c-same: #e9dcb8; --c-a: #a497d1; --c-wa: #542788; --c-dis: #a3a9b0; --c-ne: #d5d9dd; --c-te: #eceef0; --c-exempt: #e4e3df; --c-nodata: #ffffff; --gap: #14181d;
   --edge: #ffffff; --hatch: #b9b8b3; --warn-bg: #fff4e5; --warn-ink: #7a4100; --stop-bg: #fdecec; --stop-ink: #8a1f22;
   --f-display: "Public Sans", "Segoe UI", system-ui, sans-serif;
   --f-body: "Public Sans", "Segoe UI", system-ui, sans-serif;
@@ -14,11 +14,11 @@
 }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
   --bg: #111315; --surface: #1a1d21; --ink: #eceef1; --ink2: #a7aeb8; --line: #2b3036; --accent: #6da7ec;
-  --c-below: #f1a340; --c-half: #8a4a12; --c-one: #5a4a92; --c-two: #b2abd2; --c-dis: #5f666e; --c-ne: #3a3f45; --c-te: #2a2e33; --c-exempt: #3a3a37; --c-nodata: #1a1d21;
+  --c-wb: #f1a340; --c-b: #8a4a12; --c-same: #5c5440; --c-a: #5a4a92; --c-wa: #b2abd2; --c-dis: #5f666e; --c-ne: #3a3f45; --c-te: #2a2e33; --c-exempt: #3a3a37; --c-nodata: #1a1d21; --gap: #eceef1;
   --edge: #111315; --hatch: #5c5c58; --warn-bg: #3a2a12; --warn-ink: #f3c37a; --stop-bg: #3d1c1d; --stop-ink: #f2a4a2; color-scheme: dark; } }
 :root[data-theme="dark"] {
   --bg: #111315; --surface: #1a1d21; --ink: #eceef1; --ink2: #a7aeb8; --line: #2b3036; --accent: #6da7ec;
-  --c-below: #f1a340; --c-half: #8a4a12; --c-one: #5a4a92; --c-two: #b2abd2; --c-dis: #5f666e; --c-ne: #3a3f45; --c-te: #2a2e33; --c-exempt: #3a3a37; --c-nodata: #1a1d21;
+  --c-wb: #f1a340; --c-b: #8a4a12; --c-same: #5c5440; --c-a: #5a4a92; --c-wa: #b2abd2; --c-dis: #5f666e; --c-ne: #3a3f45; --c-te: #2a2e33; --c-exempt: #3a3a37; --c-nodata: #1a1d21; --gap: #eceef1;
   --edge: #111315; --hatch: #5c5c58; --warn-bg: #3a2a12; --warn-ink: #f3c37a; --stop-bg: #3d1c1d; --stop-ink: #f2a4a2; color-scheme: dark; }
 * { box-sizing: border-box; }
 body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 15px; line-height: 1.5; }
@@ -47,6 +47,9 @@ svg.map { width: 100%; height: auto; max-height: 78vh; display: block; }
 svg.map path { stroke: var(--edge); stroke-width: .5; vector-effect: non-scaling-stroke; cursor: pointer; transition: opacity .15s; }
 svg.map path.dim { opacity: .18; }
 svg.map path.sel { stroke: var(--ink); stroke-width: 2.2; }
+svg.map path.gap { fill: none; stroke: var(--gap); stroke-width: 1.6; pointer-events: none; }
+svg.map.nogap path.gap { display: none; }
+.chip .sw.gapsw { background: transparent; border: 2px solid var(--gap); }
 .srcs { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0 12px; font-size: 13px; margin: 0; border-top: 1px solid var(--line); }
 .srcs .h { color: var(--ink2); font-size: 12px; font-weight: 600; padding-top: 6px; }
 .srcs .k { grid-column: 1 / -1; color: var(--ink2); font-size: 12.5px; padding-top: 6px; }
@@ -97,7 +100,7 @@ td.num, th.num { text-align: right; font-family: var(--f-data); font-variant-num
 <div class="wrap">
   <header>
     <div class="eyebrow">Mount Laurel · Fourth Round, 2025–2035</div>
-    <h1>Where is New Jersey permitting homes, relative to its affordable-housing obligations?</h1>
+    <h1>Are New Jersey towns with Fourth Round obligations permitting more homes than they used to?</h1>
     <p class="stamp" id="stamp">Loading the latest data…</p>
   </header>
   <div id="banner" hidden></div>
@@ -105,13 +108,9 @@ td.num, th.num { text-align: right; font-family: var(--f-data); font-variant-num
   <section class="main">
     <div class="mapbox">
       <div class="toolbar">
-        <div class="seg" role="group" aria-label="Measure">
-          <button id="v-live" aria-pressed="true">Fourth Round to date</button>
-          <button id="v-base" aria-pressed="false">2021–25 baseline</button>
-        </div>
         <span class="viewnote" id="viewnote"></span>
       </div>
-      <svg class="map" id="map" role="img" aria-label="Map of New Jersey municipalities colored by permit pace relative to each town's pro-rated obligation"></svg>
+      <svg class="map" id="map" role="img" aria-label="Map of New Jersey municipalities colored by homes permitted since July 2025 relative to each town's own 2021–25 rate"></svg>
       <div class="tip" id="tip" hidden></div>
     </div>
     <aside>
@@ -125,7 +124,7 @@ td.num, th.num { text-align: right; font-family: var(--f-data); font-variant-num
       <div class="panel">
         <h2>Legend</h2>
         <div class="legend" id="legend"></div>
-        <p class="hint">Click a category to highlight its towns. Colors show a building-permit indicator, not a finding about any town's compliance.</p>
+        <p class="hint">Click a category to highlight its towns. Colors compare all homes permitted with the town's own past; they aren't affordable homes and aren't a finding about any town's compliance.</p>
       </div>
     </aside>
   </section>
@@ -153,19 +152,19 @@ td.num, th.num { text-align: right; font-family: var(--f-data); font-variant-num
   const monthName = (v) => { const [y, m] = v.split("-").map(Number); return new Date(y, m - 1, 1).toLocaleString("en-US", { month: "long", year: "numeric" }); };
 
   // ---- header ----
-  $("#stamp").innerHTML = `Two permit sources: Census through <b>${monthName(S.vintage)}</b> and the state's Construction Reporter through <b>${monthName(S.dca_vintage)}</b>. Fourth Round month <b>${S.months_elapsed}</b> of 120 (July 2025 – June 2035). Rebuilt automatically when either source publishes; data last updated ${M.built_utc.slice(0, 10)}.`;
+  const W = monthName(S.window_end);
+  $("#stamp").innerHTML = `All homes permitted, <b>July 2025 – ${W}</b>, against each town's own 2021–25 rate. Two permit sources: Census through <b>${monthName(S.vintage)}</b> and the state's Construction Reporter through <b>${monthName(S.dca_vintage)}</b>. Rebuilt automatically when either source publishes; data last updated ${M.built_utc.slice(0, 10)}.`;
   const h = S.health;
   if (h && h.overall !== "ok") {
     const b = $("#banner"); b.hidden = false; b.className = "banner " + (h.can_answer ? "warn" : "stop");
     const bad = h.checks.filter(c => c.status === "stop" || c.status === "warn").map(c => c.detail).join(" ");
     b.textContent = (h.can_answer ? "Check needed: " : "This map can't currently answer its question. The figures below are from the last valid run. ") + bad;
   }
-  const cc = S.class_counts, unread = (cc.disagree || 0) + (cc.not_enough_reports || 0) + (cc.too_early || 0);
   const figs = [
-    [pct(S.dca_pace_usable), `pace in obligated towns, state permit data (${S.dca_towns_usable} towns with usable reports, through ${monthName(S.dca_vintage)})`],
-    [pct(S.census_pace_all), `pace in obligated towns, Census data (through ${monthName(S.vintage)}; ${pct(S.census_estimate_share)} of it is Census estimates)`],
-    [`${fmt(cc.below_half || 0)} / ${fmt(S.obligated_towns)}`, "obligated towns below half the pro-rated pace"],
-    [fmt(unread), "obligated towns that can't be read yet (sources disagree, too few reports, or too early)"],
+    [pct(S.ratio_obl_dca), `of their 2021–25 rate: towns with an obligation, state permit data (${S.towns_obl_dca} towns compared)`],
+    [pct(S.ratio_obl_census), `of their 2021–25 rate: towns with an obligation, Census data (${S.towns_obl_census} towns compared)`],
+    [`${pct(S.ratio_non_dca)} · ${pct(S.ratio_non_census)}`, `towns with no new obligation, state · Census (${S.towns_non_dca} and ${S.towns_non_census} towns compared)`],
+    [pct(S.cov_any), `of the obligation is in towns that can be compared on at least one source (${pct(S.cov_dca)} state, ${pct(S.cov_census)} Census)`],
   ];
   $("#figures").innerHTML = figs.map(([v, k]) => `<div class="fig"><span class="v">${v}</span><span class="k">${k}</span></div>`).join("");
 
@@ -173,83 +172,88 @@ td.num, th.num { text-align: right; font-family: var(--f-data); font-variant-num
   const svg = $("#map"), NS = "http://www.w3.org/2000/svg";
   svg.setAttribute("viewBox", `0 0 ${M.width} ${M.height}`);
   const defs = document.createElementNS(NS, "defs");
-  defs.innerHTML = `<pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="var(--c-exempt)"/><line x1="0" y1="0" x2="0" y2="6" stroke="var(--hatch)" stroke-width="1.4"/></pattern>
+  defs.innerHTML = `<pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)"><rect width="6" height="6" fill="var(--c-exempt)"/><line x1="0" y1="0" x2="0" y2="6" stroke="var(--hatch)" stroke-width="1.4"/></pattern>
+    <pattern id="gaphatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="var(--c-ne)"/><line x1="0" y1="0" x2="0" y2="6" stroke="var(--hatch)" stroke-width="1"/></pattern>
     <pattern id="dots" width="5" height="5" patternUnits="userSpaceOnUse"><rect width="5" height="5" fill="var(--c-dis)"/><circle cx="2.5" cy="2.5" r="0.9" fill="var(--hatch)"/></pattern>`;
   svg.appendChild(defs);
   const gTowns = document.createElementNS(NS, "g"); svg.appendChild(gTowns);
+  const gGap = document.createElementNS(NS, "g"); svg.appendChild(gGap);
   const byFips = {};
   for (const t of D.towns) {
     const p = document.createElementNS(NS, "path"); p.setAttribute("d", t.d); p.dataset.f = t.f;
     gTowns.appendChild(p); t.el = p; byFips[t.f] = t;
+    if (t.gap) { const o = document.createElementNS(NS, "path"); o.setAttribute("d", t.d); o.setAttribute("class", "gap"); gGap.appendChild(o); }
   }
   const CLASSES = [
-    ["below_half", "var(--c-below)", "Below half the pro-rated pace"], ["half_to_one", "var(--c-half)", "Half to full pro-rated pace"],
-    ["one_to_two", "var(--c-one)", "At or above pro-rated pace (1–2×)"], ["two_plus", "var(--c-two)", "More than twice the pro-rated pace"],
-    ["disagree", "url(#dots)", "The two permit sources disagree"], ["not_enough_reports", "var(--c-ne)", "Not enough reports to read"],
-    ["too_early", "var(--c-te)", "Too early to read (small obligation)"], ["exempt", "url(#hatch)", "No new obligation"], ["no_data", "var(--c-nodata)", "No permit data"]];
-  const VIEWS = {
-    live: { key: "cls", note: "Homes permitted since July 2025 × 20%, against the obligation pro-rated to date, both sources over the same period. Colored where the usable sources agree, or from the only usable one." },
-    base: { key: "clsb", note: "2021–25 average homes permitted per year × 20%, against one-tenth of the obligation." },
-  };
-  const swatchCss = (c) => c === "url(#hatch)" ? "repeating-linear-gradient(45deg,var(--c-exempt) 0 3px,var(--hatch) 3px 4.5px)"
+    ["well_below", "var(--c-wb)", "Under half its 2021–25 rate"], ["below", "var(--c-b)", "Below its 2021–25 rate (0.5–0.8×)"],
+    ["about_same", "var(--c-same)", "About its 2021–25 rate (0.8–1.25×)"], ["above", "var(--c-a)", "Above its 2021–25 rate (1.25–2×)"],
+    ["well_above", "var(--c-wa)", "At least twice its 2021–25 rate"],
+    ["disagree", "url(#dots)", "The two permit sources disagree"], ["too_few", "var(--c-te)", "Too few homes to compare"],
+    ["reporting_gap", "url(#gaphatch)", "Reporting gap: not enough reports"], ["exempt", "url(#hatch)", "No new obligation"], ["no_data", "var(--c-nodata)", "No permit data"]];
+  const BANDS = CLASSES.slice(0, 5).map(c => c[0]);
+  $("#viewnote").textContent = `All homes permitted, July 2025 – ${W}, ÷ the town's 2021–25 average × ${S.window_months} ÷ 12. Colored where a source is usable and that rate predicts at least ${S.min_expected} homes; both sources must land within one band of each other.`;
+  const swatchCss = (c) => c === "url(#hatch)" ? "repeating-linear-gradient(-45deg,var(--c-exempt) 0 3px,var(--hatch) 3px 4.5px)"
+    : c === "url(#gaphatch)" ? "repeating-linear-gradient(45deg,var(--c-ne) 0 3px,var(--hatch) 3px 4px)"
     : c === "url(#dots)" ? "radial-gradient(var(--hatch) 0.9px, var(--c-dis) 1px) 0 0/5px 5px" : c;
-  let view = "live", hi = null, sel = null;
+  let hi = null, sel = null;
   function paint() {
-    const V = VIEWS[view], fill = Object.fromEntries(CLASSES.map(c => [c[0], c[1]]));
-    for (const t of D.towns) { const c = t[V.key]; t.el.style.fill = fill[c]; t.el.classList.toggle("dim", hi !== null && c !== hi); }
-    const counts = {}; D.towns.forEach(t => counts[t[V.key]] = (counts[t[V.key]] || 0) + 1);
+    const fill = Object.fromEntries(CLASSES.map(c => [c[0], c[1]]));
+    for (const t of D.towns) {
+      t.el.style.fill = fill[t.cls];
+      t.el.classList.toggle("dim", hi !== null && (hi === "gap" ? !t.gap : t.cls !== hi));
+    }
+    const counts = {}; D.towns.forEach(t => counts[t.cls] = (counts[t.cls] || 0) + 1);
+    const ngap = D.towns.filter(t => t.gap).length;
     $("#legend").innerHTML = CLASSES.filter(c => counts[c[0]]).map(c =>
-      `<button class="chip" data-c="${c[0]}" aria-pressed="${hi === c[0]}"><span class="sw" style="background:${swatchCss(c[1])}"></span><span>${c[2]}</span><span class="n">${counts[c[0]]}</span></button>`).join("");
+      `<button class="chip" data-c="${c[0]}" aria-pressed="${hi === c[0]}"><span class="sw" style="background:${swatchCss(c[1])}"></span><span>${c[2]}</span><span class="n">${counts[c[0]]}</span></button>`).join("")
+      + (ngap ? `<button class="chip" data-c="gap" aria-pressed="${hi === "gap"}"><span class="sw gapsw"></span><span>Outline: past large producer (${S.large_producer}+ homes in a year), not comparable on either source</span><span class="n">${ngap}</span></button>` : "");
     document.querySelectorAll("#legend button.chip").forEach(b => b.onclick = () => { hi = hi === b.dataset.c ? null : b.dataset.c; paint(); table(); });
-    $("#viewnote").textContent = V.note;
-    $("#v-live").setAttribute("aria-pressed", view === "live"); $("#v-base").setAttribute("aria-pressed", view === "base");
     if (sel) detail(sel);
   }
-  $("#v-live").onclick = () => { view = "live"; hi = null; paint(); table(); };
-  $("#v-base").onclick = () => { view = "base"; hi = null; paint(); table(); };
 
-  const cls = (t) => CLASSES.find(c => c[0] === t[VIEWS[view].key]) || CLASSES[CLASSES.length - 1];
-  const best = (st) => ({ exceeds: "More than its best year", within: "Within its best year", covered: "Already covered at this pace", insufficient: "Too few fully reported years" }[st] || "–");
+  const cls = (t) => CLASSES.find(c => c[0] === t.cls) || CLASSES[CLASSES.length - 1];
+  const ratio = (r) => r == null ? "–" : r.toFixed(2) + "×";
+  function why(x, zu) {
+    if (x.ok) return null;
+    if (zu) return "state 0 not confirmed";
+    if (!x.use) return `${fmt(x.mm)} months missing`;
+    if (x.e == null) return "no 2021–25 baseline";
+    return `under ${S.min_expected} expected`;
+  }
   function srcRows(t) {
-    const live = view === "live", c = t.c, d = t.s;
-    const isNum = (x) => /^[\d,.%–() ]+$|^\d/.test(String(x));
+    const c = t.c, d = t.s;
+    const isNum = (x) => /^[\d,.%–()× ]+$|^\d/.test(String(x));
     const cell = (x) => `<span class="v${isNum(x) ? " n" : ""}">${x}</span>`;
     const row = (k, a, b) => `<span class="k">${k}</span>${cell(a)}${cell(b)}`;
-    const head = `<span class="h">Census</span><span class="h">State Construction Reporter</span>`;
-    const W = monthName(S.window_end);
-    if (live) return head
+    return `<span class="h">Census</span><span class="h">State Construction Reporter</span>`
       + row(`Months reported, July 2025 – ${W}`, `${fmt(c.m)} of ${S.window_months}`, `${fmt(d.m)} of ${S.window_months}`)
-      + row("Homes permitted, same period", fmt(c.u), d.u != null ? fmt(d.u) : "–")
+      + row("All homes permitted, same period", fmt(c.u), d.u != null && d.m > 0 ? fmt(d.u) : "–")
       + (c.est > 0.5 ? row("…of which Census estimates", fmt(c.est), "") : "")
-      + row("Pace, same period (sets the color)", c.ok ? pct(c.p) : "too few reports", d.ok ? pct(d.p) : (d.zu ? "0 not confirmed" : "too few reports"))
-      + (S.vintage !== S.window_end ? row(`Census, July 2025 – ${monthName(S.vintage)}`, `${fmt(c.fu)} homes · ${c.fok ? pct(c.fp) : "too few reports"}`, "") : "")
-      + row("Best year since 2015", fmt(c.best), fmt(d.best))
-      + row("Remaining obligation vs. best year (at 20%)", best(c.b20), best(d.b20))
-      + row("…if every new home were affordable", best(c.b100), best(d.b100));
-    return head
-      + row("Fully reported years, 2021–25", `${fmt(t.cb.n)} of 5`, `${fmt(t.sb.n)} of 5`)
-      + row("Avg. homes permitted / yr", fmt(t.cb.a, 1), fmt(t.sb.a, 1))
-      + row("Coverage at 20%", pct(t.cb.v), pct(t.sb.v));
+      + row("2021–25 average per year (fully reported years)", `${fmt(t.cb.a, 1)} (${fmt(t.cb.n)} of 5)`, `${fmt(t.sb.a, 1)} (${fmt(t.sb.n)} of 5)`)
+      + row("Expected at that rate, same period", fmt(c.e, 1), fmt(d.e, 1))
+      + row("Ratio (sets the color)", c.ok ? ratio(c.r) : why(c), d.ok ? ratio(d.r) : why(d, d.zu))
+      + row("Best year since 2015", fmt(c.best), fmt(d.best));
   }
   function detail(t) {
     const k = cls(t);
-    const ob = t.pn > 0 ? `<dl><dt>Obligation, 2025–35</dt><dd>${fmt(t.pn)} units</dd><dt>Pro-rated to ${monthName(S.window_end)}</dt><dd>${fmt(t.tgt, 1)}</dd></dl>`
-      : `<p class="note">No new Fourth Round obligation (${t.why}).</p>`;
+    const ob = t.pn > 0 ? `<dl><dt>Fourth Round obligation, 2025–35 (DCA calculation)</dt><dd>${fmt(t.pn)} units</dd></dl>`
+      : `<p class="note">No new Fourth Round obligation (${t.why}). Its numbers feed the comparison group.</p>`;
     const fin = t.fin_status && t.fin_status !== "not found"
       ? `<p class="finnote">Final or adopted obligation: <b>${fmt(t.fin)}</b> (${t.fin_status}${t.fin_doc ? `; ${t.fin_doc}` : ""}). <a href="${t.fin_src}">Source</a>. Figures here use the state's calculated ${fmt(t.pn)}.</p>`
       : (t.fin_status === "not found" ? `<p class="finnote">No final or adopted number found yet; figures use the state's calculation.</p>` : "");
-    const co = view === "live" ? `<dl><dt>Reported completions since July 2025</dt><dd>${t.co == null ? "Not reported" : fmt(t.co)}</dd><dt>Reported completions ÷ permits, 2015–24</dt><dd>${t.cr == null ? "Incomplete reporting" : pct(t.cr)}</dd></dl>` : "";
+    const co = `<dl><dt>Reported completions since July 2025</dt><dd>${t.co == null ? "Not reported" : fmt(t.co)}</dd><dt>Reported completions ÷ permits, 2015–24</dt><dd>${t.cr == null ? "Incomplete reporting" : pct(t.cr)}</dd></dl>`;
+    const mark = t.one ? "one usable source" : t.ob1 ? "sources one band apart" : "";
     $("#detail").innerHTML = `<div class="name">${t.n}</div><div class="m" style="color:var(--ink2);font-size:13px">${t.c_} County</div>
-      <div class="status"><i style="background:${swatchCss(k[1])}"></i>${k[2]}${view === "live" && t.one ? ` <span style="font-weight:400;color:var(--ink2)">(one usable source)</span>` : ""}</div>${ob}
-      ${t.pn > 0 ? `<div class="srcs">${srcRows(t)}</div>` : ""}${view === "live" && t.s.zu ? `<p class="note">The state's figure for this period is 0, but the town didn't report most months to Census, or reported 5 or more homes there, so the zero isn't treated as a report.</p>` : ""}${co}${fin}`;
+      <div class="status"><i style="background:${swatchCss(k[1])}"></i>${k[2]}${mark ? ` <span style="font-weight:400;color:var(--ink2)">(${mark})</span>` : ""}</div>${ob}
+      ${t.gap ? `<p class="note">Permitted ${fmt(t.pk)} homes in its biggest fully reported year since 2015, but can't be compared on either source now.</p>` : ""}
+      <div class="srcs">${srcRows(t)}</div>${t.s.zu ? `<p class="note">The state's figure for this period is 0, but the town didn't report most months to Census, or reported 5 or more homes there, so the zero isn't treated as a report.</p>` : ""}${co}${fin}`;
   }
   function select(t) { if (sel) sel.el.classList.remove("sel"); sel = t; t.el.classList.add("sel"); gTowns.appendChild(t.el); detail(t); }
   const tip = $("#tip"), box = $(".mapbox");
   gTowns.addEventListener("mousemove", (e) => {
     const t = byFips[e.target.dataset.f]; if (!t) return;
     tip.hidden = false;
-    const live = view === "live";
-    const nums = t.pn > 0 ? `<br><span class="m">${live ? `Pace: Census ${t.c.ok ? pct(t.c.p) : "–"} · State ${t.s.ok ? pct(t.s.p) : "–"}` : `Census ${pct(t.cb.v)} · State ${pct(t.sb.v)}`} · obligation ${fmt(t.pn)}</span>` : "";
+    const nums = `<br><span class="m">Ratio: Census ${t.c.ok ? ratio(t.c.r) : "–"} · State ${t.s.ok ? ratio(t.s.r) : "–"}${t.pn > 0 ? ` · obligation ${fmt(t.pn)}` : ""}</span>`;
     tip.innerHTML = `<b>${t.n}</b><span class="m">${t.c_} County</span><br>${cls(t)[2]}${nums}`;
     const r = box.getBoundingClientRect(); let x = e.clientX - r.left + 14, y = e.clientY - r.top + 14;
     if (x + 260 > r.width) x = e.clientX - r.left - 264; tip.style.left = x + "px"; tip.style.top = y + "px";
@@ -268,22 +272,21 @@ td.num, th.num { text-align: right; font-family: var(--f-data); font-variant-num
 
   // ---- table ----
   function table() {
-    const live = view === "live";
-    const rows = D.towns.filter(t => hi === null || t[VIEWS[view].key] === hi).sort((a, b) => (b.pn || 0) - (a.pn || 0) || a.n.localeCompare(b.n));
-    const head = live ? ["Town", "County", "Status", "Obligation", `Census, Jul 2025–${monthName(S.window_end)}`, "Census pace", "State, same period", "State pace"]
-                      : ["Town", "County", "Status", "Obligation", "Census avg / yr", "Census coverage", "State avg / yr", "State coverage"];
+    const rows = D.towns.filter(t => hi === null || (hi === "gap" ? t.gap : t.cls === hi)).sort((a, b) => (b.pn || 0) - (a.pn || 0) || a.n.localeCompare(b.n));
+    const head = ["Town", "County", "Status", "Obligation", `Census homes, Jul 2025–${W}`, "Census ratio", "State homes, same period", "State ratio"];
     const num = [3, 4, 5, 6, 7];
     $("#table").innerHTML = `<thead><tr>${head.map((h, i) => `<th${num.includes(i) ? ' class="num"' : ""}>${h}</th>`).join("")}</tr></thead><tbody>` +
       rows.map(t => `<tr><td>${t.n}</td><td>${t.c_}</td><td>${cls(t)[2]}</td><td class="num">${fmt(t.pn)}</td>` +
-        (live ? `<td class="num">${fmt(t.c.u)}</td><td class="num">${t.c.ok ? pct(t.c.p) : "–"}</td><td class="num">${t.s.ok ? fmt(t.s.u) : "–"}</td><td class="num">${t.s.ok ? pct(t.s.p) : "–"}</td>`
-              : `<td class="num">${fmt(t.cb.a, 1)}</td><td class="num">${pct(t.cb.v)}</td><td class="num">${fmt(t.sb.a, 1)}</td><td class="num">${pct(t.sb.v)}</td>`) + `</tr>`).join("") + "</tbody>";
+        `<td class="num">${fmt(t.c.u)}</td><td class="num">${t.c.ok ? ratio(t.c.r) : "–"}</td><td class="num">${t.s.use ? fmt(t.s.u) : "–"}</td><td class="num">${t.s.ok ? ratio(t.s.r) : "–"}</td></tr>`).join("") + "</tbody>";
     $("#tabledetails summary").textContent = `Table: ${rows.length} towns in the current view`;
   }
 
   // ---- method ----
   $("#method").innerHTML = `<h2>How this is measured</h2>
-    <p>Each town's affordable-housing obligation for 2025–2035 comes from the NJ Department of Community Affairs' Fourth Round calculation. Homes permitted come from two public sources that often disagree: the U.S. Census Bureau's Building Permits Survey, which fills in towns that don't report with estimates, and the state's Construction Reporter, which marks them missing. A source is used for a town only if the town reported at least 75% of the months to it. Colors compare both sources over the same period (July 2025 through the latest month both have published); a town is colored when its usable sources agree or from its only usable source, and shown as "sources disagree" otherwise. A state figure of 0 counts only when the town's Census reports confirm it.</p>
-    <p>Pace multiplies homes permitted by 20%, a yardstick for the affordable share of inclusionary projects. It isn't a bound in either direction: 100%-affordable projects, prior-round surplus credits, bonus credits and vacant-land adjustments all change how many affordable homes a town needs or delivers, and permits aren't completions. Compliance is determined through the Affordable Housing Dispute Resolution Program and the courts; this page doesn't assess it.</p>
+    <p>Homes permitted come from two public sources that often disagree: the U.S. Census Bureau's Building Permits Survey, which fills in towns that don't report with estimates, and the state's Construction Reporter, which marks them missing. Both are counted over the same period, July 2025 through ${W}, and a source is used for a town only if the town reported at least 75% of those months to it. A state figure of 0 counts only when the town's Census reports confirm it.</p>
+    <p>Each town is compared with its own past: the ratio divides all homes permitted in the period by what the town's 2021–25 average (at least 4 of 5 fully reported years) would give over the same months. A source counts only when that average predicts at least ${S.min_expected} homes. When both sources count and land in bands two or more apart, the town shows as "sources disagree"; one band apart, it takes the band nearer "about the same". Towns with no new obligation get the same ratio and are the comparison group.</p>
+    <p>These are all homes permitted, not affordable homes: neither source tags affordable units. Implementing ordinances were due in ${monthName(S.ordinances_due)}, so most projects under the new zoning hadn't reached the permit stage in this period. A ratio to a town's own past isn't a target, and this page doesn't assess compliance, which is determined through the Affordable Housing Dispute Resolution Program and the courts. Obligations are DCA's calculation for every town.</p>
+    <p><i>Sensitivity, not a measure of progress:</i> if 20% of the homes permitted in obligated towns were affordable, they would equal ${pct(S.sens_affordable_dca)} (state) and ${pct(S.sens_affordable_census)} (Census) of the obligation pro-rated to date.</p>
     <p>Completions are certificates of occupancy reported to the state (through ${monthName(S.co_vintage)}). They're shown as reported and don't affect the colors.</p>
     <p>The map, its data and these figures are rebuilt from public sources by one command (<code>python3 src/update.py</code>), and every update is logged. ${M.repo ? `Code, data, method and change log: <a href="${M.repo}">${M.repo.replace("https://", "")}</a>.` : ""}</p>
     <div class="health">${(h ? h.checks : []).map(c => `<span>${c.check.replace(/_/g, " ")}: ${c.status}</span>`).join("")}</div>`;

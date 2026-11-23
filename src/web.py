@@ -15,6 +15,7 @@ OUT, DOCS = ROOT / "out", ROOT / "docs"
 REPO_URL = "https://github.com/SBoyapati13/nj-housing-pace"
 WIDTH = 600.0          # SVG viewBox width
 MIN_STEP = 0.35        # drop vertices closer than this (viewBox units) to the last kept one
+BANDS = ("well_below", "below", "about_same", "above", "well_above")
 
 def clean(v, nd=None):
     if v is None or (isinstance(v, float) and math.isnan(v)): return None
@@ -58,17 +59,18 @@ def main():
         why = "Qualified Urban Aid municipality" if r.qualified_urban_aid == 1 else "calculated obligation of zero"
         towns.append({
             "f": f, "n": r.municipality, "c_": r.county, "d": d,
-            "cls": r.class_live, "clsb": r.class_base, "one": int(r.live_sources) == 1 and r.class_live in ("below_half", "half_to_one", "one_to_two", "two_plus"), "pn": clean(r.prospective_need), "why": why,
-            "tgt": clean(r.cw_target, 1),
-            "c": {"u": clean(r.cw_units), "m": clean(r.cw_months), "p": clean(r.cw_pace, 3), "ok": bool(r.cw_usable),
+            "cls": r.class_live, "one": int(r.live_sources) == 1 and r.class_live in BANDS,
+            "ob1": bool(r.one_band_apart), "pn": clean(r.prospective_need), "why": why,
+            "gap": bool(r.gap_large_producer), "pk": clean(r.past_peak), "os": r.obligation_source,
+            "c": {"u": clean(r.cw_units), "m": clean(r.cw_months), "mm": clean(r.cw_months_missing), "use": bool(r.cw_usable),
+                  "e": clean(r.cw_expected, 1), "r": clean(r.cw_ratio, 3), "ok": bool(r.cw_comparable),
                   "est": clean(round(r.cw_units - r.cw_reported_units, 1)) if pd.notna(r.cw_units) else None,
-                  "fu": clean(r.c_units), "fm": clean(r.c_months), "fp": clean(r.c_pace, 3), "fok": bool(r.c_usable),
-                  "best": clean(r.c_best_year), "b20": clean(r.c_best_20), "b100": clean(r.c_best_100)},
-            "s": {"u": clean(r.dw_units), "m": clean(r.dw_months), "p": clean(r.dw_pace, 3), "ok": bool(r.dw_usable),
-                  "zu": bool(r.dw_zero_unconfirmed),
-                  "best": clean(r.d_best_year), "b20": clean(r.d_best_20), "b100": clean(r.d_best_100)},
-            "cb": {"n": clean(r.c_base_years), "a": clean(r.c_base_avg, 1), "v": clean(r.c_base_cov, 3)},
-            "sb": {"n": clean(r.d_base_years), "a": clean(r.d_base_avg, 1), "v": clean(r.d_base_cov, 3)},
+                  "best": clean(r.c_best_year)},
+            "s": {"u": clean(r.dw_units), "m": clean(r.dw_months), "mm": clean(r.dw_months_missing), "use": bool(r.dw_usable),
+                  "e": clean(r.dw_expected, 1), "r": clean(r.dw_ratio, 3), "ok": bool(r.dw_comparable),
+                  "zu": bool(r.dw_zero_unconfirmed), "best": clean(r.d_best_year)},
+            "cb": {"n": clean(r.c_base_years), "a": clean(r.c_base_avg, 1)},
+            "sb": {"n": clean(r.d_base_years), "a": clean(r.d_base_avg, 1)},
             "fin": clean(r.final_prospective_need), "fin_status": clean(r.final_status), "fin_doc": clean(r.final_evidence), "fin_src": clean(r.final_source),
             "co": clean(r.co_reported_since_jul2025), "cr": clean(r.completion_ratio_2015_2024, 3),
         })
@@ -83,7 +85,7 @@ def main():
     (DOCS / "index.html").write_text(
         '<!doctype html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n'
         '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n'
-        '<meta name="description" content="Live map of homes permitted in each New Jersey town since July 2025, compared with its Fourth Round affordable-housing obligation, from two public permit sources.">\n'
+        '<meta name="description" content="Live map of homes permitted in each New Jersey town since July 2025, compared with each town\'s own 2021–25 permitting, in towns with and without a Fourth Round obligation, from two public permit sources.">\n'
         + tpl.replace("<style>", "<style>\n[hidden]{display:none!important} body{margin:0}", 1)
         + "\n</html>\n")
     inline = '<script id="town-data" type="application/json">' + data.replace("</", "<\\/") + "</script>\n"
